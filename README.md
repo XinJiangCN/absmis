@@ -1,8 +1,24 @@
-# 注册
+# 常用文档
+## URL名称信息
+点击[这里](https://github.com/JasonJiangCN/absmis/blob/master/URLinfo.md)来查看URL的定义以及具体信息
 
-[注册](https://github.com)一个Github账号
+# 关注本项目
+右上角的Star和Watch可以都点一下，这样每次打开Github主页右下角就能快速进入项目了
+# Merge Master分支到当前工作分支
+有时候master分支有些很重要的改动需要同步，请先使用
+```
+git pull
+git merge master
+```
+这样就可以把master分支上最新的功能合并到自己的分支上
 
-注册好之后把用户名或者邮箱地址给我，邀请成为协作者
+请不要对自己任以外的内容进行任何改动，以免造成冲突无法合并
+
+# Pull Request
+当某个功能完成，或修复某个bug之后可以进行一次commit并推送到自己的分支上
+
+当某个部分运行的很好了，就可以开始进行Pull Request（请求把内容合并至主分支）
+打开仓库主页，选择自己的分支，找到Pull Request功能，填上请求内容并提交
 
 # 开始使用
 
@@ -54,7 +70,7 @@ Vue的一个组件库，方便引用表单、布局等
 
 ## Vue-router
 
-//TODO 待分配各组件
+URL信息请见URLinfo.md
 
 ## Axios
 
@@ -70,9 +86,6 @@ this.$http.get(url)
 	})
 ```
 
-## Vuex
-
-//可选
 
 # 任务分配
 
