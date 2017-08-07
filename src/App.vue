@@ -1,13 +1,17 @@
 <template>
   <div id="app">
     <title>Dev</title>
-    <p>Success</p>
+    <index></index>
 </div>
 </template>
 
 <script>
+import index from './components/index.vue'
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    index
+  }
 }
 </script>
 
