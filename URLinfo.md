@@ -11,7 +11,7 @@
 
 账户维护
 
-*File src/components/accountMaintain.vue*
+*File: src/components/accountMaintain.vue*
 
 # /designcompanyinfo
 编号：010101

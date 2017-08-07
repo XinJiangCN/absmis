@@ -18,7 +18,11 @@
     </el-submenu>
     <!-- login and Attendence menu for dev mode. 
       Should be removed after the nav bar is finished -->
-    <el-menu-item index="/">Attendence</el-menu-item>
+    <el-menu-item index="/changepasswd">更改密码</el-menu-item>
+     <el-menu-item index="/accountmaintain">账户维护</el-menu-item>
+      <el-menu-item index="/designcompanyinfo">设计企业-基本信息</el-menu-item>
+
+
     </el-menu>
 </div>
 </template>
