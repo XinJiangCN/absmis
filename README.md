@@ -32,9 +32,11 @@ git commit -m "commit info"
 git push origin yourName
 ```
 
-不要把有bug的代码推送到master分支上
 
 
+不要把有bug的代码推送到master分支上!
+
+## Git
 
 git[教程](http://www.runoob.com/git/git-workflow.html)
 
