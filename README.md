@@ -40,6 +40,38 @@ git[教程](http://www.runoob.com/git/git-workflow.html)
 
 主要关注基本操作、分支管理、版本回退功能
 
+# 插件
+
+## Element UI
+
+Vue的一个组件库，方便引用表单、布局等
+
+阅读[官方文档](http://element.eleme.io/#/zh-CN/component/installation)
+
+在主项目里我已经import了ElementUI，在部件内可以直接使用
+
+## Vue-router
+
+//TODO 待分配各组件
+
+## Axios
+
+使用方法
+
+```javascript
+this.$http.get(url)
+	.then(function(response){
+      
+	})
+	.catch(function(error){
+      
+	})
+```
+
+## Vuex
+
+//可选
+
 # 任务分配
 
 //TODO 分配
