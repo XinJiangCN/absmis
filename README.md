@@ -20,6 +20,26 @@ git merge master
 当某个部分运行的很好了，就可以开始进行Pull Request（请求把内容合并至主分支）
 打开仓库主页，选择自己的分支，找到Pull Request功能，填上请求内容并提交
 
+# 项目结构
+.
+├── App.vue
+├── components
+│   ├── accountMaintain.vue
+│   ├── basicInfo
+│   │   └── designCompany.vue
+│   ├── basicInfoCensor
+│   ├── changePasswd.vue
+│   ├── footer.vue
+│   ├── header.vue
+│   ├── index.vue
+│   ├── navBar.vue
+│   └── publicComponents
+├── main.js
+└── router
+    └── index.js
+所有代码应放在components文件夹对应的子目录下
+对于可能存在的复用组件，请在当前目录下（如basicInfo）创建一个新的components文件夹
+不要把自己的代码放在公用的文件夹下
 # 开始使用
 
 Clone现有整个项目

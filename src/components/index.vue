@@ -6,22 +6,30 @@
         <index-header></index-header>
         <!-- Row for the main index part-->
         <el-row :gutter="20">
-            <!-- Left for the navigation bar -->
-            <el-col :span="6">
-            <div id="navBar">
-                <nav-bar></nav-bar>
-            </div>
-            </el-col>
-             <!-- Right part for the view offerred by the router,
+        <!-- Left for the navigation bar -->
+        <el-col :span="6">
+        <div id="navBar">
+            <nav-bar></nav-bar>
+        </div>
+        </el-col>
+        <!-- Right part for the view offerred by the router,
                  with the transition effects-->
-             <el-col :span="18">
+        <el-col :span="18">
 
-             <div id="view">
-                 <transition name="el-fade-in">
-                 <router-view></router-view>
-                 </transition>
-             </div>
-             </el-col>
+        <div id="view">
+
+            <el-row>
+            <view-header></view-header>
+            </el-row>
+            <el-row>
+            <transition name="el-fade-in">
+
+            <router-view></router-view>
+            </transition>
+
+            </el-row>
+        </div>
+        </el-col>
         </el-row>
     </div>
     <!--Footer Part
@@ -35,14 +43,17 @@
 import navBar from './navBar.vue'
 import indexFooter from './footer.vue'
 import indexHeader from './header.vue'
+import viewHeader from './viewHeader.vue'
 export default {
     data: function() {
-        return{} 
-    },
+        return{
+        } 
+    },  
     components: {
         indexFooter,
         indexHeader,
-        navBar
+        navBar,
+        viewHeader
     },
     methods: {
     }
