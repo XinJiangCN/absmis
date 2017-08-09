@@ -1,24 +1,10 @@
 <template>
 <div id="navBar">
     <el-menu default-active="2" class="el-menu-vertical-demo" theme="light" :router=true>
-    <!-- submenu label indicates a folder name. Should not linked to a view-->
-    <el-menu-item-group>  
     <template slot="title"></template> 
-    </el-menu-item-group>
-    <el-menu-item index="/changepasswd">更改密码</el-menu-item>
-    <el-menu-item index="/accountmaintain">账户维护</el-menu-item>
-    <el-submenu>
-    <template slot="title">基本信息</template>
-    <el-menu-item-group>
-    <template slot="title"></template>
-    <el-menu-item index="/designcompanyinfo">设计企业</el-menu-item>
-    <el-menu-item index="/buildcompanyinfo">施工企业</el-menu-item>
-    <el-menu-item index="/estatecompanyinfo">房地产企业</el-menu-item>
-     <el-menu-item index="/componentcompanyinfo">构件部品生成企业及其他</el-menu-item>
-
-    </el-menu-item-group>
-    </el-submenu>
-
+    <div v-for="item in menuData">
+    <el-menu-item :index="item.url">{{item.text}}</el-menu-item>
+    </div>
 
 
     </el-menu>
@@ -26,6 +12,14 @@
 </template>
 <script>
 export default {
+    created(){
+        var url = this.HOST + "/menu"
+        this.$http.get(url).then(response=>{
+            this.menuData = response.data
+        }).catch(error=>{
+            alert("failed")
+        })
+    },
     methods: {
         //Default methods for the navBar
         //TODO remove them and add $http function to require the menu from server
@@ -42,12 +36,13 @@ export default {
             //menu data for showing in the nav bar
             //TODO should be linked to the navBar content after the update methods was built
             naiveMenu: '',
+            menuData:[],
             secondClassMenu: [],
             thirdClassMenu:[],
 
             //determine the menu type
             menuController: false
         }
-    }
+    },
 }
 </script>
