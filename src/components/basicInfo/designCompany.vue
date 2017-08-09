@@ -69,6 +69,7 @@ export default {
             formData.count = this.designForm.count
             formData.qualificationNum = this.designForm.qualificationNum
             formData.qualificationlevel = this.designForm.qualificationlevel
+            //TODO connect the server
         } 
     },
     components: {

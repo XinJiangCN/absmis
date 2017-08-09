@@ -6,13 +6,17 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import axios from 'axios'
+import VeeValidate from 'vee-validate'
+
 
 axios.defaults.withCredentials=true
 
 Vue.prototype.$http = axios
 
+
 Vue.use(ElementUI)
 Vue.config.productionTip = false
+Vue.use(VeeValidate)
 
 /* eslint-disable no-new */
 new Vue({

@@ -77,7 +77,7 @@ export default {
             } else {
                 //TODO POST THE DATA TO THE SERVER
             }
-            
+
         }
     },
     watch: {
