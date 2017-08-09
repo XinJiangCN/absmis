@@ -1,6 +1,5 @@
 <template>
 <div id="changePasswd">
-  
     <el-row> 
     <el-col :span="4">
     <label>登录账号</label>
@@ -28,7 +27,7 @@
     <el-input v-model="newPasswd" type="password"></el-input>
     </el-tooltip>
     </el-col>
-    <el-col :span="5" v-if="isPasswdWrong">
+    <el-col :span="5" v-if="isPasswdFormatWrong">
     <p>格式错误！</p>
     </el-col>
     </el-row>
@@ -62,7 +61,7 @@ export default {
             oldPasswd: '',
             newPasswd: '',
             reEnterPasswd: '',
-            isPasswdWrong: false,
+            isPasswdFormatWrong: false,
             isReEnterDiffrent: false
         }
     },
@@ -73,9 +72,12 @@ export default {
             || !this.newPasswd 
             || !this.reEnterPasswd) {
                 alert('请完整填写信息！')
-            } else if (this.isPasswdWrong || isReEnterDiffrent) {
+            } else if (this.isPasswdFormatWrong || isReEnterDiffrent) {
                 alert('信息填写有误，请重新填写！')
+            } else {
+                //TODO POST THE DATA TO THE SERVER
             }
+            
         }
     },
     watch: {
@@ -88,16 +90,15 @@ export default {
             },1000)
         },
         newPasswd: function() {
-            var app = this
-            app.isPasswdWrong = false
+            this.isPasswdFormatWrong = false
             setTimeout(() => {
-                if (app.newPasswd.length < 8)
-                    app.isPasswdWrong = true
+                if (this.newPasswd.length < 8)
+                    this.isPasswdFormatWrong = true
                 var patrn=/^[0-9]{1,20}$/;  
-                if (patrn.exec(app.newPasswd)) 
-                    app.isPasswdWrong = true
+                if (patrn.exec(this.newPasswd)) 
+                    this.isPasswdFormatWrong = true
                 else 
-                    app.isPasswdWrong = false
+                    this.isPasswdFormatWrong = false
             },1000)
         }
     }
