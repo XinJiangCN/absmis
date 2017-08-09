@@ -7,8 +7,8 @@
 # Merge Master分支到当前工作分支
 有时候master分支有些很重要的改动需要同步，请先使用
 ```
-git pull
-git merge master
+git pull origin master
+#向服务期端请求master分支最新的数据并合并到本地自己的分支上
 ```
 这样就可以把master分支上最新的功能合并到自己的分支上
 
@@ -21,22 +21,6 @@ git merge master
 打开仓库主页，选择自己的分支，找到Pull Request功能，填上请求内容并提交
 
 # 项目结构
-.
-├── App.vue
-├── components
-│   ├── accountMaintain.vue
-│   ├── basicInfo
-│   │   └── designCompany.vue
-│   ├── basicInfoCensor
-│   ├── changePasswd.vue
-│   ├── footer.vue
-│   ├── header.vue
-│   ├── index.vue
-│   ├── navBar.vue
-│   └── publicComponents
-├── main.js
-└── router
-    └── index.js
 所有代码应放在components文件夹对应的子目录下
 对于可能存在的复用组件，请在当前目录下（如basicInfo）创建一个新的components文件夹
 不要把自己的代码放在公用的文件夹下
