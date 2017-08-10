@@ -15,7 +15,7 @@ git pull origin master
 请不要对自己任以外的内容进行任何改动，以免造成冲突无法合并
 #注意
 请时刻关注自己在哪个分支上工作，不要随便改动其他文件！！
-#部分推送
+# 推送部分文件到远端仓库
 ```
 git add A.vue B.vue
 git commit -m "A B"
