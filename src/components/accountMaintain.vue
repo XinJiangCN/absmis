@@ -18,6 +18,8 @@
     <el-row type="flex" >
     <el-col :span="5">
 
+
+
     <!-- 增删改按钮 -->
     <el-button-group>
     <el-button type="primary" icon="plus" @click="addDialogVisible=true">
@@ -30,12 +32,16 @@
     </el-col>
 
 
+
+
     <el-col :span="5">
     <el-button @click="resetPasswdDialogvisible = true">重置密码</el-button>
     </el-col>
     </el-row>
     <el-row type="flex">
     <el-col :span="15">
+
+
 
 <!-- show table data -->
     <el-table
@@ -55,22 +61,25 @@
     label="企业名称"
     width="120">
     </el-table-column>
- 
+
     <el-table-column
     prop="username"
     label="用户名"
     show-overflow-tooltip>
     </el-table-column>
+
     <el-table-column
     prop="cumulant"
     label="累计装配式建筑"
     show-overflow-tooltip>
     </el-table-column>
+
     <el-table-column
     prop="qualificationNo"
     label="资质编号"
     show-overflow-tooltip>
     </el-table-column>
+
     <el-table-column
     prop="designerCertification.description"
     label="资质"
@@ -111,7 +120,7 @@
         <el-button @click="addForm={name: '', username: '', cumulant: '', qualificationNo:'', designerCertification:''}
         "
         >清 空</el-button>
-        <el-button @click="notSave">取 消</el-button>
+        <el-button @click="notSave(true)">取 消</el-button>
         <el-button type="primary" @click="submitAddForm(true)">确 定</el-button>
     </div>
     </el-dialog>
@@ -152,7 +161,7 @@
         <el-button @click="updateForm={name: '', username: '', cumulant: '', qualificationNo:'', designerCertificationId:''}"
         v-if="tableSelectedRow"
         >清 空</el-button>
-        <el-button @click="notSave">取 消</el-button>
+        <el-button @click="notSave(false)">取 消</el-button>
         <el-button type="primary" @click="submitAddForm(false)">确 定</el-button>
     </div>
     </el-dialog>
@@ -218,12 +227,15 @@ export default {
             //删除对话框初始时的显示控制
             delDialogVisible: false,
             resetPasswdDialogvisible: false,
+            //定义添加和修改的对象初始值为空
             addForm: {name: '', username: '', cumulant: '', qualificationNo:'', designerCertification:''},
             updateForm: {id:'', name:'', username:'', cumulant:'', qualificationNo:'', designerCertification:''},
             resetPasswdForm: {userName: '', newPasswd: ''},
             //定义当前行为空，当点击某行时，进行赋值
             tableSelectedRow:[],
+            //控制修改框中选择过多时提示信息的显示
             isMuiltRowsSelected: false,
+            //定义数组，在删除时使用
             ids:[]
             
 
@@ -291,13 +303,16 @@ export default {
 
         },
         //当点击取消时运行
-        notSave(){
-            //关闭添加对话框，并清空对话框中的内容
-            this.addDialogVisible = false 
-            this.addForm={name: '', username: '', cumulant: '', qualificationNo:'', designerCertification:''}
+        notSave(val){
+            if(val==true){
+                //关闭添加对话框，并清空对话框中的内容
+                this.addDialogVisible = false 
+                this.addForm={name: '', username: '', cumulant: '', qualificationNo:'', designerCertification:''}
+            }else if(val==false){
             //关闭修改对话框,并清空对话框内容
             this.editDialogVisible=false
             this.updateForm={name:'', username:'', cumulant:'', qualificationNo:'', designerCertification:''}
+            }
 
 
         },
@@ -313,6 +328,7 @@ export default {
         }
     },
     watch: {
+        //监听当前行，如果当前行存在，并且长度大于一，则拒绝修改操作
         tableSelectedRow: function(){
             if (this.tableSelectedRow && this.tableSelectedRow.length != 1)
                 this.isMuiltRowsSelected = true
@@ -325,6 +341,7 @@ export default {
         }
     },
     created(){
+        //防止页面加载完后点击修改弹出对话框
         if (this.tableSelectedRow.length == 0)
                 this.tableSelectedRow = ''
         this.findMsg()
