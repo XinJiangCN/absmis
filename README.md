@@ -13,7 +13,15 @@ git pull origin master
 这样就可以把master分支上最新的功能合并到自己的分支上
 
 请不要对自己任以外的内容进行任何改动，以免造成冲突无法合并
-
+#注意
+请时刻关注自己在哪个分支上工作，不要随便改动其他文件！！
+#部分推送
+```
+git add A.vue B.vue
+git commit -m "A B"
+git push origin yourName
+```
+请尽量只推送自己写的文件
 # Pull Request
 当某个功能完成，或修复某个bug之后可以进行一次commit并推送到自己的分支上
 
