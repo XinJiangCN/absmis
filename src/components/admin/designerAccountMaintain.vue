@@ -14,13 +14,13 @@
             >查询</el-button>
         </el-col>
         <!-- 每行分为24栏（固定），span设置该列占有5栏 -->
-        <el-col :span="5">
+        <el-col :span="4">
             <!-- 增删改按钮 -->
             <el-button-group>
                 <el-button type="primary" icon="plus" @click="addDialogVisible=true">
                 </el-button>
 
-                <el-button type="primary" icon="edit" @click="showEditDialogVisible">
+                <el-button type="primary" icon="edit" @click="showUpdateDialogVisible">
                 </el-button>
 
                 <el-button type="primary" icon="delete" @click="delConfirmation">
@@ -28,7 +28,7 @@
             </el-button-group>
         </el-col>
 
-        <el-col :span="5">
+        <el-col :span="4">
             <el-button @click="resetPwdConfirmation">
                 重置密码
             </el-button>
@@ -100,8 +100,8 @@
     </el-dialog>
     <!-- Add Dialog Finished-->
 
-    <!-- Edit Dialog-->
-    <el-dialog title="修改" :visible.sync="editDialogVisible">
+    <!-- Update Dialog-->
+    <el-dialog title="修改" :visible.sync="updateDialogVisible">
         <div>
             <enterprise-information 
                 :enterprise = "enterpriseForUpdateForm"
@@ -110,15 +110,15 @@
 
         <div slot="footer">
             <el-button 
-                @click="enterpriseForUpdateForm={id:enterpriseForUpdateForm.id}"
+                @click="enterpriseForUpdateForm={id:enterpriseForUpdateForm.id,name:'',username:'',password:enterpriseForUpdateForm.password}"
             >清 空</el-button>
 
-            <el-button @click="editDialogVisible=false">取 消</el-button>
+            <el-button @click="updateDialogVisible=false">取 消</el-button>
 
             <el-button type="primary" @click="submitUpdateForm">提 交</el-button>
         </div>
     </el-dialog>
-    <!-- Edit Dialog Finished -->
+    <!-- Update Dialog Finished -->
 
     <!-- Delete Dialog-->
     <el-dialog title="删除" :visible.sync="delConfirmationDialogVisible">
@@ -147,7 +147,9 @@
     <el-dialog title="重置密码" :visible.sync="resetPwdConfirmationDialogVisible">
 
         <el-form>
-            <label>您确定重置该密码吗？</label>
+            <label>
+            <h3>您确定重置此用户的密码吗？</h3>
+            </label>
         </el-form>
         <div slot="footer">
             <el-button @click="resetPwdConfirmationDialogVisible = false">  取 消
@@ -157,7 +159,7 @@
             </el-button>
         </div>
     </el-dialog>
-    <!-- Edit Dialog Finished -->
+    <!-- Update Dialog Finished -->
 
     <!-- 调用子组件，为了利用ref来调用子组件中的方法，实际无显示效果 -->
     <msg-dialog ref="msgDialog"></msg-dialog>
@@ -177,7 +179,7 @@ import msgDialog from '../common/msgDialog'
                 //增加用的对话框，初始为不显示
                 addDialogVisible:false,
                 //修改用，初始不显示对话框
-                editDialogVisible: false,
+                updateDialogVisible: false,
                 //提示信息框初始时不显示
                 msgDialogVisible:false,
                 //删除对话框初始时的显示控制
@@ -185,8 +187,8 @@ import msgDialog from '../common/msgDialog'
                 //控制重置密码提示框的显示，初始不显示
                 resetPwdConfirmationDialogVisible: false,
                 //定义添加和修改的对象初始值为空
-                enterpriseForAddForm: {name:'', username:''},
-                enterpriseForUpdateForm: {id:'', name:'', username:''},
+                enterpriseForAddForm: {name:'', username:'',password:''},
+                enterpriseForUpdateForm: {id:'', name:'', username:'',password:''},
                 //定义当前行为空，当点击某行时，为本变量赋值
                 tableSelectedRows:[],
                 //定义当前是否选择多行，控制修改框中选择过多时提示信息的显示
@@ -209,23 +211,10 @@ import msgDialog from '../common/msgDialog'
                 //取出选中行的所有信息，在判断选中情况、修改和删除时使用
                 this.tableSelectedRows = selectedRows
             },
-            //点击修改之后运行本方法
-            showEditDialogVisible(){
-                if(this.tableSelectedRows.length==1){
-                    this.editDialogVisible=true
-                    //将选中行的具体信息提取出来，修改时用于绑定
-                    this.enterpriseForUpdateForm.id = this.tableSelectedRows[0].id
-                    this.enterpriseForUpdateForm.name = this.tableSelectedRows[0].name
-                    this.enterpriseForUpdateForm.username = this.tableSelectedRows[0].username
-                }else if(this.tableSelectedRows.length==0){
-                    this.$refs.msgDialog.confirm("请至少选择一个企业进行修改！");
-                }else{
-                    this.$refs.msgDialog.confirm("仅可选择一个企业进行修改！")
-                }
-            },
             //点击确定进行添加保存
             submitAddForm(){
                 this.addDialogVisible=false
+                this.enterpriseForAddForm.password = this.enterpriseForAddForm.username
                 var url = this.HOST + "/addDesigner"
                 this.$http.post(url,this.enterpriseForAddForm).then(response=>{
                     this.findAllDesigners()
@@ -233,11 +222,26 @@ import msgDialog from '../common/msgDialog'
                 }).catch(error=>{
                     this.$refs.msgDialog.confirm("添加失败")
                 })
-                this.enterpriseForAddForm={name:'', username:''}
+                this.enterpriseForAddForm={name:'', username:'',password:''}
+            },
+            //点击修改之后运行本方法
+            showUpdateDialogVisible(){
+                if(this.tableSelectedRows.length==1){
+                    this.updateDialogVisible=true
+                    //将选中行的具体信息提取出来，修改时用于绑定
+                    this.enterpriseForUpdateForm.id = this.tableSelectedRows[0].id
+                    this.enterpriseForUpdateForm.name = this.tableSelectedRows[0].name
+                    this.enterpriseForUpdateForm.username = this.tableSelectedRows[0].username
+                    this.enterpriseForUpdateForm.password = this.tableSelectedRows[0].password
+                }else if(this.tableSelectedRows.length==0){
+                    this.$refs.msgDialog.confirm("请至少选择一个企业进行修改！");
+                }else{
+                    this.$refs.msgDialog.confirm("仅可选择一个企业进行修改！")
+                }
             },
             //点击确定进行修改保存
             submitUpdateForm(){
-                this.editDialogVisible=false
+                this.updateDialogVisible=false
                     var url = this.HOST + "/updateDesigner"
                     this.$http.put(url,this.enterpriseForUpdateForm).then(response=>{
                         this.findAllDesigners() 
@@ -290,6 +294,7 @@ import msgDialog from '../common/msgDialog'
                 var url = this.HOST + "/resetPsd?id="+this.tableSelectedRows[0].id
                 this.$http.post(url).then(response=>{
                     this.$refs.msgDialog.notify(response.username +"的密码已经重置为用户名")
+                    this.findAllDesigners()
                 }).catch(response=>{
                     this.$refs.msgDialog.confirm("重置失败！")
                 })
@@ -298,7 +303,7 @@ import msgDialog from '../common/msgDialog'
             cancelAdd(){
                 //关闭添加对话框，并清空对话框中的内容
                 this.addDialogVisible = false 
-                this.enterpriseForAddForm={name: '', username: ''}
+                this.enterpriseForAddForm={name: '', username: '',password:''}
             },
             //查询所要显示的表格，或者刷新该表格使用
             findAllDesigners(){
