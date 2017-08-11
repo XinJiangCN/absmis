@@ -16,12 +16,15 @@ Vue.prototype.$http = axios
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
+
 Vue.use(VeeValidate)
+
+Vue.prototype.HOST = '/absmis'
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: { App }
+	el: '#app',
+	router,
+	template: '<App/>',
+	components: { App }
 })
