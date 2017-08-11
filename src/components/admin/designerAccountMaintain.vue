@@ -84,11 +84,10 @@
     </el-row>
     <!-- Add Dialog -->
     <el-dialog title="添加" :visible.sync="addDialogVisible">
-        <el-form>
-            <enterprise-information 
-                :enterprise = "enterpriseForAddForm"
-            ></enterprise-information>
-        </el-form>
+        <!-- 调用子组件显示修改中的输入框 -->
+        <enterprise-information 
+            :enterprise = "enterpriseForAddForm"
+        ></enterprise-information>
 
         <div slot="footer">
             <el-button @click="enterpriseForAddForm={}">清 空</el-button>
@@ -102,11 +101,10 @@
 
     <!-- Update Dialog-->
     <el-dialog title="修改" :visible.sync="updateDialogVisible">
-        <div>
-            <enterprise-information 
-                :enterprise = "enterpriseForUpdateForm"
-            ></enterprise-information>
-        </div>
+        <!-- 调用子组件显示修改中的输入框 -->
+        <enterprise-information 
+            :enterprise = "enterpriseForUpdateForm"
+        ></enterprise-information>
 
         <div slot="footer">
             <el-button 
