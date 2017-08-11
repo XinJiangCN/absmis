@@ -44,29 +44,44 @@
                 tooltip-effect="dark"
                 style="width: 100%"
                 highlight-current-row
-                @selection-change="handleSelectionChange">
-
+                @selection-change="handleSelectionChange"
+                :fit="true">
                 <el-table-column
                     type="selection"
-                    width="55">
+                    header-align="center"
+                    style="width:10%">
                 </el-table-column>
 
                 <el-table-column
                     prop="name"
                     label="企业名称"
-                    width="120">
+                    style="width:50%"
+                    header-align="center">
                 </el-table-column>
 
                 <el-table-column
                     prop="username"
                     label="用户名"
-                    show-overflow-tooltip>
+                    style="width:40%"
+                    show-overflow-tooltip
+                    header-align="center">
                 </el-table-column>
-
             </el-table>
         </el-col>
     </el-row>
-
+    <el-row>
+        <el-col :span="8">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              :page-sizes="[10,15,20,]"
+              :page-size="currentPageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="totalNumber">
+            </el-pagination>
+        </el-col>
+    </el-row>
     <!-- Add Dialog -->
     <el-dialog title="添加" :visible.sync="addDialogVisible">
         <el-form>
@@ -76,7 +91,7 @@
         </el-form>
 
         <div slot="footer">
-            <el-button @click="enterpriseForUpdateForm={name: '', username: ''}">清 空</el-button>
+            <el-button @click="enterpriseForAddForm={}">清 空</el-button>
 
             <el-button @click="cancelAdd">取 消</el-button>
 
@@ -95,7 +110,7 @@
 
         <div slot="footer">
             <el-button 
-                @click="enterpriseForUpdateForm={name: '', username: ''}"
+                @click="enterpriseForUpdateForm={id:enterpriseForUpdateForm.id}"
             >清 空</el-button>
 
             <el-button @click="editDialogVisible=false">取 消</el-button>
@@ -177,7 +192,13 @@ import msgDialog from '../common/msgDialog'
                 //定义当前是否选择多行，控制修改框中选择过多时提示信息的显示
                 isMultiRowsSelected: false,
                 //定义数组，在删除时使用
-                ids:[]
+                ids:[],
+                //分页用，当前页为第几页
+                currentPage:1,
+                //分页用，当前页显示数据条数
+                currentPageSize:10,
+                //分页用，本表格中数据总数
+                totalNumber:''
             }
         },
         methods: {
@@ -265,8 +286,9 @@ import msgDialog from '../common/msgDialog'
             },
             //进行密码重置
             handleResetPwd: function() {
-                var url = this.HOST + "/"
-                this.$http.get(url).then(response=>{
+                this.resetPwdConfirmationDialogVisible=false
+                var url = this.HOST + "/resetPsd?id="+this.tableSelectedRows[0].id
+                this.$http.post(url).then(response=>{
                     this.$refs.msgDialog.notify(response.username +"的密码已经重置为用户名")
                 }).catch(response=>{
                     this.$refs.msgDialog.confirm("重置失败！")
@@ -281,12 +303,23 @@ import msgDialog from '../common/msgDialog'
             //查询所要显示的表格，或者刷新该表格使用
             findAllDesigners(){
                 //初始显示表格用的查询数据
-                var url= this.HOST + "/findAllDesigners"
+                var url= this.HOST + "/displayAllDesigners?page="+this.currentPage+"&rows="+this.currentPageSize
                 this.$http.get(url).then(response=>{
-                    this.designerTableData = response.data
+                    this.designerTableData = response.data.rows
+                    this.totalNumber = response.data.total
                 }).catch(error=>{
                     this.$refs.msgDialog.confirm("查询失败")
                 })
+            },
+            //当前页显示条数发生改变时触发本方法
+            handleSizeChange(newPageSize){
+                this.currentPageSize = newPageSize
+                this.findAllDesigners()
+            },
+            //当前页页码发生改变时触发本方法
+            handleCurrentChange(newPage){
+                this.currentPage = newPage
+                this.findAllDesigners()
             }
         },
         //watch负责监听，当监听对象发生变化时，运行对应的方法
