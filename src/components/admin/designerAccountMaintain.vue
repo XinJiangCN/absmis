@@ -38,35 +38,9 @@
     <el-row type="flex">
         <el-col :span="15">
             <!-- 企业账号维护（设计单位） -->
-            <el-table
-                :data="designerTableData"
-                border
-                tooltip-effect="dark"
-                style="width: 100%"
-                highlight-current-row
-                @selection-change="handleSelectionChange"
-                :fit="true">
-                <el-table-column
-                    type="selection"
-                    header-align="center"
-                    style="width:10%">
-                </el-table-column>
-
-                <el-table-column
-                    prop="name"
-                    label="企业名称"
-                    style="width:50%"
-                    header-align="center">
-                </el-table-column>
-
-                <el-table-column
-                    prop="username"
-                    label="用户名"
-                    style="width:40%"
-                    show-overflow-tooltip
-                    header-align="center">
-                </el-table-column>
-            </el-table>
+            <enterprise-information-table 
+            :enterpriseTableData="designerTableData"
+            @handleSelectionChange="handleSelectionChange"></enterprise-information-table>
         </el-col>
     </el-row>
     <el-row>
@@ -167,6 +141,7 @@
 <script>
 import enterpriseInformation from './enterpriseInformation'
 import msgDialog from '../common/msgDialog'
+import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
     export default {
         data(){
             return {
@@ -334,7 +309,8 @@ import msgDialog from '../common/msgDialog'
         },
         components:{
             enterpriseInformation,
-            msgDialog
+            msgDialog,
+            enterpriseInformationTable
         }
     }
 </script>
