@@ -75,10 +75,10 @@
             ></enterprise-information>
         </el-form>
 
-        <div slot="footer" class="dialog-footer">
+        <div slot="footer">
             <el-button @click="enterpriseForUpdateForm={name: '', username: ''}">清 空</el-button>
 
-            <el-button @click="cancel">取 消</el-button>
+            <el-button @click="cancelAdd">取 消</el-button>
 
             <el-button type="primary" @click="submitAddForm">确 定</el-button>
         </div>
@@ -93,7 +93,7 @@
             ></enterprise-information>
         </div>
 
-        <div slot="footer" class="dialog-footer">
+        <div slot="footer">
             <el-button 
                 @click="enterpriseForUpdateForm={name: '', username: ''}"
             >清 空</el-button>
@@ -110,6 +110,7 @@
         <el-row>
             <div>
                 <label>确认删除以下企业吗？</label>
+                <!-- 换行 -->
                 <el-row>{{ }}</el-row>
                 <el-row>
                     <label v-for="row in tableSelectedRows">
@@ -119,10 +120,10 @@
                 </el-row>
             </div>
         </el-row>
-        <div slot="footer" class="dialog-footer">
+        <div slot="footer">
             <el-button @click="delConfirmationDialogVisible = false">取 消</el-button>
 
-            <el-button type="primary" @click="deleteRecord">确 定</el-button>
+            <el-button type="primary" @click="deleteEnterprise">确 定</el-button>
         </div>
     </el-dialog>
     <!-- Delete Dialog Finished -->
@@ -133,7 +134,7 @@
         <el-form>
             <label>您确定重置该密码吗？</label>
         </el-form>
-        <div slot="footer" class="dialog-footer">
+        <div slot="footer">
             <el-button @click="resetPwdConfirmationDialogVisible = false">  取 消
             </el-button>
 
@@ -204,7 +205,6 @@ import msgDialog from '../common/msgDialog'
             //点击确定进行添加保存
             submitAddForm(){
                 this.addDialogVisible=false
-                console.log(this.enterpriseForAddForm)
                 var url = this.HOST + "/addDesigner"
                 this.$http.post(url,this.enterpriseForAddForm).then(response=>{
                     this.findAllDesigners()
@@ -219,13 +219,11 @@ import msgDialog from '../common/msgDialog'
                 this.editDialogVisible=false
                     var url = this.HOST + "/updateDesigner"
                     this.$http.put(url,this.enterpriseForUpdateForm).then(response=>{
-                        this.findAllDesigners()
-                        
+                        this.findAllDesigners() 
                         this.$refs.msgDialog.notify("修改成功")
                     }).catch(error=>{
                         this.$refs.msgDialog.confirm("修改失败")
                     })
-                    this.enterpriseForUpdateForm={id:'', name:'', username:''}
             },
             //点击删除时运行本方法
             delConfirmation(){
@@ -236,17 +234,17 @@ import msgDialog from '../common/msgDialog'
                 }
             },
             //删除时使用，用来获取多选的所有行的id,并调用删除方法进行删除
-            deleteRecord(){
+            deleteEnterprise(){
                     this.delConfirmationDialogVisible = false
                     var i = 0
                     this.tableSelectedRows.forEach(item=>{
                         this.ids[i]=item.id
                         i=i+1
                     })
-                    this.delContent()
+                    this.delRecord()
             },
             //删除企业信息
-            delContent(){
+            delRecord(){
                 var url = this.HOST + "/deleteDesigners?ids="+this.ids
                     this.$http.delete(url).then(response=>{
                         this.findAllDesigners()
@@ -275,35 +273,24 @@ import msgDialog from '../common/msgDialog'
                 })
             },
             //当点击取消时运行
-            cancel(){
+            cancelAdd(){
                 //关闭添加对话框，并清空对话框中的内容
                 this.addDialogVisible = false 
                 this.enterpriseForAddForm={name: '', username: ''}
             },
-            closeMsgDialog(){
-                this.msgDialogVisible=false
-            },
             //查询所要显示的表格，或者刷新该表格使用
             findAllDesigners(){
-            //初始显示表格用的查询数据
-            var url1 = this.HOST + "/findAllDesigners"
-            this.$http.get(url1).then(response=>{
-                this.designerTableData = response.data
-            }).catch(error=>{
-                this.$refs.msgDialog.confirm("查询失败")
-            })
-            },
-            
+                //初始显示表格用的查询数据
+                var url= this.HOST + "/findAllDesigners"
+                this.$http.get(url).then(response=>{
+                    this.designerTableData = response.data
+                }).catch(error=>{
+                    this.$refs.msgDialog.confirm("查询失败")
+                })
+            }
         },
         //watch负责监听，当监听对象发生变化时，运行对应的方法
         watch: {
-            //监听当前行，如果当前行存在，并且长度大于一，则拒绝修改操作
-            tableSelectedRows: function(){
-                if (this.tableSelectedRows && this.tableSelectedRows.length != 1)
-                    this.isMultiRowsSelected = true
-                else
-                    this.isMultiRowsSelected = false
-            }
         },
         //页面加载时运行
         created(){
