@@ -15,30 +15,29 @@
         </el-col>
         <!-- 每行分为24栏（固定），span设置该列占有5栏 -->
         <el-col :span="4">
-            <!-- 增删改按钮 -->
-            <el-button-group>
-                <el-button type="primary" icon="plus" @click="addDialogVisible=true">
-                </el-button>
+        <!-- 增删改按钮 -->
+        <el-button-group>
+          <el-button type="primary" icon="plus" @click="addDialogVisible=true">
+          </el-button>
 
-                <el-button type="primary" icon="edit" @click="showUpdateDialogVisible">
-                </el-button>
+          <el-button type="primary" icon="edit" @click="showEditDialogVisible">
+          </el-button>
 
-                <el-button type="primary" icon="delete" @click="delConfirmation">
-                </el-button>
-            </el-button-group>
-        </el-col>
+          <el-button type="primary" icon="delete" @click="delConfirmation">
+          </el-button>
+        </el-button-group>
+      </el-col>
 
-        <el-col :span="4">
-            <el-button @click="resetPwdConfirmation">重置密码
-            </el-button>
-        </el-col>
+      <el-col :span="4">
+        <el-button @click="resetPwdConfirmation">重置密码
+        </el-button>
+      </el-col>
     </el-row>
-
     <el-row type="flex">
         <el-col :span="15">
             <!-- 企业账号维护（设计单位） -->
             <enterprise-information-table 
-            :enterpriseTableData="designerTableData"
+            :enterpriseTableData="subUnitEnTableData"
             @handleSelectionChange="handleSelectionChange"></enterprise-information-table>
         </el-col>
     </el-row>
@@ -145,7 +144,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
         data(){
             return {
                 //用来显示表格中的数据
-                designerTableData:[],
+                subUnitEnTableData:[],
                 //用来绑定搜索框中的内容
                 searchContent:'',
                 //增加用的对话框，初始为不显示
@@ -187,9 +186,9 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             submitAddForm(){
                 this.addDialogVisible=false
                 this.enterpriseForAddForm.password = this.enterpriseForAddForm.username
-                var url = this.HOST + "/addDesigner"
+                var url = this.HOST + "/addSubUnitEn"
                 this.$http.post(url,this.enterpriseForAddForm).then(response=>{
-                    this.findAllDesigners()
+                    this.findAllSubUnitEns()
                     this.$refs.msgDialog.notify("添加成功")
                 }).catch(error=>{
                     this.$refs.msgDialog.confirm("添加失败")
@@ -214,9 +213,9 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             //点击确定进行修改保存
             submitUpdateForm(){
                 this.updateDialogVisible=false
-                    var url = this.HOST + "/updateDesigner"
+                    var url = this.HOST + "/updateSubUnitEn"
                     this.$http.put(url,this.enterpriseForUpdateForm).then(response=>{
-                        this.findAllDesigners() 
+                        this.findAllSubUnitEns() 
                         this.$refs.msgDialog.notify("修改成功")
                     }).catch(error=>{
                         this.$refs.msgDialog.confirm("修改失败")
@@ -242,9 +241,9 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             },
             //删除企业信息
             delRecord(){
-                var url = this.HOST + "/deleteDesigners?ids="+this.ids
+                var url = this.HOST + "/deleteSubUnitEns?ids="+this.ids
                     this.$http.delete(url).then(response=>{
-                        this.findAllDesigners()
+                        this.findAllSubUnitEns()
                         this.$refs.msgDialog.notify("删除成功")
                     }).catch(response=>{
                         this.$refs.msgDialog.confirm("删除失败")
@@ -266,7 +265,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                 var url = this.HOST + "/resetPsd?id="+this.tableSelectedRows[0].id
                 this.$http.post(url).then(response=>{
                     this.$refs.msgDialog.notify(response.data.username +"的密码已经重置为用户名")
-                    this.findAllDesigners()
+                    this.findAllSubUnitEns()
                 }).catch(response=>{
                     this.$refs.msgDialog.confirm("重置失败！")
                 })
@@ -278,11 +277,11 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                 this.enterpriseForAddForm={name: '', username: '',password:''}
             },
             //查询所要显示的表格，或者刷新该表格使用
-            findAllDesigners(){
+            findAllSubUnitEns(){
                 //初始显示表格用的查询数据
-                var url= this.HOST + "/displayAllDesigners?page="+this.currentPage+"&rows="+this.currentPageSize
+                var url= this.HOST + "/displayAllSubUnitEns?page="+this.currentPage+"&rows="+this.currentPageSize
                 this.$http.get(url).then(response=>{
-                    this.designerTableData = response.data.rows
+                    this.subUnitEnTableData = response.data.rows
                     this.totalNumber = response.data.total
                 }).catch(error=>{
                     this.$refs.msgDialog.confirm("查询失败")
@@ -291,12 +290,12 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             //当前页显示条数发生改变时触发本方法
             handleSizeChange(newPageSize){
                 this.currentPageSize = newPageSize
-                this.findAllDesigners()
+                this.findAllSubUnitEns()
             },
             //当前页页码发生改变时触发本方法
             handleCurrentChange(newPage){
                 this.currentPage = newPage
-                this.findAllDesigners()
+                this.findAllSubUnitEns()
             }
         },
         //watch负责监听，当监听对象发生变化时，运行对应的方法
@@ -304,7 +303,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
         },
         //页面加载时运行
         created(){
-            this.findAllDesigners()
+            this.findAllSubUnitEns()
         },
         components:{
             enterpriseInformation,
