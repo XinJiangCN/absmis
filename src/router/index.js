@@ -15,7 +15,7 @@ import componentCompanyBasicInfo from '../components/basicInfo/componentCompany.
 
 
 Vue.use(Router)
-
+/*usertype*/
 export default new Router({
     routes: [
         {
