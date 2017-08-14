@@ -15,38 +15,128 @@ import componentCompanyBasicInfo from '../components/basicInfo/componentCompany.
 
 
 Vue.use(Router)
-/*usertype*/
+
 export default new Router({
     routes: [
     {
-        path: '/changepasswd',
-        name: '更改密码',
+        path: '/homePage',
+        name: '首页',
         component: changePasswd
     },
     {
-        path: '/accountmaintain',
-        name: '账户维护',
+        path: '/accountMaintain',
+        name: '企业账号维护',
         component: accountMaintain
     },
     {
-        path: '/designcompanyinfo',
-        name: '设计企业-基本信息',
+        path: '/changePasswd',
+        name: '用户修改密码',
         component: designCompanyBasicInfo
     },
     {
-        path: '/buildcompanyinfo',
-        name: '施工企业-基本信息',
+        path: '/designerInfo',
+        name: '设计单位-基本信息',
         component: buildCompanyBasicInfo 
     },
     {
-        path: '/estatecompanyinfo',
+        path: '/realEstateEnInfo',
         name: '房地产企业-基本信息',
         component: estateCompanyBasicInfo
     },
     {
-        path: '/componentcompanyinfo',
-        name: '构件部品生产企业及其他',
+        path: '/builderInfo',
+        name: '施工单位-基本信息',
         component: componentCompanyBasicInfo
+    },
+    {
+        path: '/componentEnInfo',
+        name: '构件生产企业-基本信息',
+        component: changePasswd
+    },
+    {
+        path: '/subUnitEnInfo',
+        name: '部品生产企业-基本信息',
+        component: changePasswd
+    },
+    {
+        path: '/machineryEnInfo',
+        name: '设备生产企业-基本信息',
+        component: changePasswd
+    },
+    {
+        path: '/estateOwnerInfo',
+        name: '建设单位-基本信息',
+        component: changePasswd
+    },
+    {
+        path: '/traditionalInfoCheck',
+        name: '传统企业-基本信息审核',
+        component: changePasswd
+    },
+    {
+        path: '/nonTraditionalInfoCheck',
+        name: '非传统企业-基本信息审核',
+        component: changePasswd
+    },
+    {
+        path: '/realEstateEnIn',
+        name: '房地产-产业化信息',
+        component: changePasswd
+    },
+    {
+        path: '/designerIn',
+        name: '设计单位-产业化信息',
+        component: changePasswd
+    },
+    {
+        path: '/builderIn',
+        name: '施工单位-产业化信息',
+        component: changePasswd
+    },
+    {
+        path: '/componentEnIn',
+        name: '构件企业-产业化信息',
+        component: changePasswd
+    },
+    {
+        path: '/subUnitEnIn',
+        name: '部品企业-产业化信息',
+        component: changePasswd
+    },
+    {
+        path: '/traditionalInCheck',
+        name: '传统企业-产业化审核',
+        component: changePasswd
+    },
+    {
+        path: '/componentEnInCheck',
+        name: '构件企业-产业化审核',
+        component: changePasswd
+    },
+    {
+        path: '/subUnitEnInCheck',
+        name: '部品企业-产业化审核',
+        component: changePasswd
+    },
+    {
+        path: '/subUnitEnInCheck',
+        name: '设备企业-产业化审核',
+        component: changePasswd
+    },
+    {
+        path: '/realEstateEnProject',
+        name: '房地产-项目信息',
+        component: changePasswd
+    },
+    {
+        path: '/estateOwnerProject',
+        name: '建设单位-项目信息',
+        component: changePasswd
+    },
+    {
+        path: '/projectCheck',
+        name: '项目信息审核',
+        component: changePasswd
     }
     ]
 })
