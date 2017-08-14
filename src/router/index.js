@@ -18,7 +18,7 @@ Vue.use(Router)
 /*usertype*/
 export default new Router({
     routes: [
-        {
+    {
         path: '/changepasswd',
         name: '更改密码',
         component: changePasswd
