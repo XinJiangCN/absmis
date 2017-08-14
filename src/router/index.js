@@ -4,8 +4,8 @@ import Router from 'vue-router'
 //For router-use
 
 //public 
-import changePasswd from '../components/changePasswd.vue'
-import accountMaintain from '../components/accountMaintain.vue'
+import changePasswd from '../components/bizCommon/changePasswd.vue'
+import accountMaintain from '../components/admin/accountMaintain.vue'
 
 //basic info
 import designCompanyBasicInfo from '../components/basicInfo/designCompany.vue'

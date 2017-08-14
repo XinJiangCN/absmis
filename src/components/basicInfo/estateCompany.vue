@@ -56,7 +56,7 @@ export default {
                 qualificationlevel: ''
             },
             options: [
-                { value: 'A', label: "特技"},
+                { value: 'A', label: "特级"},
                 { value: 'B', label: "一级"},
                 { value: 'C', label: "二级"},
                 { value: 'D', label: "三级"},
