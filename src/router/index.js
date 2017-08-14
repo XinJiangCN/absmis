@@ -8,6 +8,7 @@ import changePasswd from '../components/bizCommon/changePasswd.vue'
 import accountMaintain from '../components/admin/accountMaintain.vue'
 
 //basic info
+import homePage from '../components/bizCommon/homePage.vue'
 import designCompanyBasicInfo from '../components/basicInfo/designCompany.vue'
 import buildCompanyBasicInfo from '../components/basicInfo/buildCompany.vue'
 import estateCompanyBasicInfo from '../components/basicInfo/estateCompany.vue'
@@ -21,7 +22,7 @@ export default new Router({
     {
         path: '/homePage',
         name: '首页',
-        component: changePasswd
+        component: homePage
     },
     {
         path: '/accountMaintain',
@@ -31,7 +32,7 @@ export default new Router({
     {
         path: '/changePasswd',
         name: '用户修改密码',
-        component: designCompanyBasicInfo
+        component: changePasswd
     },
     {
         path: '/designerInfo',
