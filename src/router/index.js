@@ -4,15 +4,20 @@ import Router from 'vue-router'
 //For router-use
 
 //public 
-import changePasswd from '../components/changePasswd.vue'
-import accountMaintain from '../components/accountMaintain.vue'
+import changePasswd from '../components/bizCommon/changePasswd.vue'
+import accountMaintain from '../components/admin/accountMaintain.vue'
+//admin
+import auditSubUnitEnIndustrialization from '../components/admin/auditSubUnitEnIndustrialization.vue'
+import auditMachineryEnIndustrialization from '../components/admin/auditMachineryEnIndustrialization.vue'
 
 //basic info
 import designCompanyBasicInfo from '../components/basicInfo/designCompany.vue'
 import buildCompanyBasicInfo from '../components/basicInfo/buildCompany.vue'
 import estateCompanyBasicInfo from '../components/basicInfo/estateCompany.vue'
 import componentCompanyBasicInfo from '../components/basicInfo/componentCompany.vue'
-
+//industrialization info
+import subUnitEnIndustrialization from '../components/industrializationInfo/subUnitEnIndustrialization.vue'
+import machineryEnIndustrialization from '../components/industrializationInfo/machineryEnIndustrialization.vue'
 
 Vue.use(Router)
 
@@ -47,6 +52,26 @@ export default new Router({
         path: '/componentcompanyinfo',
         name: '构件部品生产企业及其他',
         component: componentCompanyBasicInfo
+    },
+    {
+        path:'/subunitenin',
+        name:'部品生产企业建筑产业化信息',
+        component:subUnitEnIndustrialization
+    },
+    {
+        path:'/MachineryEnIn',
+        name:'设备企业建筑产业化信息',
+        component:machineryEnIndustrialization
+    },
+    {
+        path:'/check3',
+        name:'部品生产企业建筑产业化信息审核',
+        component:auditSubUnitEnIndustrialization
+    },
+    {
+        path:'/check4',
+        name:'设备企业建筑产业化信息审核',
+        component:auditMachineryEnIndustrialization
     }
     ]
 })

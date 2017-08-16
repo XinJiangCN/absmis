@@ -13,7 +13,23 @@ git pull origin master
 这样就可以把master分支上最新的功能合并到自己的分支上
 
 请不要对自己任以外的内容进行任何改动，以免造成冲突无法合并
-
+#注意
+请时刻关注自己在哪个分支上工作，不要随便改动其他文件！！
+# 推送部分文件到远端仓库
+```
+git add A.vue B.vue
+git commit -m "A B"
+git push origin yourName
+```
+请尽量只推送自己写的文件
+#版本回退
+使用`git log`来查看最近的commit记录，找到你想回退到的版本
+复制其commit记录代号的前几位，
+使用
+```
+git reset --hard 3249xerwer
+```
+即可将工作树清空，将版本回退到提交过的稳定版本
 # Pull Request
 当某个功能完成，或修复某个bug之后可以进行一次commit并推送到自己的分支上
 
