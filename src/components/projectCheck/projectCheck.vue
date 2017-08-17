@@ -1,5 +1,5 @@
 <template>
-<div id="projectInfo">
+<div id="projectCheck">
    <div>
      <el-row :gutter="8">
      <!-- 第一列 -->
@@ -30,16 +30,16 @@
    <!--  第二列 -->
     <el-col :span="16">
         <el-tabs v-model="activeName2" type="card">
-            <el-tab-pane label="项目基本信息" 
-            name="projectInfo">
-                <project-info @findAllProjectsByRealEstateEn="findAllProjectsByRealEstateEn" :projectId="clickRowId" ref="findProjectInfo">
-                </project-info>
+            <el-tab-pane label="项目基本信息审核" 
+            name="projectInfoCheck">
+                <project-info-check :projectId="clickRowId" ref="findProjectInfo">
+                </project-info-check>
             </el-tab-pane>
 
-            <el-tab-pane label="项目单位工程信息" 
-            name="unitEngineeringInfo">
-                <unit-engineering-info :projectId="clickRowId" ref="findAllUnitEngineerings">
-                </unit-engineering-info>
+            <el-tab-pane label="项目单位工程信息审核" 
+            name="unitEngineeringInfoCheck">
+                <unit-engineering-info-check :projectId="clickRowId" ref="findAllUnitEngineerings">
+                </unit-engineering-info-check>
             </el-tab-pane>
         </el-tabs>
     </el-col>
@@ -50,10 +50,10 @@
 </div>
 </template>
 <script>
-  import projectInformationTable from './projectInformationTable'
+  import projectInformationTable from '../projectInfo/projectInformationTable'
   import msgDialog from '../common/msgDialog'
-  import projectInfo from './projectInfo'
-  import unitEngineeringInfo from './unitEngineeringInfo'
+  import projectInfoCheck from './projectInfoCheck'
+  import unitEngineeringInfoCheck from './unitEngineeringInfoCheck'
   export default {
     data: function() {
       return {
@@ -70,12 +70,6 @@
         }
       },
       methods: {
-        handleSizeChange(row){
-
-        },
-        handleCurrentChange(row){
-
-        },
        handleSizeChange(selectedRows) {
         this.tableSelectedRows = selectedRows
        },
@@ -90,8 +84,8 @@
        handleSelectionChange(selectedRows) {
         this.tableSelectedRows = selectedRows
        },
-      findAllProjectsByRealEstateEn(){
-        this.$http.get(this.HOST + "/displayAllProjectByRealEstateEns?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
+      findAllProjects(){
+        this.$http.get(this.HOST + "/displayAllProjects?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
           this.projectTableData = response.data.rows;
           this.totalNum = response.data.total;
         }).catch(error => {
@@ -101,13 +95,13 @@
 
     },
     created() {
-      this.findAllProjectsByRealEstateEn()
+      this.findAllProjects()
     },
     components: {
       msgDialog,
       projectInformationTable,
-      unitEngineeringInfo,
-      projectInfo
+      unitEngineeringInfoCheck,
+      projectInfoCheck
     }
   }
 
