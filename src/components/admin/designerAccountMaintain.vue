@@ -81,7 +81,7 @@
 
         <div slot="footer">
             <el-button 
-                @click="enterpriseForUpdateForm={id:enterpriseForUpdateForm.id,name:'',username:'',password:enterpriseForUpdateForm.password}"
+                @click="enterpriseForUpdateForm={name:'',username:''}"
             >清 空</el-button>
 
             <el-button @click="updateDialogVisible=false">取 消</el-button>
@@ -160,7 +160,9 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                 resetPwdConfirmationDialogVisible: false,
                 //定义添加和修改的对象初始值为空
                 enterpriseForAddForm: {name:'', username:'',password:''},
-                enterpriseForUpdateForm: {id:'', name:'', username:'',password:''},
+                enterpriseForUpdateForm: {name:'', username:''},
+                //用来保存当前行的所有信息，修改后用新信息将旧信息覆盖
+                enterpriseForUpdate:'',
                 //定义当前行为空，当点击某行时，为本变量赋值
                 tableSelectedRows:[],
                 //定义当前是否选择多行，控制修改框中选择过多时提示信息的显示
@@ -194,17 +196,16 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                 }).catch(error=>{
                     this.$refs.msgDialog.confirm("添加失败")
                 })
-                this.enterpriseForAddForm={name:'', username:'',password:''}
+                this.enterpriseForAddForm={}
             },
             //点击修改之后运行本方法
             showUpdateDialogVisible(){
                 if(this.tableSelectedRows.length==1){
                     this.updateDialogVisible=true
+                    this.enterpriseForUpdate=this.tableSelectedRows[0]
                     //将选中行的具体信息提取出来，修改时用于绑定
-                    this.enterpriseForUpdateForm.id = this.tableSelectedRows[0].id
                     this.enterpriseForUpdateForm.name = this.tableSelectedRows[0].name
                     this.enterpriseForUpdateForm.username = this.tableSelectedRows[0].username
-                    this.enterpriseForUpdateForm.password = this.tableSelectedRows[0].password
                 }else if(this.tableSelectedRows.length==0){
                     this.$refs.msgDialog.confirm("请至少选择一个企业进行修改！");
                 }else{
@@ -214,8 +215,10 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             //点击确定进行修改保存
             submitUpdateForm(){
                 this.updateDialogVisible=false
+                this.enterpriseForUpdate.name=this.enterpriseForUpdateForm.name
+                this.enterpriseForUpdate.username=this.enterpriseForUpdateForm.username
                     var url = this.HOST + "/updateDesigner"
-                    this.$http.put(url,this.enterpriseForUpdateForm).then(response=>{
+                    this.$http.put(url,this.enterpriseForUpdate).then(response=>{
                         this.findAllDesigners() 
                         this.$refs.msgDialog.notify("修改成功")
                     }).catch(error=>{
@@ -297,7 +300,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             handleCurrentChange(newPage){
                 this.currentPage = newPage
                 this.findAllDesigners()
-            }
+            },
         },
         //watch负责监听，当监听对象发生变化时，运行对应的方法
         watch: {
