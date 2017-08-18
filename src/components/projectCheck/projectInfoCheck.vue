@@ -421,20 +421,14 @@ import checkDialog from './checkDialog'
             }
           }]
         },
-        time:'',
-		landUseRight:'',
-	    constructionLicense:'',
-	    engineeringLicense:'',
-	    tender:[],
-	    checkList: [],
-	    comprehensiveInspectionAndAcceptance:'',
-	    delivery:'',
-	    constructionDrawing:'',
       	projectStates:[],
       	projectCategorys:[],
   		projectForm: {
   			id:'',
-  			checkedStatus:'',
+  			checkedStatus:{
+  				id:'',
+  				state:''
+  			},
             name: '',
 		    startingTime:'',
 		    fillTime:'',
@@ -515,8 +509,9 @@ import checkDialog from './checkDialog'
     methods:{
     	submitUpdateForm(){
     		this.editDialogVisible = false;
-	         var url = this.HOST + "/updateProjectById?id="+this.projectForm.id+"&checkedStatus="+this.projectForm.checkedStatus.id
-	        this.$http.post(url, this.projectForm).then(response => {
+    		console.log("然后然后");
+	         var url = this.HOST + "/updateProjectById?id="+this.projectForm.id+"&checkedStatus="+this.projectForm.checkedStatus
+	        this.$http.post(url).then(response => {
 	          this.$refs.msgDialog.notify("修改成功")
 	        }).catch(error => {
 	          this.$refs.msgDialog.confirm("修改失败")
@@ -564,7 +559,6 @@ import checkDialog from './checkDialog'
       },
     },
     created() {
-      this.findCurrentProjectInfo()
       this.findAllProjectCategorys()
       this.findAllProjectStates()
     },

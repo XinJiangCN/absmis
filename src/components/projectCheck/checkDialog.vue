@@ -2,7 +2,7 @@
 <div>
 	<el-form>
 		<el-form-item label="审核状态" >
-	        <el-select v-model="updateForm.checkedStatus.id" placeholder="请选择">
+	        <el-select v-model="updateForm.checkedStatus" placeholder="请选择">
 	            <el-option
 	              v-for="item in checkedStatuss"
 	              :key="item.id"
@@ -18,7 +18,10 @@
 	export default{
 		data(){
 		      return {
-		        checkedStatuss:[]
+		        checkedStatuss:{
+		        	id:'',
+		        	state:''
+		        }
 		      }
 		},
 		props:['updateForm'],

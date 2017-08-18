@@ -43,9 +43,9 @@
     <!-- Add Dialog -->
     <el-dialog title="添加" :visible.sync="addDialogVisible">
       <el-form>
-        <unitEngineering-information-dialog
+        <unitEngineering-info-add-dialog
           :unitEngineeringDialog="unitEngineeringForAddForm"
-        ></unitEngineering-information-dialog>
+        ></unitEngineering-info-add-dialog>
       </el-form>
 
       <div slot="footer">
@@ -101,6 +101,7 @@
 </template>
 <script>
  import unitEngineeringInformationDialog from './unitEngineeringInformationDialog'
+  import unitEngineeringInfoAddDialog from './unitEngineeringInfoAddDialog'
  import msgDialog from '../common/msgDialog'
  import unitEngineeringInformationTable from './unitEngineeringInformationTable'
   export default{
@@ -128,14 +129,14 @@
           undergroundNum: '', 
           overgroundNum: '', 
           engineeringCategory: '', 
-          structureForm: '',
+          structureForm:'',
           engineeringIndustrialization:{
             unitAssemblyRate:'',
             unitAssemblyRate: '',
             exteriorWallArea: '',
             wallShadowArea: '',
             conArea: '', 
-            applicationStrutureType: '', 
+            applicationStrutureType:'', 
             floorScope: '',
             frameworkShear: {
                columnFs:false,
@@ -148,7 +149,7 @@
                integralToiletFs:false,
                solarEnergyFs:false
 
-            },
+            }
           }
         },
         unitEngineeringForUpdateForm: {
@@ -158,15 +159,20 @@
           undergroundNum: '', 
           overgroundNum: '', 
           engineeringCategory: '', 
-          structureForm: '',
-          checkedStatus:'',
+          structureForm: {
+             id:'',
+            description:''
+          },
           engineeringIndustrialization:{
             unitAssemblyRate:'',
             unitAssemblyRate: '',
             exteriorWallArea: '',
             wallShadowArea: '',
             conArea: '', 
-            applicationStrutureType: '', 
+            applicationStrutureType: {
+               id:1,
+            description:''
+            }, 
             floorScope: '',
             frameworkShear:{
                columnFs:false,
@@ -216,19 +222,21 @@
           this.editDialogVisible = true;
           //将选中行的具体信息提取出来，修改时用于绑定
           this.unitEngineeringForUpdateForm.id = this.tableSelectedRows[0].id;
-          this.unitEngineeringForUpdateForm.checkedStatus = this.tableSelectedRows[0].checkedStatus;
-          this.unitEngineeringForUpdateForm.checkedStatus.id = this.tableSelectedRows[0].checkedStatus.id;
+          // this.unitEngineeringForUpdateForm.checkedStatus = this.tableSelectedRows[0].checkedStatus;
+          // this.unitEngineeringForUpdateForm.checkedStatus.id = this.tableSelectedRows[0].checkedStatus.id;
           this.unitEngineeringForUpdateForm.name = this.tableSelectedRows[0].name;
           this.unitEngineeringForUpdateForm.constructionArea = this.tableSelectedRows[0].constructionArea;
           this.unitEngineeringForUpdateForm.undergroundNum = this.tableSelectedRows[0].undergroundNum;
           this.unitEngineeringForUpdateForm.overgroundNum = this.tableSelectedRows[0].overgroundNum;
           this.unitEngineeringForUpdateForm.engineeringCategory = this.tableSelectedRows[0].engineeringCategory;
           this.unitEngineeringForUpdateForm.structureForm = this.tableSelectedRows[0].structureForm;
+          this.unitEngineeringForUpdateForm.structureForm.id = this.tableSelectedRows[0].structureForm.id;
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.unitAssemblyRate = this.tableSelectedRows[0].engineeringIndustrialization.unitAssemblyRate;
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.exteriorWallArea = this.tableSelectedRows[0].engineeringIndustrialization.exteriorWallArea;
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.wallShadowArea = this.tableSelectedRows[0].engineeringIndustrialization.wallShadowArea;
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.conArea = this.tableSelectedRows[0].engineeringIndustrialization.conArea;
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.applicationStructureType = this.tableSelectedRows[0].engineeringIndustrialization.applicationStructureType;
+          this.unitEngineeringForUpdateForm.engineeringIndustrialization.applicationStructureType.id = this.tableSelectedRows[0].engineeringIndustrialization.applicationStructureType.id;
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.floorScope = this.tableSelectedRows[0].engineeringIndustrialization.floorScope;
 
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.frameworkShear.columnFs = this.tableSelectedRows[0].engineeringIndustrialization.frameworkShear.columnFs;
@@ -264,7 +272,7 @@
           undergroundNum: '', 
           overgroundNum: '', 
           engineeringCategory: '', 
-          structureForm: '',
+          structureForm:'',
           checkedStatus:'',
           engineeringIndustrialization:{
             unitAssemblyRate:'',
@@ -272,7 +280,7 @@
             exteriorWallArea: '',
             wallShadowArea: '',
             conArea: '', 
-            applicationStrutureType: '', 
+            applicationStrutureType:'', 
             floorScope: '',
             frameworkShear:{
                columnFs:false,
@@ -338,15 +346,27 @@
           undergroundNum: '', 
           overgroundNum: '', 
           engineeringCategory: '', 
-          structureForm: '',
+          structureForm:'',
           engineeringIndustrialization:{
             unitAssemblyRate:'',
             unitAssemblyRate: '',
             exteriorWallArea: '',
             wallShadowArea: '',
             conArea: '', 
-            applicationStructureType: '', 
-            floorScope: ''
+            applicationStrutureType:'', 
+            floorScope: '',
+            frameworkShear: {
+               columnFs:false,
+               beamFs:false,
+               floorFs:false,
+               stairsFs:false,
+               exteriorWallFs:false,
+               interiorWallFs:false,
+               integralKitchenFs:false,
+               integralToiletFs:false,
+               solarEnergyFs:false
+
+            }
           }
         }
       },
@@ -368,6 +388,7 @@
     },
     components: {
       unitEngineeringInformationDialog,
+      unitEngineeringInfoAddDialog,
       msgDialog,
       unitEngineeringInformationTable
     }

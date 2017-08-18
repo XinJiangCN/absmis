@@ -77,7 +77,7 @@
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
@@ -88,7 +88,7 @@
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			    >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
@@ -126,154 +126,201 @@
     	<el-row>
 				<el-form-item label="项目起止时间">
 			    <el-row :span="20">
+			    <!-- <el-date-picker
+				      v-model="time"
+				      type="daterange"
+				      placeholder="选择日期范围"
+				      @change="changeTime">
+				</el-date-picker> -->
 				<el-date-picker
-			      v-model="projectForm.schedule.projectStartTime"
+			      v-model="projectForm.schedule.startTime"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    <el-date-picker
-			      v-model="projectForm.schedule.projectEndTime"
+			      v-model="projectForm.schedule.endTime"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			     >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="取得土地使用权">
 			    <el-row :span="20">
+			    <!-- <el-date-picker
+				      v-model="landUseRight"
+				      type="daterange"
+				      placeholder="选择日期范围"
+				      @change="changeLandUseRight">
+				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.landUseRightStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			    >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.landUseRightEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="建设用地规划许可证">
 			    <el-row :span="20">
+			    <!-- <el-date-picker
+				      v-model="constructionLicense"
+				      type="daterange"
+				      placeholder="选择日期范围"
+				      @change="changeConstructionLicense">
+				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.constructionLicenseStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			    >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.constructionLicenseEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			     >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="建设工程规划许可证">
 			    <el-row :span="20">
+			    <!-- <el-date-picker
+				      v-model="engineeringLicense"
+				      type="daterange"
+				      placeholder="选择日期范围"
+				      @change="changeEngineeringLicense">
+				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.engineeringLicenseStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			     >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.engineeringLicenseEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="施工图设计及审查">
 			    <el-row :span="20">
+			    <!-- <el-date-picker
+				      v-model="tender"
 
+				      type="daterange"
+				      placeholder="选择日期范围"
+				      @change="changeTender">
+				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.tenderStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.tenderEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			    >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="组织工程招标及工程施工">
 			    <el-row :span="20">
+			    <!-- <el-date-picker
+				      v-model="comprehensiveInspectionAndAcceptance"
+				      type="daterange"
+				      placeholder="选择日期范围"
+				      @change="changeCia">
+				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.comprehensiveInspectionAndAcceptanceStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			     >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.comprehensiveInspectionAndAcceptanceEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			     >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="项目综合验收">
 			    <el-row :span="20">
+			    <!-- <el-date-picker
+				      v-model="delivery"
+				      type="daterange"
+				      placeholder="选择日期范围"
+				      @change="changeDelivery">
+				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.deliveryStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			    >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.deliveryEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			     >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="项目交付使用">
 			    <el-row :span="20">
-
+			    <!-- <el-date-picker
+				      v-model="constructionDrawing"
+				      type="daterange"
+				      placeholder="选择日期范围"
+				      @change="changeConstructionDrawing">
+				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.constructionDrawingStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			     >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.constructionDrawingEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			    >
+			      :picker-options="pickerOptions1">
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
@@ -369,31 +416,38 @@
       return{
        		
       	  pickerOptions1: {
-		          shortcuts: [{
-		            text: '今天',
-		            onClick(picker) {
-		              picker.$emit('pick', new Date());
-		            }
-		          }, 
-		          {
-		            text: '昨天',
-		            onClick(picker) {
-		              const date = new Date();
-		              date.setTime(date.getTime() - 3600 * 1000 * 24);
-		              picker.$emit('pick', date);
-		            }
-		          }, 
-		          {
-		            text: '一周前',
-		            onClick(picker) {
-		              const date = new Date();
-		              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-		              picker.$emit('pick', date);
-		            }
-		          }]
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
         },
-      	projectStates:'',
-      	projectCategorys:'',
+        time:'',
+		landUseRight:'',
+	    constructionLicense:'',
+	    engineeringLicense:'',
+	    tender:[],
+	    checkList: [],
+	    comprehensiveInspectionAndAcceptance:'',
+	    delivery:'',
+	    constructionDrawing:'',
+      	projectStates:[],
+      	projectCategorys:[],
   		projectForm: {
             name: '',
 		    startingTime:'',
@@ -409,8 +463,9 @@
 		    projectCategory:'',
 		   	projectState:'',
 		   	schedule:{
-		   		projectEndTime:'',
-		   		projectStartTime:'',
+		   		
+		   		startTime:'',
+			    endTime:'',
 			    landUseRightStart:'',
 			    landUseRightEnd:'',
 			    constructionLicenseStart:'',
@@ -474,10 +529,10 @@
     },
     methods:{
     	findCurrentProjectInfo(){
-    		this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
+    		this.$http.get(this.HOST + "/findProjectInfoByEstateOwner?id="+this.projectId).then(response => {
           		this.projectForm = response.data
           		console.log("啦啦啦啦")
-          		//console.log(this.projectForm)
+          		console.log(this.projectForm)
         		}).catch(error => {
           		this.$refs.msgDialog.confirm("查询失败la")
         		})
@@ -486,7 +541,7 @@
     	addProjectForm(){
     		console.log(JSON.stringify(this.projectForm))
     		console.log(this.projectForm)
-    		var url = this.HOST + "/addProjectByRealEstateEn"
+    		var url = this.HOST + "/addProjectByEstateOwner"
         	this.$http.post(url, this.projectForm).then(response => {
         		console.log("成功了")
         		this.$emit('findAllProjectsByRealEstateEn')

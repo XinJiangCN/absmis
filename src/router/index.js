@@ -15,6 +15,7 @@ import estateCompanyBasicInfo from '../components/basicInfo/estateCompany.vue'
 import componentCompanyBasicInfo from '../components/basicInfo/componentCompany.vue'
 import project from '../components/projectInfo/project.vue'
 import projectCheck from '../components/projectCheck/projectCheck'
+import projectByEstateOwner from '../components/projectInfo/projectByEstateOwner'
 
 
 Vue.use(Router)
@@ -134,7 +135,7 @@ export default new Router({
     {
         path: '/estateOwnerProject',
         name: '建设单位-项目信息',
-        component: changePasswd
+        component: projectByEstateOwner
     },
     {
         path: '/projectCheck',
