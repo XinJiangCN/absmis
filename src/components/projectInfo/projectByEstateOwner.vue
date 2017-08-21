@@ -1,25 +1,9 @@
 <template>
-<div id="projectInfo">
+<div id="projectInfoByEstate">
    <div>
      <el-row :gutter="8">
      <!-- 第一列 -->
       <el-col :span="8">
-        <el-row>
-          <el-col :span="24">
-            <el-collapse>
-                <el-collapse-item title="开工起止时间" name="1">
-                    <div>
-                    <el-date-picker
-                    v-model="queryStartingTime"
-                    type="daterange"
-                    placeholder="选择日期范围">
-                  </el-date-picker>        
-                  <el-button type="text" :plain="true" @click="findByStartingTime">查询</el-button>
-                  </div>
-                </el-collapse-item>
-            </el-collapse>
-          </el-col>
-        </el-row>
         <el-row>
           <el-col :span="24">
             <!-- 企业账号维护（设计单位） -->
@@ -48,8 +32,8 @@
         <el-tabs v-model="activeName2" type="card">
             <el-tab-pane label="项目基本信息" 
             name="projectInfo">
-                <project-info @findAllProjectsByRealEstateEn="findAllProjectsByRealEstateEn" :projectId="clickRowId" ref="findProjectInfo">
-                </project-info>
+                <project-info-by-estate-owner @findAllProjectsByRealEstateEn="findAllProjectsByRealEstateEn" :projectId="clickRowId" ref="findProjectInfo">
+                </project-info-by-estate-owner>
             </el-tab-pane>
 
             <el-tab-pane label="项目单位工程信息" 
@@ -66,14 +50,13 @@
 </div>
 </template>
 <script>
-import projectInformationTable from './projectInformationTable'
-import msgDialog from '../common/msgDialog'
-import projectInfo from './projectInfo'
-import unitEngineeringInfo from './unitEngineeringInfo'
+  import projectInformationTable from './projectInformationTable'
+  import msgDialog from '../common/msgDialog'
+  import projectInfoByEstateOwner from './projectInfoByEstateOwner'
+  import unitEngineeringInfo from './unitEngineeringInfo'
   export default {
     data: function() {
       return {
-        queryStartingTime:'',
         pageSize:5,
         currentPage:1,
         totalNum:'',
@@ -87,15 +70,6 @@ import unitEngineeringInfo from './unitEngineeringInfo'
         }
       },
       methods: {
-        findByStartingTime(){
-          this.$http.get(this.HOST + "/queryProjectByRealEstateEn?startTime="+this.queryStartingTime[0]+"&endTime="+this.queryStartingTime[1]+"&page="+this.currentPage+"&rows="+this.pageSize).then(response => {
-          this.projectTableData = response.data.rows;
-          this.totalNum = response.data.total;
-          }).catch(error => {
-          this.$refs.msgDialog.confirm("查询失败")
-          })
-
-        },
         handleSizeChange(row){
 
         },
@@ -117,7 +91,7 @@ import unitEngineeringInfo from './unitEngineeringInfo'
         this.tableSelectedRows = selectedRows
        },
       findAllProjectsByRealEstateEn(){
-        this.$http.get(this.HOST + "/displayAllProjectByRealEstateEns?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
+        this.$http.get(this.HOST + "/displayAllProjectByEstateOwners?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
           this.projectTableData = response.data.rows;
           this.totalNum = response.data.total;
         }).catch(error => {
@@ -133,7 +107,7 @@ import unitEngineeringInfo from './unitEngineeringInfo'
       msgDialog,
       projectInformationTable,
       unitEngineeringInfo,
-      projectInfo
+      projectInfoByEstateOwner
     }
   }
 
