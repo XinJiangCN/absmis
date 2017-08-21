@@ -6,6 +6,7 @@
       <el-col :span="8">
         <el-row>
           <el-col :span="24">
+<<<<<<< HEAD
             <el-collapse>
                 <el-collapse-item title="开工起止时间" name="1">
                     <div>
@@ -22,6 +23,8 @@
         </el-row>
         <el-row>
           <el-col :span="24">
+=======
+>>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
             <!-- 企业账号维护（设计单位） -->
             <project-information-table 
             :projectTableData="projectTableData"
@@ -66,6 +69,7 @@
 </div>
 </template>
 <script>
+<<<<<<< HEAD
 import projectInformationTable from './projectInformationTable'
 import msgDialog from '../common/msgDialog'
 import projectInfo from './projectInfo'
@@ -74,6 +78,15 @@ import unitEngineeringInfo from './unitEngineeringInfo'
     data: function() {
       return {
         queryStartingTime:'',
+=======
+  import projectInformationTable from './projectInformationTable'
+  import msgDialog from '../common/msgDialog'
+  import projectInfo from './projectInfo'
+  import unitEngineeringInfo from './unitEngineeringInfo'
+  export default {
+    data: function() {
+      return {
+>>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
         pageSize:5,
         currentPage:1,
         totalNum:'',
@@ -87,6 +100,7 @@ import unitEngineeringInfo from './unitEngineeringInfo'
         }
       },
       methods: {
+<<<<<<< HEAD
         findByStartingTime(){
           this.$http.get(this.HOST + "/queryProjectByRealEstateEn?startTime="+this.queryStartingTime[0]+"&endTime="+this.queryStartingTime[1]+"&page="+this.currentPage+"&rows="+this.pageSize).then(response => {
           this.projectTableData = response.data.rows;
@@ -96,6 +110,8 @@ import unitEngineeringInfo from './unitEngineeringInfo'
           })
 
         },
+=======
+>>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
         handleSizeChange(row){
 
         },

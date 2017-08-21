@@ -6,13 +6,21 @@
 		      <el-col :span="8">
 		        <!-- 增删改按钮 -->
 		        <el-button-group>
+<<<<<<< HEAD
 		          <el-button type="primary" @click="reset">增加</el-button>
+=======
+		          <el-button type="primary">增加</el-button>
+>>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
 		          <el-button type="primary">暂存</el-button>
 		          <el-button type="primary" @click="addProjectForm">提交</el-button>
 		        </el-button-group>
 		      </el-col>
     	</el-row>
+<<<<<<< HEAD
 <el-form id="projectForm" ref="form" :model="projectForm" label-width="180px">
+=======
+<el-form ref="form" :model="projectForm" label-width="180px">
+>>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
     	<el-row>
     		<label>项目基本信息</label>
     	</el-row>
@@ -41,7 +49,11 @@
 			    </el-form-item>
 			    <el-form-item label="项目状态">
 			    <el-row :span="20">
+<<<<<<< HEAD
 			    <el-select v-model="projectForm.projectState.id" placeholder="请选择">
+=======
+			    <el-select v-model="projectForm.projectState" placeholder="请选择">
+>>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
 	            <el-option
 	              v-for="item in projectStates"
 	              :key="item.id"
@@ -53,7 +65,11 @@
 			    </el-form-item>
 			    <el-form-item label="项目类别">
 			    <el-row :span="20">
+<<<<<<< HEAD
 			    <el-select v-model="projectForm.projectCategory.id" placeholder="请选择">
+=======
+			    <el-select v-model="projectForm.projectCategory" placeholder="请选择">
+>>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
 	            <el-option
 	              v-for="item in projectCategorys"
 	              :key="item.id"
@@ -406,6 +422,7 @@
 		    builder:'',
 		  	designer:'',
 		   	construction:'',
+<<<<<<< HEAD
 		   	checkedStatus:{
 		   		id:'',
 		   		state:''
@@ -418,6 +435,10 @@
 		   		id:'',
 		   		description:''
 		   	},
+=======
+		    projectCategory:'',
+		   	projectState:'',
+>>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
 		   	schedule:{
 		   		projectEndTime:'',
 		   		projectStartTime:'',
@@ -483,6 +504,7 @@
       }
     },
     methods:{
+<<<<<<< HEAD
     	reset(){
     		this.projectForm = {
             name: '',
@@ -566,6 +588,8 @@
 		   	}
         }
     	},
+=======
+>>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
     	findCurrentProjectInfo(){
     		this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
           		this.projectForm = response.data
@@ -576,6 +600,7 @@
         		})
 
     	},
+<<<<<<< HEAD
     	//TODO 已经审核通过的不能重复提交
     	addProjectForm(){
     		console.log(this.projectForm.checkedStatus)
@@ -595,6 +620,19 @@
 	        	})
 
     		}
+=======
+    	addProjectForm(){
+    		console.log(JSON.stringify(this.projectForm))
+    		console.log(this.projectForm)
+    		var url = this.HOST + "/addProjectByRealEstateEn"
+        	this.$http.post(url, this.projectForm).then(response => {
+        		console.log("成功了")
+        		this.$emit('findAllProjectsByRealEstateEn')
+          	this.$refs.msgDialog.notify("添加成功")
+        	}).catch(error => {
+          	this.$refs.msgDialog.confirm("添加失败")
+        	})
+>>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
     	},
     	findAllProjectStates() {
         		this.$http.get(this.HOST + "/findAllProjectStates").then(response => {
