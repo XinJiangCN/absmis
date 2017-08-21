@@ -219,14 +219,10 @@
       //点击修改之后运行本方法
       showEditDialogVisible() {
         if (this.tableSelectedRows.length == 1) {
-<<<<<<< HEAD
           if(this.tableSelectedRows[0].checkedStatus.id==1){
             this.$refs.msgDialog.confirm("审核通过不能修改！")
           }else{
             this.editDialogVisible = true;
-=======
-          this.editDialogVisible = true;
->>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
           //将选中行的具体信息提取出来，修改时用于绑定
           this.unitEngineeringForUpdateForm.id = this.tableSelectedRows[0].id;
           // this.unitEngineeringForUpdateForm.checkedStatus = this.tableSelectedRows[0].checkedStatus;
@@ -255,11 +251,8 @@
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.frameworkShear.integralKitchenFs = this.tableSelectedRows[0].engineeringIndustrialization.frameworkShear.integralKitchenFs;
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.frameworkShear.integralToiletFs = this.tableSelectedRows[0].engineeringIndustrialization.frameworkShear.integralToiletFs;
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.frameworkShear.solarEnergyFs = this.tableSelectedRows[0].engineeringIndustrialization.frameworkShear.solarEnergyFs;
-<<<<<<< HEAD
 
           }
-=======
->>>>>>> b6e4c6efb23cfe5af7652fccc1575daec13f7e69
         } else if (this.tableSelectedRows.length == 0) {
           this.$refs.msgDialog.confirm("请至少选择一个企业进行修改！");
         } else {
