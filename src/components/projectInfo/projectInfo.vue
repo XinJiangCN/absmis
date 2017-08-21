@@ -394,6 +394,7 @@
         },
       	projectStates:'',
       	projectCategorys:'',
+      	checkedStatus:'undefined',
   		projectForm: {
             name: '',
 		    startingTime:'',
@@ -406,10 +407,6 @@
 		    builder:'',
 		  	designer:'',
 		   	construction:'',
-		   	checkedStatus:{
-		   		id:'',
-		   		state:''
-		   	},
 		    projectCategory:{
 		    	id:'',
 		    	description:''
@@ -484,6 +481,7 @@
     },
     methods:{
     	reset(){
+    		this.checkedStatus = 'undefined',
     		this.projectForm = {
             name: '',
 		    startingTime:'',
@@ -567,9 +565,17 @@
         }
     	},
     	findCurrentProjectInfo(){
+    		console.log("测试中1"+this.projectForm)
+    		console.log("测试中1"+JSON.stringify(this.projectForm))
     		this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
           		this.projectForm = response.data
+          		 this.checkedStatus = response.data.checkedStatus
+          		console.log("啦啦啦啦"+response.data.checkedStatus)
+          		// console.log("啦啦啦啦"+response.data.checkedStatus.id)
           		console.log("啦啦啦啦")
+          		console.log("测试中2"+this.projectForm)
+          		console.log("测试中3"+JSON.stringify(response.data))
+    			console.log("测试中2"+JSON.stringify(this.projectForm))
           		//console.log(this.projectForm)
         		}).catch(error => {
           		this.$refs.msgDialog.confirm("查询失败la")
@@ -578,23 +584,30 @@
     	},
     	//TODO 已经审核通过的不能重复提交
     	addProjectForm(){
-    		console.log(this.projectForm.checkedStatus)
-    		console.log(JSON.stringify(this.projectForm))
-    		console.log(this.projectForm)
-    		if(this.projectForm.checkedStatus.id==1){
-    			this.findCurrentProjectInfo()
-    			this.$refs.msgDialog.confirm("审核通过不能重复提交！")
+    		if(this.checkedStatus=='undefined'){
+    			this.submitForm()
     		}else{
-    			var url = this.HOST + "/addProjectByRealEstateEn"
-	        	this.$http.post(url, this.projectForm).then(response => {
-	        		console.log("成功了")
-	        		this.$emit('findAllProjectsByRealEstateEn')
-	          	this.$refs.msgDialog.notify("添加成功")
-	        	}).catch(error => {
-	          	this.$refs.msgDialog.confirm("添加失败")
-	        	})
-
+    			if(this.checkedStatus==null){
+    				this.submitForm()	
+    			}else{
+    				if(this.checkedStatus.id==1){
+    					this.findCurrentProjectInfo()
+    					this.$refs.msgDialog.confirm("审核通过不能重复提交！")
+    				}else{
+    					this.submitForm()
+    				}
+    			}
     		}
+    	},
+    	submitForm(){
+			var url = this.HOST + "/addProjectByRealEstateEn"
+        	this.$http.post(url, this.projectForm).then(response => {
+        		console.log("成功了")
+        		this.$emit('findAllProjectsByRealEstateEn')
+          	this.$refs.msgDialog.notify("添加成功")
+        	}).catch(error => {
+          	this.$refs.msgDialog.confirm("添加失败l")
+        	})
     	},
     	findAllProjectStates() {
         		this.$http.get(this.HOST + "/findAllProjectStates").then(response => {

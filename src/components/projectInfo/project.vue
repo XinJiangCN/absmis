@@ -66,6 +66,7 @@
 </div>
 </template>
 <script>
+import moment from 'moment'
 import projectInformationTable from './projectInformationTable'
 import msgDialog from '../common/msgDialog'
 import projectInfo from './projectInfo'
@@ -88,22 +89,26 @@ import unitEngineeringInfo from './unitEngineeringInfo'
       },
       methods: {
         findByStartingTime(){
-          this.$http.get(this.HOST + "/queryProjectByRealEstateEn?startTime="+this.queryStartingTime[0]+"&endTime="+this.queryStartingTime[1]+"&page="+this.currentPage+"&rows="+this.pageSize).then(response => {
+          this.$http.get(this.HOST + "/queryProjectByRealEstateEn?startTime="+this.smallFormat(this.queryStartingTime[0])+"&endTime="+this.smallFormat(this.queryStartingTime[1])+"&page="+this.currentPage+"&rows="+this.pageSize).then(response => {
+
           this.projectTableData = response.data.rows;
           this.totalNum = response.data.total;
+          console.log(this.projectTableData)
           }).catch(error => {
           this.$refs.msgDialog.confirm("查询失败")
           })
 
         },
-        handleSizeChange(row){
-
+        smallFormat(data){
+            return moment(data).format("YYYY-MM-DD")
         },
-        handleCurrentChange(row){
-
+        handleCurrentChange(currentPage){
+          this.currentPage = currentPage
+          this.findAllProjectsByRealEstateEn()
         },
-       handleSizeChange(selectedRows) {
-        this.tableSelectedRows = selectedRows
+       handleSizeChange(currentSize) {
+        this.pageSize = currentSize
+        this.findAllProjectsByRealEstateEn()
        },
        clickRow(selectedRow) {
         this.clickRowId = selectedRow.id

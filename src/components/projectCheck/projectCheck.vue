@@ -6,6 +6,22 @@
       <el-col :span="8">
         <el-row>
           <el-col :span="24">
+            <el-collapse>
+                <el-collapse-item title="开工起止时间" name="1">
+                    <div>
+                    <el-date-picker
+                    v-model="queryStartingTime"
+                    type="daterange"
+                    placeholder="选择日期范围">
+                  </el-date-picker>        
+                  <el-button type="text" :plain="true" @click="findByStartingTime">查询</el-button>
+                  </div>
+                </el-collapse-item>
+            </el-collapse>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
             <!-- 企业账号维护（设计单位） -->
             <project-information-table 
             :projectTableData="projectTableData"
@@ -50,6 +66,7 @@
 </div>
 </template>
 <script>
+import moment from 'moment'
   import projectInformationTable from '../projectInfo/projectInformationTable'
   import msgDialog from '../common/msgDialog'
   import projectInfoCheck from './projectInfoCheck'
@@ -59,6 +76,7 @@
       return {
         pageSize:5,
         currentPage:1,
+        queryStartingTime:'',
         totalNum:'',
         clickRowId:'1',
         //用来显示表格中的数据
@@ -70,6 +88,17 @@
         }
       },
       methods: {
+         findByStartingTime(){
+            this.$http.get(this.HOST + "/queryProject?startTime="+this.smallFormat(this.queryStartingTime[0])+"&endTime="+this.smallFormat(this.queryStartingTime[1])+"&page="+this.currentPage+"&rows="+this.pageSize).then(response => {
+            this.projectTableData = response.data.rows;
+            this.totalNum = response.data.total;
+            }).catch(error => {
+            this.$refs.msgDialog.confirm("查询失败")
+            })
+        },
+        smallFormat(data){
+            return moment(data).format("YYYY-MM-DD")
+        },
        handleSizeChange(selectedRows) {
         this.tableSelectedRows = selectedRows
        },
