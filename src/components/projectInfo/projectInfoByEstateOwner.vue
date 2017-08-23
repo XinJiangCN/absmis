@@ -6,7 +6,7 @@
 		      <el-col :span="8">
 		        <!-- 增删改按钮 -->
 		        <el-button-group>
-		          <el-button type="primary">增加</el-button>
+		          <el-button type="primary"@click="reset">增加</el-button>
 		          <el-button type="primary">暂存</el-button>
 		          <el-button type="primary" @click="addProjectForm">提交</el-button>
 		        </el-button-group>
@@ -41,7 +41,7 @@
 			    </el-form-item>
 			    <el-form-item label="项目状态">
 			    <el-row :span="20">
-			    <el-select v-model="projectForm.projectState" placeholder="请选择">
+			    <el-select v-model="projectForm.projectState.id" placeholder="请选择">
 	            <el-option
 	              v-for="item in projectStates"
 	              :key="item.id"
@@ -53,7 +53,7 @@
 			    </el-form-item>
 			    <el-form-item label="项目类别">
 			    <el-row :span="20">
-			    <el-select v-model="projectForm.projectCategory" placeholder="请选择">
+			    <el-select v-model="projectForm.projectCategory.id" placeholder="请选择">
 	            <el-option
 	              v-for="item in projectCategorys"
 	              :key="item.id"
@@ -126,201 +126,154 @@
     	<el-row>
 				<el-form-item label="项目起止时间">
 			    <el-row :span="20">
-			    <!-- <el-date-picker
-				      v-model="time"
-				      type="daterange"
-				      placeholder="选择日期范围"
-				      @change="changeTime">
-				</el-date-picker> -->
 				<el-date-picker
-			      v-model="projectForm.schedule.startTime"
+			      v-model="projectForm.schedule.projectStartTime"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			      >
 			    </el-date-picker>
 			    <el-date-picker
-			      v-model="projectForm.schedule.endTime"
+			      v-model="projectForm.schedule.projectEndTime"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			     >
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="取得土地使用权">
 			    <el-row :span="20">
-			    <!-- <el-date-picker
-				      v-model="landUseRight"
-				      type="daterange"
-				      placeholder="选择日期范围"
-				      @change="changeLandUseRight">
-				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.landUseRightStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			    >
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.landUseRightEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			      >
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="建设用地规划许可证">
 			    <el-row :span="20">
-			    <!-- <el-date-picker
-				      v-model="constructionLicense"
-				      type="daterange"
-				      placeholder="选择日期范围"
-				      @change="changeConstructionLicense">
-				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.constructionLicenseStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			    >
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.constructionLicenseEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			     >
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="建设工程规划许可证">
 			    <el-row :span="20">
-			    <!-- <el-date-picker
-				      v-model="engineeringLicense"
-				      type="daterange"
-				      placeholder="选择日期范围"
-				      @change="changeEngineeringLicense">
-				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.engineeringLicenseStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			     >
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.engineeringLicenseEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			      >
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="施工图设计及审查">
 			    <el-row :span="20">
-			    <!-- <el-date-picker
-				      v-model="tender"
 
-				      type="daterange"
-				      placeholder="选择日期范围"
-				      @change="changeTender">
-				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.tenderStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			      >
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.tenderEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			    >
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="组织工程招标及工程施工">
 			    <el-row :span="20">
-			    <!-- <el-date-picker
-				      v-model="comprehensiveInspectionAndAcceptance"
-				      type="daterange"
-				      placeholder="选择日期范围"
-				      @change="changeCia">
-				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.comprehensiveInspectionAndAcceptanceStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			     >
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.comprehensiveInspectionAndAcceptanceEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			     >
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="项目综合验收">
 			    <el-row :span="20">
-			    <!-- <el-date-picker
-				      v-model="delivery"
-				      type="daterange"
-				      placeholder="选择日期范围"
-				      @change="changeDelivery">
-				    </el-date-picker> -->
 				<el-date-picker
 			      v-model="projectForm.schedule.deliveryStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			    >
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.deliveryEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			     >
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
 
 			    <el-form-item label="项目交付使用">
 			    <el-row :span="20">
-			    <!-- <el-date-picker
-				      v-model="constructionDrawing"
-				      type="daterange"
-				      placeholder="选择日期范围"
-				      @change="changeConstructionDrawing">
-				    </el-date-picker> -->
+
 				<el-date-picker
 			      v-model="projectForm.schedule.constructionDrawingStart"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			     >
 			    </el-date-picker>
 			    <el-date-picker
 			      v-model="projectForm.schedule.constructionDrawingEnd"
 			      align="right"
 			      type="date"
 			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			    >
 			    </el-date-picker>
 			    </el-row>
 			    </el-form-item>
@@ -437,17 +390,9 @@
             }
           }]
         },
-        time:'',
-		landUseRight:'',
-	    constructionLicense:'',
-	    engineeringLicense:'',
-	    tender:[],
-	    checkList: [],
-	    comprehensiveInspectionAndAcceptance:'',
-	    delivery:'',
-	    constructionDrawing:'',
-      	projectStates:[],
-      	projectCategorys:[],
+	projectStates:'',
+      	projectCategorys:'',
+      	checkedStatus:'undefined',
   		projectForm: {
             name: '',
 		    startingTime:'',
@@ -460,12 +405,17 @@
 		    builder:'',
 		  	designer:'',
 		   	construction:'',
-		    projectCategory:'',
-		   	projectState:'',
+		    projectCategory:{
+		    	id:'',
+		    	description:''
+		    },
+		   	projectState:{
+		   		id:'',
+		   		description:''
+		   	},
 		   	schedule:{
-		   		
-		   		startTime:'',
-			    endTime:'',
+		   		projectEndTime:'',
+		   		projectStartTime:'',
 			    landUseRightStart:'',
 			    landUseRightEnd:'',
 			    constructionLicenseStart:'',
@@ -528,9 +478,94 @@
       }
     },
     methods:{
+    	    	reset(){
+    		this.checkedStatus = 'undefined',
+    		this.projectForm = {
+            name: '',
+		    startingTime:'',
+		    fillTime:'',
+		    site:'',
+		    licenseNo:'',
+		    unitEngineeringNum:'',
+		    totalConstructionArea:'',
+		    overgroundConstructionArea:'',
+		    builder:'',
+		  	designer:'',
+		   	construction:'',
+		    projectCategory:{
+		    	id:'',
+		    	description:''
+		    },
+		   	projectState:{
+		   		id:'',
+		   		description:''
+		   	},
+		   	schedule:{
+		   		projectEndTime:'',
+		   		projectStartTime:'',
+			    landUseRightStart:'',
+			    landUseRightEnd:'',
+			    constructionLicenseStart:'',
+			    constructionLicenseEnd:'',
+			    engineeringLicenseStart:'',
+			    engineeringLicenseEnd:'',
+			    tenderStart:'',
+			    tenderEnd:'',
+			    comprehensiveInspectionAndAcceptanceStart:'',
+			    comprehensiveInspectionAndAcceptanceEnd:'',
+			    deliveryStart:'',
+			    deliveryEnd:'',
+			    constructionDrawingStart:'',
+			    constructionDrawingEnd:''
+		   	},
+		   	projectIndustrialization:{
+		   		industrializedTechnologyArea:'',
+			    industrializedTechnologyAreaRatio:'',
+			  	unitAssemblyRate:'',
+			   	wall:'',
+			    wallShadowArea:'',
+			   	constructionArea:'',
+			   	applicationTechnology:{
+			   		 frameworkShear:{
+			   		 	 columnFs:false,
+			   			 beamFs:false,
+					     floorFs:false,
+					     stairsFs:false,
+					     exteriorWallFs:false,
+					     interiorWallFs:false,
+					     integralKitchenFs:false,
+					     integralToiletFs:false,
+					     solarEnergyFs:false
+			   		 },
+     				 frameworkCore:{
+     				 	 columnFc:false,
+			   			 beamFc:false,
+					     floorFc:false,
+					     stairsFc:false,
+					     exteriorWallFc:false,
+					     interiorWallFc:false,
+					     integralKitchenFc:false,
+					     integralToiletFc:false,
+					     solarEnergyFc:false
+     				 },
+     				 shearWall:{
+					     floorSw:false,
+					     stairsSw:false,
+					     exteriorWallSw:false,
+					     interiorWallSw:false,
+					     integralKitchenSw:false,
+					     integralToiletSw:false,
+					     solarEnergySw:false
+     				 }
+			   	}
+
+		   	}
+        }
+    	},
     	findCurrentProjectInfo(){
     		this.$http.get(this.HOST + "/findProjectInfoByEstateOwner?id="+this.projectId).then(response => {
           		this.projectForm = response.data
+          		this.checkedStatus = response.data.checkedStatus
           		console.log("啦啦啦啦")
           		console.log(this.projectForm)
         		}).catch(error => {
@@ -538,7 +573,24 @@
         		})
 
     	},
+    	//TODO 已经审核通过的不能重复提交
     	addProjectForm(){
+    		if(this.checkedStatus=='undefined'){
+    			this.submitForm()
+    		}else{
+    			if(this.checkedStatus==null){
+    				this.submitForm()	
+    			}else{
+    				if(this.checkedStatus.id==1){
+    					this.findCurrentProjectInfo()
+    					this.$refs.msgDialog.confirm("审核通过不能重复提交！")
+    				}else{
+    					this.submitForm()
+    				}
+    			}
+    		}
+    	},
+    	submitForm(){
     		console.log(JSON.stringify(this.projectForm))
     		console.log(this.projectForm)
     		var url = this.HOST + "/addProjectByEstateOwner"

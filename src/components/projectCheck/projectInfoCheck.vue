@@ -512,6 +512,7 @@
 	        })
       	 },
     	findCurrentProjectInfo(){
+    		console.log("log"+this.projectId)
     		this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
           		this.projectForm = response.data
           		console.log("啦啦啦啦")
