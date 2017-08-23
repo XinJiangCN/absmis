@@ -6,7 +6,8 @@
 		      <el-col :span="8">
 		        <!-- 增删改按钮 -->
 		        <el-button-group>
-		          <el-button type="primary" @click="showEditDialogVisible">审核</el-button>
+		          <el-button type="primary" @click="passProject">审核通过</el-button>
+		          <el-button type="primary" @click="rejectProject">驳回</el-button>
 		        </el-button-group>
 		      </el-col>
     	</el-row>
@@ -373,26 +374,11 @@
     	</el-row>
 </el-form>    	
 	</el-col>
-	<!-- Edit Dialog-->
-    <el-dialog title="审核" :visible.sync="editDialogVisible">
-      <div>
-        <el-form>
-            <check-dialog :updateForm="projectForm"
-            ></check-dialog>
-        </el-form>
-      </div>
 
-      <div slot="footer">
-            <el-button @click="editDialogVisible=false">取 消</el-button>
-
-            <el-button type="primary" @click="submitUpdateForm">提 交</el-button>
-        </div>
-    </el-dialog>
 	<msg-dialog ref="msgDialog"></msg-dialog>
 </div>
 </template>
 <script>
-import checkDialog from './checkDialog'
   import msgDialog from '../common/msgDialog'
   export default{
     data(){
@@ -507,23 +493,23 @@ import checkDialog from './checkDialog'
       }
     },
     methods:{
-    	submitUpdateForm(){
-    		this.editDialogVisible = false;
+    	passProject(){
     		console.log("然后然后");
-	         var url = this.HOST + "/updateProjectById?id="+this.projectForm.id+"&checkedStatus="+this.projectForm.checkedStatus
+	         var url = this.HOST + "/updateProjectById?id="+this.projectForm.id+"&checkedStatus="+1
 	        this.$http.post(url).then(response => {
-	          this.$refs.msgDialog.notify("修改成功")
+	          this.$refs.msgDialog.notify("审核通过")
 	        }).catch(error => {
 	          this.$refs.msgDialog.confirm("修改失败")
 	        })
 
     	},
-    	 showEditDialogVisible() {
-    	 	this.editDialogVisible = true
-    	 	//console.log(projectForm.checkedStatus)
-
-
-        
+    	 rejectProject() {
+    	 	var url = this.HOST + "/updateProjectById?id="+this.projectForm.id+"&checkedStatus="+2
+	        this.$http.post(url).then(response => {
+	          this.$refs.msgDialog.notify("修改重申")
+	        }).catch(error => {
+	          this.$refs.msgDialog.confirm("修改失败")
+	        })
       	 },
     	findCurrentProjectInfo(){
     		this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
@@ -563,8 +549,7 @@ import checkDialog from './checkDialog'
       this.findAllProjectStates()
     },
     components: {
-      msgDialog,
-      checkDialog
+      msgDialog
     }
   }
 </script>

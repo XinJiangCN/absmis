@@ -1,42 +1,43 @@
 <template>
-<div>
-	<el-form>
-		<el-form-item label="审核状态" >
-	        <el-select v-model="updateForm.checkedStatus" placeholder="请选择">
-	            <el-option
-	              v-for="item in checkedStatuss"
-	              :key="item.id"
-	              :label="item.state"
-	              :value="item.id">
-	            </el-option>    
-	        </el-select>
-	    </el-form-item>
-	</el-form>
-</div>
+  <el-table
+    :data="unitEngineeringTableData"
+    border
+    stripe
+    tooltip-effect="dark"
+    style="width:63%"
+    highlight-current-row
+    @selection-change="handleSelectionChange">
+    <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column
+      label="工程名称"
+      prop="name"
+      width="180"
+      show-overflow-tooltip>
+    </el-table-column>
+    <el-table-column
+      label="工程类别"
+       width="180"
+      prop="engineeringCategory"
+      show-overflow-tooltip>
+    </el-table-column>
+  </el-table>
 </template>
 <script>
-	export default{
-		data(){
-		      return {
-		        checkedStatuss:{
-		        	id:'',
-		        	state:''
-		        }
-		      }
-		},
-		props:['updateForm'],
-		methods:{
-			findAllCheckedStatus() {
-		        var url = this.HOST + "/findAllCheckedStates"
-		        this.$http.get(url).then(response => {
-		          this.checkedStatuss = response.data;
-		        }).catch(error => {
-		          this.$refs.msgDialog.confirm("查询失败")
-		        })
-	      }
-		},
-		 created() {
-      			this.findAllCheckedStatus()
-    	}
-	}
+  export default{
+    data(){
+      return{
+        selectedRows:[],
+      }
+    },
+    props:['unitEngineeringTableData'],
+    methods:{
+      handleSelectionChange(selectedRows){
+        this.selectedRows = selectedRows
+        this.$emit('handleSelectionChange',this.selectedRows)
+      }
+    }
+  }
 </script>
