@@ -216,13 +216,8 @@
         //取出选中行的所有信息，在判断选中情况、修改和删除时使用
         this.tableSelectedRows = selectedRows
       },
-      //点击修改之后运行本方法
-      showEditDialogVisible() {
-        if (this.tableSelectedRows.length == 1) {
-          if(this.tableSelectedRows[0].checkedStatus.id==1){
-            this.$refs.msgDialog.confirm("审核通过不能修改！")
-          }else{
-            this.editDialogVisible = true;
+      getRowInfo(){
+        this.editDialogVisible = true;
           //将选中行的具体信息提取出来，修改时用于绑定
           this.unitEngineeringForUpdateForm.id = this.tableSelectedRows[0].id;
           // this.unitEngineeringForUpdateForm.checkedStatus = this.tableSelectedRows[0].checkedStatus;
@@ -252,6 +247,22 @@
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.frameworkShear.integralToiletFs = this.tableSelectedRows[0].engineeringIndustrialization.frameworkShear.integralToiletFs;
           this.unitEngineeringForUpdateForm.engineeringIndustrialization.frameworkShear.solarEnergyFs = this.tableSelectedRows[0].engineeringIndustrialization.frameworkShear.solarEnergyFs;
 
+
+      },
+      //点击修改之后运行本方法
+      showEditDialogVisible() {
+        console.log(this.tableSelectedRows[0].checkedStatus)
+        console.log(this.tableSelectedRows)
+        if (this.tableSelectedRows.length == 1) {
+          if(this.tableSelectedRows[0].checkedStatus==null){
+            this.getRowInfo()
+          }else{
+            if(this.tableSelectedRows[0].checkedStatus.id==1){
+                this.$refs.msgDialog.confirm("审核通过不能修改！")
+            }else{
+                this.getRowInfo()
+            }
+            
           }
         } else if (this.tableSelectedRows.length == 0) {
           this.$refs.msgDialog.confirm("请至少选择一个企业进行修改！");
@@ -278,7 +289,6 @@
           overgroundNum: '', 
           engineeringCategory: '', 
           structureForm:'',
-          checkedStatus:'',
           engineeringIndustrialization:{
             unitAssemblyRate:'',
             unitAssemblyRate: '',

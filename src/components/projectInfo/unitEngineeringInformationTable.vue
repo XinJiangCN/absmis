@@ -83,12 +83,6 @@
       prop="engineeringIndustrialization.floorScope"
       show-overflow-tooltip>
     </el-table-column>
-    <el-table-column
-      label="审核状态"
-       width="180"
-      prop="checkedStatus.state"
-      show-overflow-tooltip>
-    </el-table-column>
   </el-table>
 </template>
 <script>
