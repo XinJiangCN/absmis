@@ -23,10 +23,10 @@
         <el-row>
           <el-col :span="24">
             <!-- 企业账号维护（设计单位） -->
-            <project-information-table 
+            <project-information-table-check 
             :projectTableData="projectTableData"
             @clickRow="clickRow"
-            @handleSelectionChange="handleSelectionChange"></project-information-table>
+            @handleSelectionChange="handleSelectionChange"></project-information-table-check>
           </el-col>
         </el-row>
         <el-row>
@@ -67,7 +67,7 @@
 </template>
 <script>
 import moment from 'moment'
-  import projectInformationTable from '../projectInfo/projectInformationTable'
+  import projectInformationTableCheck from './projectInformationTableCheck'
   import msgDialog from '../common/msgDialog'
   import projectInfoCheck from './projectInfoCheck'
   import unitEngineeringInfoCheck from './unitEngineeringInfoCheck'
@@ -133,7 +133,7 @@ import moment from 'moment'
     },
     components: {
       msgDialog,
-      projectInformationTable,
+      projectInformationTableCheck,
       unitEngineeringInfoCheck,
       projectInfoCheck
     }
