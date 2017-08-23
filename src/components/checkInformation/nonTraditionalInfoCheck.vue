@@ -11,7 +11,7 @@
 				<el-input v-model="searchContent" placeholder="请输入查询内容"></el-input>
 			</el-col>
 			<el-col :span="3">
-				<el-button>查询</el-button>
+				<el-button @click="searchNonTraditionalData">查询</el-button>
 			</el-col>
 			<el-col :span="3">
 				<el-button @click="checkNontraditionalInfo">审核</el-button>
@@ -122,7 +122,9 @@ import msgDialog from '../common/msgDialog'
 				//数据总量
 				total:0,
 				//查询条件
-				searchContent:''
+				searchContent:'',
+				//刷新查询后的表格页面使用
+				searchContentFinal:''
 
 
 			}
@@ -185,13 +187,47 @@ import msgDialog from '../common/msgDialog'
 				this.checkStatusDialogVisable=false
 				var url=this.HOST+"/updateTraditionalEn?id="+this.currentRowId+"&checkedStatusId="+this.checkStatusId
 				this.$http.post(url).then(response=>{
-					this.findNonTraditionalInfo()
+					if(this.searchContentFinal){
+						var url = this.HOST + "/queryOrganizations?queryName="+this.searchContentFinal+"&rows="+this.pageSize+"&page="+this.currentPage
+						this.$http.get(url).then(response=>{
+							this.nonTraditionalCheckTableData = response.data.rows
+							this.total = response.data.total
+							//遍历判断，给未审核状态的元素赋值，使其页面显示“未审核”
+							this.nonTraditionalCheckTableData.forEach(item=>{
+								if(!item.checkedStatus){
+									item.checkedStatus={id:'',no:'',state:"未审核"}
+								}
+							})
+						}).catch(error=>{
+							this.$refs.nonTraditionalCheckMsg.confirm("查询失败！")
+						})
+					}else{
+						this.findNonTraditionalInfo()
+					}
+					
 					this.$refs.nonTraditionalCheckMsg.notify("审核成功")
 				}).catch(error=>{
 					this.$refs.nonTraditionalCheckMsg.confirm("审核失败！")
 				})
 				this.checkStatusId=''
 				this.currentRowId=''
+			},
+			//查询企业信息
+			searchNonTraditionalData(){
+				this.searchContentFinal = this.searchContent
+				var url = this.HOST + "/queryOrganizations?queryName="+this.searchContentFinal+"&rows="+this.pageSize+"&page="+this.currentPage
+				this.$http.get(url).then(response=>{
+					this.nonTraditionalCheckTableData = response.data.rows
+					this.total = response.data.total
+					//遍历判断，给未审核状态的元素赋值，使其页面显示“未审核”
+					this.nonTraditionalCheckTableData.forEach(item=>{
+						if(!item.checkedStatus){
+							item.checkedStatus={id:'',no:'',state:"未审核"}
+						}
+					})
+				}).catch(error=>{
+					this.$refs.nonTraditionalCheckMsg.confirm("查询失败！")
+				})
 			}
 		},
 		components:{

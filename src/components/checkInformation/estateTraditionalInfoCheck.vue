@@ -5,7 +5,7 @@
 				<el-input v-model="searchContent" placeholder="请输入查询内容"></el-input>
 			</el-col>
 			<el-col :span="3">
-				<el-button>查询</el-button>
+				<el-button @click="searchEstateTraditionalData">查询</el-button>
 			</el-col>
 			<el-col :span="3">
 				<el-button @click="check">审核</el-button>
@@ -16,7 +16,6 @@
 		    border
 		    tooltip-effect="dark"
 		    style="width:100%"
-		    
 		    highlight-current-row
 		    @row-click="handleSelectionChange">
 		    <el-table-column
@@ -127,7 +126,9 @@ import msgDialog from '../common/msgDialog'
 				//数据总量
 				total:0,
 				//查询的条件
-				searchContent:''
+				searchContent:'',
+				//刷新查询后的表格页面使用
+				searchContentFinal:''
 
 			}
 		},
@@ -181,7 +182,23 @@ import msgDialog from '../common/msgDialog'
 				this.checkedStatusDialogVisible=false
 				var url=this.HOST+"/checkRealEstateEn?id="+this.currentRowId+"&checkedStatusId="+this.checkedStatusId
 				this.$http.post(url).then(response=>{
-					this.findEstateTraditionalInfo()
+					if(this.searchContentFinal){
+						var url = this.HOST + "/queryRealEstateEnByName?nameQuery="+this.searchContentFinal+"&rows="+this.pageSize+"&page="+this.currentPage
+						this.$http.get(url).then(response=>{
+							this.traditionalCheckTableData = response.data.rows
+							this.total=response.data.total
+							//遍历所有元素，给未审核元素的审核状态赋值，页面显示效果为“未审核”
+							this.traditionalCheckTableData.forEach(item=>{
+								if(!item.checkedStatus){
+									item.checkedStatus={id:'',no:'',state:"未审核"}
+								}
+							})
+						}).catch(error=>{
+							this.$refs.traditionalCheckMsg.confirm("查询失败！")
+						})
+					}else{
+						this.findEstateTraditionalInfo()
+					}
 					this.$refs.traditionalCheckMsg.notify("审核成功")
 				}).catch(error=>{
 					this.$refs.traditionalCheckMsg.confirm("审核失败！")
@@ -195,6 +212,23 @@ import msgDialog from '../common/msgDialog'
 				this.currentRowId=currentRow.id
 				//获取当前行的审核状态的Id，用于弹出框的初始显示和提交
 				this.checkedStatusId=currentRow.checkedStatus.id
+			},
+			//查询获取查询内容
+			searchEstateTraditionalData(){
+				this.searchContentFinal=this.searchContent
+				var url = this.HOST + "/queryRealEstateEnByName?nameQuery="+this.searchContentFinal+"&rows="+this.pageSize+"&page="+this.currentPage
+				this.$http.get(url).then(response=>{
+					this.traditionalCheckTableData = response.data.rows
+					this.total=response.data.total
+					//遍历所有元素，给未审核元素的审核状态赋值，页面显示效果为“未审核”
+					this.traditionalCheckTableData.forEach(item=>{
+						if(!item.checkedStatus){
+							item.checkedStatus={id:'',no:'',state:"未审核"}
+						}
+					})
+				}).catch(error=>{
+					this.$refs.traditionalCheckMsg.confirm("查询失败！")
+				})
 			}
 		},
 		//注册组件

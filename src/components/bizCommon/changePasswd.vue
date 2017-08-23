@@ -6,10 +6,17 @@
         </el-col>
 
         <el-col :span="8">
-            <el-input v-model="oldPasswd" type="password"></el-input>
+            <el-input v-model="oldPasswd" type="password" v-    validate="'required'" name="password">
+            </el-input>
+
+            <span v-show="errors.has('password')">
+                {{ errors.first('password') }}
+            </span>
         </el-col>
     </el-row>
 
+    <el-row></el-row>
+    
     <el-row>
         <el-col :span="4">
             <label>新密码</label>
@@ -17,16 +24,15 @@
 
         <el-col :span="8">
             <el-tooltip 
-                content="注意：密码长度至少为八位，包含两种以上字符" placement="top">
-                <el-input v-model="newPasswd" type="password"></el-input>
+                content="注意：密码长度至少为八位，包含两种以上字符" placement="right">
+                <el-input name="newPassword" v-model="newPasswd" type="password" v-validate="'required|min:8'">
+                </el-input>
             </el-tooltip>
-        </el-col>
-
-        <el-col :span="5" v-if="isPasswdFormatWrong">
-            <p>格式错误！</p>
+            <span v-show="errors.has('newPassword')">{{errors.first('newPassword')}}</span>
+            <span v-show="isPasswdFormatWrong">at least 2 kinds of characters</span>
         </el-col>
     </el-row>
-
+    <el-row></el-row>
     <el-row>
         <el-col :span="4">
             <label>确认密码</label>
@@ -34,15 +40,12 @@
 
         <el-col :span="8">
             <el-input v-model="reEnterPasswd" type="password"></el-input>
-        </el-col>
-
-        <el-col :span="5" v-if="isReEnterDiffrent">
-            <p>两次输入不一致！</p>
+            <span v-show="isReEnterDiffrent">it is different from the newPassword!</span>
         </el-col>
     </el-row>
-
+    <el-row></el-row>
     <el-row>
-        <el-col :span="9">
+        <el-col :span="16">
             <el-button @click="handleSubmit">提交</el-button>
         </el-col>
     </el-row>
@@ -69,9 +72,9 @@ export default {
             if (!this.oldPasswd
             || !this.newPasswd 
             || !this.reEnterPasswd) {
-                alert('请完整填写信息！')
+                this.$refs.updatePassword.confirm('请完整填写信息！')
             } else if (this.isPasswdFormatWrong || this.isReEnterDiffrent) {
-                alert('信息填写有误，请重新填写！')
+                this.$refs.updatePassword.confirm('信息填写有误，请重新填写！')
             } else {
                 //TODO POST THE DATA TO THE SERVER
                 this.updatePassword()
@@ -101,6 +104,7 @@ export default {
     },
     watch: {
         reEnterPasswd: function() {
+            this.isReEnterDiffrent=false
             setTimeout(() => { 
                 if (this.reEnterPasswd != this.newPasswd)
                     this.isReEnterDiffrent = true
@@ -113,8 +117,12 @@ export default {
             setTimeout(() => {
                 if (this.newPasswd.length < 8)
                     this.isPasswdFormatWrong = true
-                var patrn=/^[0-9]{1,20}$/;  
-                if (patrn.exec(this.newPasswd)) 
+                else if(this.newPasswd.length==0)
+                    this.isPasswdFormatWrong=false
+
+                var patrn=/[0-9]/  
+                var patrn1=/[a-zA-Z]/
+                if (!patrn.exec(this.newPasswd)||!patrn1.exec(this.newPasswd))
                     this.isPasswdFormatWrong = true
                 else 
                     this.isPasswdFormatWrong = false
