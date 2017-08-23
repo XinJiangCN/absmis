@@ -9,10 +9,15 @@ import accountMaintain from '../components/admin/accountMaintain.vue'
 
 //basic info
 import homePage from '../components/bizCommon/homePage.vue'
+
 import designCompanyBasicInfo from '../components/basicInfo/designCompanyBasicInfo.vue'
 import buildCompanyBasicInfo from '../components/basicInfo/buildCompanyBasicInfo.vue'
 import estateCompanyBasicInfo from '../components/basicInfo/estateCompanyBasicInfo.vue'
 import componentCompanyBasicInfo from '../components/basicInfo/componentCompanyBasicInfo.vue'
+
+import project from '../components/projectInfo/project.vue'
+import projectCheck from '../components/projectCheck/projectCheck'
+import projectByEstateOwner from '../components/projectInfo/projectByEstateOwner'
 
 //check basic information
 import traditionalInfoCheck from '../components/checkInformation/traditionalInfoCheck'
@@ -130,17 +135,17 @@ export default new Router({
     {
         path: '/realEstateEnProject',
         name: '房地产-项目信息',
-        component: changePasswd
+        component: project
     },
     {
         path: '/estateOwnerProject',
         name: '建设单位-项目信息',
-        component: changePasswd
+        component: projectByEstateOwner
     },
     {
         path: '/projectCheck',
         name: '项目信息审核',
-        component: changePasswd
+        component: projectCheck
     }
     ]
 })

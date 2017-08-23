@@ -1,8 +1,8 @@
-<template>
-  <div>
-    <el-row>
-      <el-col :span="5">
-        <el-input
+  <template>
+    <div>
+      <el-row>
+        <el-col :span="5">
+          <el-input
           placeholder="请输入要查询的内容"
           icon="search"
           v-model="searchContent">
@@ -12,132 +12,132 @@
       <el-col :span="3">
         <el-button @click="handleSearch"
         >查询
-        </el-button>
-      </el-col>
-      <!-- 每行分为24栏（固定），span设置该列占有5栏 -->
-      <el-col :span="4">
-        <!-- 增删改按钮 -->
-        <el-button-group>
-          <el-button type="primary" icon="plus" @click="addDialogVisible=true">
-          </el-button>
-
-          <el-button type="primary" icon="edit" @click="showEditDialogVisible">
-          </el-button>
-
-          <el-button type="primary" icon="delete" @click="delConfirmation">
-          </el-button>
-        </el-button-group>
-      </el-col>
-
-      <el-col :span="4">
-        <el-button @click="resetPwdConfirmation">重置密码
-        </el-button>
-      </el-col>
-    </el-row>
-
-    <el-row type="flex">
-      <el-col :span="15">
-        <!-- 企业账号维护（设计单位） -->
-        <enterprise-information-table 
-            :enterpriseTableData="realEstateEnTableData"
-            @handleSelectionChange="handleSelectionChange"></enterprise-information-table>
-       </el-col>
-    </el-row>
-    
-    <el-row>
-      <el-col :span="8">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[5, 10, 15, 20]"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="totalNum">
-        </el-pagination>
-      </el-col>
-    </el-row>
-
-    <!-- Add Dialog -->
-    <el-dialog title="添加" :visible.sync="addDialogVisible">
-      <el-form>
-        <enterprise-information
-          :enterprise="enterpriseForAddForm"
-        ></enterprise-information>
-      </el-form>
-
-      <div slot="footer">
-            <el-button @click="enterpriseForAddForm={}">清 空</el-button>
-
-            <el-button @click="cancelAdd">取 消</el-button>
-
-            <el-button type="primary" @click="submitAddForm">确 定</el-button>
-        </div>
-    </el-dialog>
-    <!-- Add Dialog Finished-->
-
-    <!-- Edit Dialog-->
-    <el-dialog title="修改" :visible.sync="editDialogVisible">
-      <div>
-        <enterprise-information
-          :enterprise="enterpriseForUpdateForm"
-        ></enterprise-information>
-      </div>
-
-      <div slot="footer">
-            <el-button 
-                @click="enterpriseForUpdateForm={name:'',username:''}"
-            >清 空</el-button>
-
-            <el-button @click="editDialogVisible=false">取 消</el-button>
-
-            <el-button type="primary" @click="submitUpdateForm">提 交</el-button>
-        </div>
-    </el-dialog>
-    <!-- Edit Dialog Finished -->
-
-    <!-- Delete Dialog-->
-    <el-dialog title="删除" :visible.sync="delConfirmationDialogVisible">
-      <el-row>
-        <div>
-          <label>确认删除以下企业吗？</label>
-          <!-- 换行 -->
-          <el-row>{{ }}</el-row>
-          <el-row>
-            <label v-for="row in tableSelectedRows">
-              <el-row></el-row>
-              {{row.name}}
-            </label>
-          </el-row>
-        </div>
-      </el-row>
-      <div slot="footer">
-        <el-button @click="delConfirmationDialogVisible = false">取 消</el-button>
-
-        <el-button type="primary" @click="deleteEnterprise">确 定</el-button>
-      </div>
-    </el-dialog>
-    <!-- Delete Dialog Finished -->
-
-    <!-- Reset Password Dialog-->
-    <el-dialog title="重置密码" :visible.sync="resetPwdConfirmationDialogVisible">
-
-      <el-form>
-        <label>您确定重置该密码吗？</label>
-      </el-form>
-      <div slot="footer">
-        <el-button @click="resetPwdConfirmationDialogVisible = false"> 取 消
+      </el-button>
+    </el-col>
+    <!-- 每行分为24栏（固定），span设置该列占有5栏 -->
+    <el-col :span="4">
+      <!-- 增删改按钮 -->
+      <el-button-group>
+        <el-button type="primary" icon="plus" @click="addDialogVisible=true">
         </el-button>
 
-        <el-button type="primary" @click="handleResetPwd"> 确 定
+        <el-button type="primary" icon="edit" @click="showEditDialogVisible">
         </el-button>
-      </div>
-    </el-dialog>
-    <!-- Edit Dialog Finished -->
 
-    <!-- 调用子组件，为了利用ref来调用子组件中的方法，实际无显示效果 -->
-    <msg-dialog ref="msgDialog"></msg-dialog>
+        <el-button type="primary" icon="delete" @click="delConfirmation">
+        </el-button>
+      </el-button-group>
+    </el-col>
+
+    <el-col :span="4">
+      <el-button @click="resetPwdConfirmation">重置密码
+      </el-button>
+    </el-col>
+  </el-row>
+
+  <el-row type="flex">
+    <el-col :span="15">
+      <!-- 企业账号维护（设计单位） -->
+      <enterprise-information-table 
+      :enterpriseTableData="realEstateEnTableData"
+      @handleSelectionChange="handleSelectionChange"></enterprise-information-table>
+    </el-col>
+  </el-row>
+  
+  <el-row>
+    <el-col :span="8">
+      <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[5, 10, 15, 20]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="totalNum">
+    </el-pagination>
+  </el-col>
+</el-row>
+
+<!-- Add Dialog -->
+<el-dialog title="添加" :visible.sync="addDialogVisible">
+  <el-form>
+    <enterprise-information
+    :enterprise="enterpriseForAddForm"
+    ></enterprise-information>
+  </el-form>
+
+  <div slot="footer">
+    <el-button @click="enterpriseForAddForm={}">清 空</el-button>
+
+    <el-button @click="cancelAdd">取 消</el-button>
+
+    <el-button type="primary" @click="submitAddForm">确 定</el-button>
   </div>
+</el-dialog>
+<!-- Add Dialog Finished-->
+
+<!-- Edit Dialog-->
+<el-dialog title="修改" :visible.sync="editDialogVisible">
+  <div>
+    <enterprise-information
+    :enterprise="enterpriseForUpdateForm"
+    ></enterprise-information>
+  </div>
+
+  <div slot="footer">
+    <el-button 
+        @click="enterpriseForUpdateForm={name:'',username:''}"
+    >清 空</el-button>
+
+    <el-button @click="editDialogVisible=false">取 消</el-button>
+
+    <el-button type="primary" @click="submitUpdateForm">提 交</el-button>
+  </div>
+</el-dialog>
+<!-- Edit Dialog Finished -->
+
+<!-- Delete Dialog-->
+<el-dialog title="删除" :visible.sync="delConfirmationDialogVisible">
+  <el-row>
+    <div>
+      <label>确认删除以下企业吗？</label>
+      <!-- 换行 -->
+      <el-row>{{ }}</el-row>
+      <el-row>
+        <label v-for="row in tableSelectedRows">
+          <el-row></el-row>
+          {{row.name}}
+        </label>
+      </el-row>
+    </div>
+  </el-row>
+  <div slot="footer">
+    <el-button @click="delConfirmationDialogVisible = false">取 消</el-button>
+
+    <el-button type="primary" @click="deleteEnterprise">确 定</el-button>
+  </div>
+</el-dialog>
+<!-- Delete Dialog Finished -->
+
+<!-- Reset Password Dialog-->
+<el-dialog title="重置密码" :visible.sync="resetPwdConfirmationDialogVisible">
+
+  <el-form>
+    <label>您确定重置该密码吗？</label>
+  </el-form>
+  <div slot="footer">
+    <el-button @click="resetPwdConfirmationDialogVisible = false"> 取 消
+    </el-button>
+
+    <el-button type="primary" @click="handleResetPwd"> 确 定
+    </el-button>
+  </div>
+</el-dialog>
+<!-- Edit Dialog Finished -->
+
+<!-- 调用子组件，为了利用ref来调用子组件中的方法，实际无显示效果 -->
+<msg-dialog ref="msgDialog"></msg-dialog>
+</div>
 </template>
 
 <script>
@@ -272,15 +272,15 @@
         }
       },
       //进行密码重置
-       handleResetPwd: function() {
-          this.resetPwdConfirmationDialogVisible=false
-          var url = this.HOST + "/resetPsd?id="+this.tableSelectedRows[0].id
-          this.$http.post(url).then(response=>{
-              this.$refs.msgDialog.notify(response.data.username +"的密码已经重置为用户名")
-              this.findAllDesigners()
-          }).catch(response=>{
-              this.$refs.msgDialog.confirm("重置失败！")
-          })
+      handleResetPwd: function() {
+        this.resetPwdConfirmationDialogVisible=false
+        var url = this.HOST + "/resetPsd?id="+this.tableSelectedRows[0].id
+        this.$http.post(url).then(response=>{
+          this.$refs.msgDialog.notify(response.data.username +"的密码已经重置为用户名")
+          this.findAllDesigners()
+        }).catch(response=>{
+          this.$refs.msgDialog.confirm("重置失败！")
+        })
       },
       //当点击取消时运行
       cancelAdd() {
