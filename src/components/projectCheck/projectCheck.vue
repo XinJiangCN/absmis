@@ -1,5 +1,5 @@
 <template>
-<div id="projectInfo">
+<div id="projectCheck">
    <div>
      <el-row :gutter="8">
      <!-- 第一列 -->
@@ -46,16 +46,16 @@
    <!--  第二列 -->
     <el-col :span="16">
         <el-tabs v-model="activeName2" type="card">
-            <el-tab-pane label="项目基本信息" 
-            name="projectInfo">
-                <project-info @findAllProjectsByRealEstateEn="findAllProjectsByRealEstateEn" :projectId="clickRowId" ref="findProjectInfo">
-                </project-info>
+            <el-tab-pane label="项目基本信息审核" 
+            name="projectInfoCheck">
+                <project-info-check :projectId="clickRowId" ref="findProjectInfo">
+                </project-info-check>
             </el-tab-pane>
 
-            <el-tab-pane label="项目单位工程信息" 
-            name="unitEngineeringInfo">
-                <unit-engineering-info :projectId="clickRowId" ref="findAllUnitEngineerings">
-                </unit-engineering-info>
+            <el-tab-pane label="项目单位工程信息审核" 
+            name="unitEngineeringInfoCheck">
+                <unit-engineering-info-check :projectId="clickRowId" ref="findAllUnitEngineerings">
+                </unit-engineering-info-check>
             </el-tab-pane>
         </el-tabs>
     </el-col>
@@ -67,16 +67,16 @@
 </template>
 <script>
 import moment from 'moment'
-import projectInformationTable from './projectInformationTable'
-import msgDialog from '../common/msgDialog'
-import projectInfo from './projectInfo'
-import unitEngineeringInfo from './unitEngineeringInfo'
+  import projectInformationTable from '../projectInfo/projectInformationTable'
+  import msgDialog from '../common/msgDialog'
+  import projectInfoCheck from './projectInfoCheck'
+  import unitEngineeringInfoCheck from './unitEngineeringInfoCheck'
   export default {
     data: function() {
       return {
-        queryStartingTime:'',
         pageSize:5,
         currentPage:1,
+        queryStartingTime:'',
         totalNum:'',
         clickRowId:'1',
         //用来显示表格中的数据
@@ -88,27 +88,19 @@ import unitEngineeringInfo from './unitEngineeringInfo'
         }
       },
       methods: {
-        findByStartingTime(){
-          this.$http.get(this.HOST + "/queryProjectByRealEstateEn?startTime="+this.smallFormat(this.queryStartingTime[0])+"&endTime="+this.smallFormat(this.queryStartingTime[1])+"&page="+this.currentPage+"&rows="+this.pageSize).then(response => {
-
-          this.projectTableData = response.data.rows;
-          this.totalNum = response.data.total;
-          console.log(this.projectTableData)
-          }).catch(error => {
-          this.$refs.msgDialog.confirm("查询失败")
-          })
-
+         findByStartingTime(){
+            this.$http.get(this.HOST + "/queryProject?startTime="+this.smallFormat(this.queryStartingTime[0])+"&endTime="+this.smallFormat(this.queryStartingTime[1])+"&page="+this.currentPage+"&rows="+this.pageSize).then(response => {
+            this.projectTableData = response.data.rows;
+            this.totalNum = response.data.total;
+            }).catch(error => {
+            this.$refs.msgDialog.confirm("查询失败")
+            })
         },
         smallFormat(data){
             return moment(data).format("YYYY-MM-DD")
         },
-        handleCurrentChange(currentPage){
-          this.currentPage = currentPage
-          this.findAllProjectsByRealEstateEn()
-        },
-       handleSizeChange(currentSize) {
-        this.pageSize = currentSize
-        this.findAllProjectsByRealEstateEn()
+       handleSizeChange(selectedRows) {
+        this.tableSelectedRows = selectedRows
        },
        clickRow(selectedRow) {
         this.clickRowId = selectedRow.id
@@ -121,8 +113,8 @@ import unitEngineeringInfo from './unitEngineeringInfo'
        handleSelectionChange(selectedRows) {
         this.tableSelectedRows = selectedRows
        },
-      findAllProjectsByRealEstateEn(){
-        this.$http.get(this.HOST + "/displayAllProjectByRealEstateEns?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
+      findAllProjects(){
+        this.$http.get(this.HOST + "/displayAllProjects?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
           this.projectTableData = response.data.rows;
           this.totalNum = response.data.total;
         }).catch(error => {
@@ -132,13 +124,13 @@ import unitEngineeringInfo from './unitEngineeringInfo'
 
     },
     created() {
-      this.findAllProjectsByRealEstateEn()
+      this.findAllProjects()
     },
     components: {
       msgDialog,
       projectInformationTable,
-      unitEngineeringInfo,
-      projectInfo
+      unitEngineeringInfoCheck,
+      projectInfoCheck
     }
   }
 
