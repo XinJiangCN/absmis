@@ -1,7 +1,6 @@
 <template>
 <div>
     <el-form :model="buildInformation" label-width="180px">
-
         <part-basic-info :basicInfoData="buildInformation"></part-basic-info>
         <el-row>
             <el-col :span="6">
