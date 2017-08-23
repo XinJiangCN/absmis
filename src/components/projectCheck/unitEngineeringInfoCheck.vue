@@ -5,18 +5,18 @@
       <el-col :span="5">
         <!-- 增删改按钮 -->
         <el-button-group>
-          <el-button type="primary" icon="edit" @click="showEditDialogVisible">
+          <el-button type="primary" @click="showEditDialogVisible">审核
           </el-button>
         </el-button-group>
       </el-col>
     </el-row>
 
     <el-row type="flex">  
-      <el-col :span="20">
+      <el-col :span="24">
         <!-- 企业账号维护（设计单位） -->
-        <unitEngineering-information-table 
+        <check-dialog 
             :unitEngineeringTableData="unitEngineeringTableData"
-            @handleSelectionChange="handleSelectionChange"></unitEngineering-information-table>
+            @handleSelectionChange="handleSelectionChange"></check-dialog>
         
        </el-col>
     </el-row>
@@ -40,15 +40,15 @@
     <el-dialog title="审核" :visible.sync="editDialogVisible">
       <div>
         <el-form>
-            <checkDialog :updateForm="unitEngineeringForUpdateForm"
-            ></checkDialog>
+            <unitEngineeringInformationDialogCheck :unitEngineeringDialog="unitEngineeringForUpdateForm"
+            ></unitEngineeringInformationDialogCheck>
         </el-form>
       </div>
 
       <div slot="footer">
-            <el-button @click="editDialogVisible=false">取 消</el-button>
+            <el-button @click="rejectUnitEngineering">驳回</el-button>
 
-            <el-button type="primary" @click="submitUpdateForm">提 交</el-button>
+            <el-button type="primary" @click="passUnitEngineering">通过</el-button>
         </div>
     </el-dialog>
     <!-- Edit Dialog Finished -->
@@ -60,6 +60,7 @@
 <script>
  import msgDialog from '../common/msgDialog'
 import checkDialog from './checkDialog'
+import unitEngineeringInformationDialogCheck from './unitEngineeringInformationDialogCheck'
  import unitEngineeringInformationTable from '../projectInfo/unitEngineeringInformationTable'
 export default {
     data(){
@@ -175,14 +176,25 @@ export default {
         }
       },
       //点击确定进行修改保存
-      submitUpdateForm() {
+      passUnitEngineering() {
+        console.log(this.unitEngineeringForUpdateForm.id)
         this.editDialogVisible = false;
-        var url = this.HOST + "/updateUnitEngineering?projectId="+this.projectId
-        this.$http.put(url, this.unitEngineeringForUpdateForm).then(response => {
+        var url = this.HOST + "/checkUnitEngineering?id="+this.unitEngineeringForUpdateForm.id+"&checkedStatusId="+1
+        this.$http.post(url).then(response => {
           this.findAllUnitEngineerings();
-          this.$refs.msgDialog.notify("修改成功")
+          this.$refs.msgDialog.notify("审核通过")
         }).catch(error => {
-          this.$refs.msgDialog.confirm("修改失败")
+          this.$refs.msgDialog.confirm("修改失败1")
+        })
+      },
+      rejectUnitEngineering() {
+        this.editDialogVisible = false;
+        var url = this.HOST + "/checkUnitEngineering?id="+this.unitEngineeringForUpdateForm.id+"&checkedStatusId="+2
+        this.$http.post(url).then(response => {
+          this.findAllUnitEngineerings();
+          this.$refs.msgDialog.notify("修改重申")
+        }).catch(error => {
+          this.$refs.msgDialog.confirm("修改失败2")
         })
       },
       //查询所要显示的表格，或者刷新该表格使用
@@ -210,6 +222,7 @@ export default {
     components: {
       checkDialog,
       msgDialog,
+      unitEngineeringInformationDialogCheck,
       unitEngineeringInformationTable
     }
 }

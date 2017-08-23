@@ -99,8 +99,13 @@ import moment from 'moment'
         smallFormat(data){
             return moment(data).format("YYYY-MM-DD")
         },
-       handleSizeChange(selectedRows) {
-        this.tableSelectedRows = selectedRows
+       handleCurrentChange(currentPage){
+          this.currentPage = currentPage
+          this.findAllProjects()
+        },
+       handleSizeChange(currentSize) {
+        this.pageSize = currentSize
+        this.findAllProjects()
        },
        clickRow(selectedRow) {
         this.clickRowId = selectedRow.id
