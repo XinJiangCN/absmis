@@ -9,14 +9,19 @@ import accountMaintain from '../components/admin/accountMaintain.vue'
 
 //basic info
 import homePage from '../components/bizCommon/homePage.vue'
-import designCompanyBasicInfo from '../components/basicInfo/designCompany.vue'
-import buildCompanyBasicInfo from '../components/basicInfo/buildCompany.vue'
-import estateCompanyBasicInfo from '../components/basicInfo/estateCompany.vue'
-import componentCompanyBasicInfo from '../components/basicInfo/componentCompany.vue'
+
+import designCompanyBasicInfo from '../components/basicInfo/designCompanyBasicInfo.vue'
+import buildCompanyBasicInfo from '../components/basicInfo/buildCompanyBasicInfo.vue'
+import estateCompanyBasicInfo from '../components/basicInfo/estateCompanyBasicInfo.vue'
+import componentCompanyBasicInfo from '../components/basicInfo/componentCompanyBasicInfo.vue'
+
 import project from '../components/projectInfo/project.vue'
 import projectCheck from '../components/projectCheck/projectCheck'
 import projectByEstateOwner from '../components/projectInfo/projectByEstateOwner'
 
+//check basic information
+import traditionalInfoCheck from '../components/checkInformation/traditionalInfoCheck'
+import nonTraditionalInfoCheck from '../components/checkInformation/nonTraditionalInfoCheck'
 
 Vue.use(Router)
 
@@ -40,7 +45,7 @@ export default new Router({
     {
         path: '/designerInfo',
         name: '设计单位-基本信息',
-        component: buildCompanyBasicInfo 
+        component: designCompanyBasicInfo 
     },
     {
         path: '/realEstateEnInfo',
@@ -50,12 +55,12 @@ export default new Router({
     {
         path: '/builderInfo',
         name: '施工单位-基本信息',
-        component: componentCompanyBasicInfo
+        component: buildCompanyBasicInfo
     },
     {
         path: '/componentEnInfo',
         name: '构件生产企业-基本信息',
-        component: changePasswd
+        component: componentCompanyBasicInfo
     },
     {
         path: '/subUnitEnInfo',
@@ -75,12 +80,12 @@ export default new Router({
     {
         path: '/traditionalInfoCheck',
         name: '传统企业-基本信息审核',
-        component: changePasswd
+        component: traditionalInfoCheck
     },
     {
         path: '/nonTraditionalInfoCheck',
         name: '非传统企业-基本信息审核',
-        component: changePasswd
+        component: nonTraditionalInfoCheck
     },
     {
         path: '/realEstateEnIn',
