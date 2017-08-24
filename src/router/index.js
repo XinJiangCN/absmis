@@ -16,6 +16,7 @@ import estateCompanyBasicInfo from '../components/basicInfo/estateCompanyBasicIn
 import componentCompanyBasicInfo from '../components/basicInfo/componentCompanyBasicInfo.vue'
 import estateOwnerBasicInfo from '../components/basicInfo/estateOwnerBasicInfo'
 
+//项目信息提交+审核
 import project from '../components/projectInfo/project.vue'
 import projectCheck from '../components/projectCheck/projectCheck'
 import projectByEstateOwner from '../components/projectInfo/projectByEstateOwner'
@@ -76,7 +77,7 @@ export default new Router({
     {
         path: '/estateOwnerInfo',
         name: '建设单位-基本信息',
-        component: changePasswd
+        component: estateOwnerBasicInfo
     },
     {
         path: '/traditionalInfoCheck',
@@ -141,7 +142,7 @@ export default new Router({
     {
         path: '/estateOwnerProject',
         name: '建设单位-项目信息',
-        component: estateOwnerBasicInfo
+        component: projectByEstateOwner
     },
     {
         path: '/projectCheck',
