@@ -67,7 +67,7 @@ export default {
       return {
         pageSize:5,
         currentPage:1,
-        totalNum:'',
+        totalNum:100,
         checkedStatus:'',
         //用来显示表格中的数据
         unitEngineeringTableData: [],

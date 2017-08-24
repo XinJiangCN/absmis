@@ -77,8 +77,8 @@ import unitEngineeringInfo from './unitEngineeringInfo'
         queryStartingTime:'',
         pageSize:5,
         currentPage:1,
-        totalNum:'',
-        clickRowId:'1',
+        totalNum:100,
+        clickRowId:1,
         //用来显示表格中的数据
         projectTableData: [],
         //提示信息框初始时不显示
