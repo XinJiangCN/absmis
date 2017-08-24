@@ -6,6 +6,9 @@ import Router from 'vue-router'
 //public 
 import changePasswd from '../components/bizCommon/changePasswd.vue'
 import accountMaintain from '../components/admin/accountMaintain.vue'
+//admin
+import auditSubUnitEnIndustrialization from '../components/admin/auditSubUnitEnIndustrialization.vue'
+import auditMachineryEnIndustrialization from '../components/admin/auditMachineryEnIndustrialization.vue'
 
 //basic info
 import homePage from '../components/bizCommon/homePage.vue'
@@ -17,7 +20,9 @@ import componentCompanyBasicInfo from '../components/basicInfo/componentCompanyB
 import estateOwnerBasicInfo from '../components/basicInfo/estateOwnerBasicInfo'
 import subUnitEnBasicInfo from '../components/basicInfo/subUnitEnBasicInfo'
 import machineryEnBasicInfo from '../components/basicInfo/machineryEnBasicInfo'
-
+//industrialization info
+import subUnitEnIndustrialization from '../components/industrializationInfo/subUnitEnIndustrialization.vue'
+import machineryEnIndustrialization from '../components/industrializationInfo/machineryEnIndustrialization.vue'
 //项目信息提交+审核
 import project from '../components/projectInfo/project.vue'
 import projectCheck from '../components/projectCheck/projectCheck'
@@ -112,9 +117,14 @@ export default new Router({
         component: changePasswd
     },
     {
+        path:'/machineryEnIn',
+        name:'设备企业-产业化信息',
+        component:machineryEnIndustrialization
+    },
+    {
         path: '/subUnitEnIn',
         name: '部品企业-产业化信息',
-        component: changePasswd
+        component: subUnitEnIndustrialization
     },
     {
         path: '/traditionalInCheck',
@@ -129,12 +139,12 @@ export default new Router({
     {
         path: '/subUnitEnInCheck',
         name: '部品企业-产业化审核',
-        component: changePasswd
+        component: auditSubUnitEnIndustrialization
     },
     {
-        path: '/subUnitEnInCheck',
+        path: '/machineryEnInCheck',
         name: '设备企业-产业化审核',
-        component: changePasswd
+        component: auditMachineryEnIndustrialization
     },
     {
         path: '/realEstateEnProject',
