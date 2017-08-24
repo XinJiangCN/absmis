@@ -64,12 +64,12 @@ export default new Router({
         component:machineryEnIndustrialization
     },
     {
-        path:'/check3',
+        path:'/subUnitEnInCheck',
         name:'部品生产企业建筑产业化信息审核',
         component:auditSubUnitEnIndustrialization
     },
     {
-        path:'/check4',
+        path:'/machineryEnInCheck',
         name:'设备企业建筑产业化信息审核',
         component:auditMachineryEnIndustrialization
     }
