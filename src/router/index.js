@@ -14,6 +14,7 @@ import designCompanyBasicInfo from '../components/basicInfo/designCompanyBasicIn
 import buildCompanyBasicInfo from '../components/basicInfo/buildCompanyBasicInfo.vue'
 import estateCompanyBasicInfo from '../components/basicInfo/estateCompanyBasicInfo.vue'
 import componentCompanyBasicInfo from '../components/basicInfo/componentCompanyBasicInfo.vue'
+import estateOwnerBasicInfo from '../components/basicInfo/estateOwnerBasicInfo'
 
 import project from '../components/projectInfo/project.vue'
 import projectCheck from '../components/projectCheck/projectCheck'
@@ -140,7 +141,7 @@ export default new Router({
     {
         path: '/estateOwnerProject',
         name: '建设单位-项目信息',
-        component: projectByEstateOwner
+        component: estateOwnerBasicInfo
     },
     {
         path: '/projectCheck',
