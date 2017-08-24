@@ -93,6 +93,7 @@ import unitEngineeringInfo from './unitEngineeringInfo'
 
           this.projectTableData = response.data.rows;
           this.totalNum = response.data.total;
+          console.log(this.totalNum+"一共多少条")
           console.log(this.projectTableData)
           }).catch(error => {
           this.$refs.msgDialog.confirm("查询失败")
