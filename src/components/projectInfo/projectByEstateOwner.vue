@@ -76,7 +76,7 @@
       return {
         pageSize:5,
         currentPage:1,
-        totalNum:'',
+        totalNum:100,
         clickRowId:'1',
         //用来显示表格中的数据
         projectTableData: [],

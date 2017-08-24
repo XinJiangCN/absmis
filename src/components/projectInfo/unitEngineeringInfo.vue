@@ -109,7 +109,7 @@
       return {
         pageSize:5,
         currentPage:1,
-        totalNum:'',
+        totalNum:100,
         //用来显示表格中的数据
         unitEngineeringTableData: [],
         //增加用的对话框，初始为不显示
@@ -198,7 +198,7 @@
     },
     props:{
       projectId:{
-        type: String,
+        type: Number,
         required: true
       },
     },

@@ -77,7 +77,7 @@ import moment from 'moment'
         pageSize:5,
         currentPage:1,
         queryStartingTime:'',
-        totalNum:'',
+        totalNum:100,
         clickRowId:'1',
         //用来显示表格中的数据
         projectTableData: [],

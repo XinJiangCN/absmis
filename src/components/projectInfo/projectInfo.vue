@@ -630,7 +630,7 @@
     //页面加载时运行
     props:{
       projectId:{
-        type: String,
+        type: Number,
         required: true
       },
     },
