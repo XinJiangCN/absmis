@@ -1,0 +1,47 @@
+<template>
+  <el-table
+    :data="projectTableData"
+    border
+    stripe
+    tooltip-effect="dark"
+    style="width:100%"
+    highlight-current-row
+    @row-click="rowClick"
+    @selection-change="handleSelectionChange">
+    <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column
+      label="项目名称"
+      prop="name"
+      show-overflow-tooltip>
+    </el-table-column>
+    <el-table-column
+      label="开工时间"
+      prop="startingTime"
+      show-overflow-tooltip>
+    </el-table-column>
+  </el-table>
+</template>
+<script>
+  export default{
+    data(){
+      return{
+        selectedRows:[],
+        currentRow:[],
+      }
+    },
+    props:['projectTableData'],
+    methods:{
+      handleSelectionChange(selectedRows){
+        this.selectedRows = selectedRows
+        this.$emit('handleSelectionChange',this.selectedRows)
+      },
+      rowClick(selectedRow){
+        this.currentRow = selectedRow
+        this.$emit('clickRow',this.currentRow)
+      }
+    }
+  }
+</script>

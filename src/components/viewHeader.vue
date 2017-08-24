@@ -17,10 +17,28 @@
 
 <script>
 export default {
-    data: function() {
-        return {
-            currentUser: 'Admin'
-        }
+    data() {
+      return {
+        currentUser: ''
+      }
+    },
+    methods: {
+      //查询所要显示的表格，或者刷新该表格使用
+      findUser() {
+        //初始显示表格用的查询数据
+        //当前多少页 一页多少条
+        this.$http.get(this.HOST + "/userInfo").then(response => {
+          this.currentUser = response.data.userType;
+        }).catch(error => {
+          
+        })
+      }
+    },
+    //watch负责监听，当监听对象发生变化时，运行对应的方法
+    watch: {},
+    //页面加载时运行
+    created() {
+      this.findUser()
     }
-}
+  }
 </script>
