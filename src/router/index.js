@@ -15,6 +15,8 @@ import buildCompanyBasicInfo from '../components/basicInfo/buildCompanyBasicInfo
 import estateCompanyBasicInfo from '../components/basicInfo/estateCompanyBasicInfo.vue'
 import componentCompanyBasicInfo from '../components/basicInfo/componentCompanyBasicInfo.vue'
 import estateOwnerBasicInfo from '../components/basicInfo/estateOwnerBasicInfo'
+import subUnitEnBasicInfo from '../components/basicInfo/subUnitEnBasicInfo'
+import machineryEnBasicInfo from '../components/basicInfo/machineryEnBasicInfo'
 
 //项目信息提交+审核
 import project from '../components/projectInfo/project.vue'
@@ -67,12 +69,12 @@ export default new Router({
     {
         path: '/subUnitEnInfo',
         name: '部品生产企业-基本信息',
-        component: changePasswd
+        component: subUnitEnBasicInfo
     },
     {
         path: '/machineryEnInfo',
         name: '设备生产企业-基本信息',
-        component: changePasswd
+        component: machineryEnBasicInfo
     },
     {
         path: '/estateOwnerInfo',

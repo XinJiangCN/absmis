@@ -1,18 +1,18 @@
 <template>
 <div>
-    <el-form :model="estateOwnerInformation" label-width="180px">
+    <el-form :model="machineryEnInformation" label-width="180px">
     <!-- 调用组件进行页面显示 -->
-        <part-basic-info :basicInfoData="estateOwnerInformation"></part-basic-info>
+        <part-basic-info :basicInfoData="machineryEnInformation"></part-basic-info>
         <el-row>
-            <el-col :span="6">
-                <label>企业类型：建设单位</label>
+            <el-col :span="7">
+                <label>企业类型：设备生产企业</label>
             </el-col>
         </el-row>
         <el-row></el-row>
   
     </el-form>
     <!-- 调用组件进行页面显示 -->
-    <all-type-basic-info :basicInfoData="estateOwnerInformation"
+    <all-type-basic-info :basicInfoData="machineryEnInformation"
         @submitForm="submitBasicInfoDialogVisible=true"
     ></all-type-basic-info>
     <!-- 调用组件，目的是利用组件中的消息提示框，实际无显示意义 -->
@@ -36,7 +36,7 @@ export default {
         //获取当前使用者的所有信息
         var userNameUrl = this.HOST + '/returnUserInfo'
         this.$http.get(userNameUrl).then(response=>{
-            this.estateOwnerInformation = response.data
+            this.machineryEnInformation = response.data
         }).catch(error=>{
             this.$refs.msgForSubmit.confirm("获取失败！")
         })
@@ -44,7 +44,7 @@ export default {
     data: function() {
         return {
             //用来存放当前使用者的所有信息
-            estateOwnerInformation: {},
+            machineryEnInformation: {},
             //提交所有信息时的确认对话框
             submitBasicInfoDialogVisible:false
         }
@@ -54,8 +54,8 @@ export default {
         handleSubmit: function() {
             //关闭对话框
             this.submitBasicInfoDialogVisible=false
-            var url = this.HOST + '/updateEstateOwner'
-            this.$http.put(url,this.estateOwnerInformation).then(response=>{
+            var url = this.HOST + '/updateMachineryEn'
+            this.$http.put(url,this.machineryEnInformation).then(response=>{
                 this.$refs.msgForSubmit.notify("提交成功！")
             }).catch(error=>{
                 this.$refs.msgForSubmit.confirm("提交失败！")
