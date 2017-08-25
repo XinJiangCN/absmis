@@ -275,8 +275,7 @@
 				}).catch(response=>{
 					alert("获取构件产业化信息失败！")
 				})
-			},
-			
+			},			
 			handleRowChange:function(val){
 				this.selectedRow=val
 				this.selectedRowId=val.id
@@ -378,7 +377,6 @@
 				
 			},
 			confirmUpdate:function(){
-				// this.updateData.id=this.selectedRowId
 				var url=this.HOST+'/updateComponentEnIndustrialization'
 				this.$http.put(url,this.updateData).then(response=>{
 					this.showUpdateDialog=false
