@@ -105,22 +105,22 @@ export default new Router({
     {
         path: '/realEstateEnIn',
         name: '房地产-产业化信息',
-        component: changePasswd
+        component: realEstateEnIndustrialization
     },
     {
         path: '/designerIn',
         name: '设计单位-产业化信息',
-        component: changePasswd
+        component: designerIndustrialization
     },
     {
         path: '/builderIn',
         name: '施工单位-产业化信息',
-        component: changePasswd
+        component: builderIndustrialization
     },
     {
         path: '/componentEnIn',
         name: '构件企业-产业化信息',
-        component: changePasswd
+        component: componentEnIndustrialization
     },
     {
         path:'/machineryEnIn',
@@ -135,12 +135,12 @@ export default new Router({
     {
         path: '/traditionalInCheck',
         name: '传统企业-产业化审核',
-        component: changePasswd
+        component: traditionalInCheck
     },
     {
         path: '/componentEnInCheck',
         name: '构件企业-产业化审核',
-        component: changePasswd
+        component: componentEnInCheck
     },
     {
         path: '/subUnitEnInCheck',
