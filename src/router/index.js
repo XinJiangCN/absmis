@@ -24,7 +24,7 @@ import machineryEnBasicInfo from '../components/basicInfo/machineryEnBasicInfo'
 import subUnitEnIndustrialization from '../components/industrializationInfo/subUnitEnIndustrialization.vue'
 import machineryEnIndustrialization from '../components/industrializationInfo/machineryEnIndustrialization.vue'
 import realEstateEnIndustrialization from'../components/industrializationInfo/realEstateEnIndustrialization.vue'
-import componentEnIndustrialization from '../components/industrializationInfo/componentEnIndustrialization.vue'
+import componentEnIndustrialization from '../components/industrializationInfo/ComponentEnIndustrialization.vue'
 import designerIndustrialization from '../components/industrializationInfo/designerIndustrialization.vue'
 import builderIndustrialization from '../components/industrializationInfo/builderIndustrialization.vue'
 //项目信息提交+审核
