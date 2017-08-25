@@ -23,6 +23,10 @@ import machineryEnBasicInfo from '../components/basicInfo/machineryEnBasicInfo'
 //industrialization info
 import subUnitEnIndustrialization from '../components/industrializationInfo/subUnitEnIndustrialization.vue'
 import machineryEnIndustrialization from '../components/industrializationInfo/machineryEnIndustrialization.vue'
+import realEstateEnIndustrialization from'../components/industrializationInfo/realEstateEnIndustrialization.vue'
+import componentEnIndustrialization from '../components/industrializationInfo/componentEnIndustrialization.vue'
+import designerIndustrialization from '../components/industrializationInfo/designerIndustrialization.vue'
+import builderIndustrialization from '../components/industrializationInfo/builderIndustrialization.vue'
 //项目信息提交+审核
 import project from '../components/projectInfo/project.vue'
 import projectCheck from '../components/projectCheck/projectCheck'
@@ -31,7 +35,9 @@ import projectByEstateOwner from '../components/projectInfo/projectByEstateOwner
 //check basic information
 import traditionalInfoCheck from '../components/checkInformation/traditionalInfoCheck'
 import nonTraditionalInfoCheck from '../components/checkInformation/nonTraditionalInfoCheck'
-
+//check industrializationInfo
+import traditionalInCheck from '../components/checkIndustrilizationInfo/traditionalInCheck.vue'
+import componentEnInCheck from '../components/checkIndustrilizationInfo/componentEnInCheck.vue'
 Vue.use(Router)
 
 export default new Router({
