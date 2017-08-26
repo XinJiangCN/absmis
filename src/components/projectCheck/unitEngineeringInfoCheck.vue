@@ -14,9 +14,10 @@
     <el-row type="flex">  
       <el-col :span="24">
         <!-- 企业账号维护（设计单位） -->
-        <check-dialog 
+        <unit-engineering-check-table
             :unitEngineeringTableData="unitEngineeringTableData"
-            @handleSelectionChange="handleSelectionChange"></check-dialog>
+            @handleSelectionChange="handleSelectionChange">
+        </unit-engineering-check-table>
         
        </el-col>
     </el-row>
@@ -40,8 +41,8 @@
     <el-dialog title="审核" :visible.sync="editDialogVisible">
       <div>
         <el-form>
-            <unitEngineeringInformationDialogCheck :unitEngineeringDialog="unitEngineeringForUpdateForm"
-            ></unitEngineeringInformationDialogCheck>
+            <unit-engineering-info-check-dialog :unitEngineeringDialog="unitEngineeringForUpdateForm"
+            ></unit-engineering-info-check-dialog>
         </el-form>
       </div>
 
@@ -58,10 +59,9 @@
   </div>
 </template>
 <script>
- import msgDialog from '../common/msgDialog'
-import checkDialog from './checkDialog'
-import unitEngineeringInformationDialogCheck from './unitEngineeringInformationDialogCheck'
- import unitEngineeringInformationTable from '../projectInfo/unitEngineeringInformationTable'
+import msgDialog from '../common/msgDialog'
+import unitEngineeringInfoCheckDialog from './unitEngineeringInfoCheckDialog'
+import unitEngineeringCheckTable from './unitEngineeringCheckTable'
 export default {
     data(){
       return {
@@ -118,12 +118,6 @@ export default {
         //定义当前是否选择多行，控制修改框中选择过多时提示信息的显示
         isMultiRowsSelected: false,
       }
-    },
-    props:{
-      projectId:{
-        type: String,
-        required: true
-      },
     },
     methods: {
       handleSizeChange(newPageSize){
@@ -220,10 +214,9 @@ export default {
       this.findAllUnitEngineerings()
     },
     components: {
-      checkDialog,
       msgDialog,
-      unitEngineeringInformationDialogCheck,
-      unitEngineeringInformationTable
+      unitEngineeringInfoCheckDialog,
+      unitEngineeringCheckTable
     }
 }
 </script>

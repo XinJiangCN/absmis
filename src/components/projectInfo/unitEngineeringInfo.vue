@@ -59,9 +59,9 @@
     <!-- Edit Dialog-->
     <el-dialog title="修改" :visible.sync="editDialogVisible">
       <div>
-        <unitEngineering-information-dialog
+        <unitEngineering-info-edit-dialog
           :unitEngineeringDialog="unitEngineeringForUpdateForm"
-        ></unitEngineering-information-dialog>
+        ></unitEngineering-info-edit-dialog>
       </div>
 
       <div slot="footer">
@@ -100,7 +100,7 @@
   </div>
 </template>
 <script>
- import unitEngineeringInformationDialog from './unitEngineeringInformationDialog'
+ import unitEngineeringInfoEditDialog from './unitEngineeringInfoEditDialog'
   import unitEngineeringInfoAddDialog from './unitEngineeringInfoAddDialog'
  import msgDialog from '../common/msgDialog'
  import unitEngineeringInformationTable from './unitEngineeringInformationTable'
@@ -402,7 +402,7 @@
       this.findAllUnitEngineerings()
     },
     components: {
-      unitEngineeringInformationDialog,
+      unitEngineeringInfoEditDialog,
       unitEngineeringInfoAddDialog,
       msgDialog,
       unitEngineeringInformationTable

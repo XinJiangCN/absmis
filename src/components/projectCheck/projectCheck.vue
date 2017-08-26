@@ -6,27 +6,17 @@
       <el-col :span="8">
         <el-row>
           <el-col :span="24">
-            <el-collapse>
-                <el-collapse-item title="开工起止时间" name="1">
-                    <div>
-                    <el-date-picker
-                    v-model="queryStartingTime"
-                    type="daterange"
-                    placeholder="选择日期范围">
-                  </el-date-picker>        
-                  <el-button type="text" :plain="true" @click="findByStartingTime">查询</el-button>
-                  </div>
-                </el-collapse-item>
-            </el-collapse>
+          <queryStartingTime :queryStartingTime="queryStartingTime" @findByStartingTime="findByStartingTime"> 
+           </queryStartingTime>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <!-- 企业账号维护（设计单位） -->
-            <project-information-table-check 
+            <project-info-check-table 
             :projectTableData="projectTableData"
             @clickRow="clickRow"
-            @handleSelectionChange="handleSelectionChange"></project-information-table-check>
+            @handleSelectionChange="handleSelectionChange"></project-info-check-table>
           </el-col>
         </el-row>
         <el-row>
@@ -66,11 +56,11 @@
 </div>
 </template>
 <script>
-import moment from 'moment'
-  import projectInformationTableCheck from './projectInformationTableCheck'
+  import unitEngineeringInfoCheck from './unitEngineeringInfoCheck'
+  import moment from 'moment'
+  import projectInfoCheckTable from './projectInfoCheckTable'
   import msgDialog from '../common/msgDialog'
   import projectInfoCheck from './projectInfoCheck'
-  import unitEngineeringInfoCheck from './unitEngineeringInfoCheck'
   export default {
     data: function() {
       return {
@@ -88,7 +78,8 @@ import moment from 'moment'
         }
       },
       methods: {
-         findByStartingTime(){
+         findByStartingTime(param){
+            this.queryStartingTime = param
             this.$http.get(this.HOST + "/queryProject?startTime="+this.smallFormat(this.queryStartingTime[0])+"&endTime="+this.smallFormat(this.queryStartingTime[1])+"&page="+this.currentPage+"&rows="+this.pageSize).then(response => {
             this.projectTableData = response.data.rows;
             this.totalNum = response.data.total;
@@ -133,10 +124,9 @@ import moment from 'moment'
     },
     components: {
       msgDialog,
-      projectInformationTableCheck,
       unitEngineeringInfoCheck,
+      projectInfoCheckTable,
       projectInfoCheck
     }
   }
-
 </script>

@@ -28,7 +28,7 @@ import componentEnIndustrialization from '../components/industrializationInfo/Co
 import designerIndustrialization from '../components/industrializationInfo/designerIndustrialization.vue'
 import builderIndustrialization from '../components/industrializationInfo/builderIndustrialization.vue'
 //项目信息提交+审核
-import project from '../components/projectInfo/project.vue'
+import projectByRealEstateEn from '../components/projectInfo/projectByRealEstateEn'
 import projectCheck from '../components/projectCheck/projectCheck'
 import projectByEstateOwner from '../components/projectInfo/projectByEstateOwner'
 
@@ -155,7 +155,7 @@ export default new Router({
     {
         path: '/realEstateEnProject',
         name: '房地产-项目信息',
-        component: project
+        component: projectByRealEstateEn
     },
     {
         path: '/estateOwnerProject',
