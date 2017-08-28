@@ -6,47 +6,49 @@
 		      <el-col :span="8">
 		        <!-- 增删改按钮 -->
 		        <el-button-group>
-		          <el-button type="primary"@click="reset">增加</el-button>
+		          <el-button type="primary" @click="reset">增加</el-button>
 		          <el-button type="primary">暂存</el-button>
 		          <el-button type="primary" @click="addProjectForm">提交</el-button>
 		        </el-button-group>
 		      </el-col>
     	</el-row>
     <project-info :projectForm="projectForm">
-    </project-info>    	
+    </project-info>  	
 	</el-col>
 	<msg-dialog ref="msgDialog"></msg-dialog>
 </div>
 </template>
 <script>
   import msgDialog from '../common/msgDialog'
+  import projectInfo from './projectInfo'
   export default{
     data(){
-      return{
-       		
+      return{	
       	  pickerOptions1: {
-          shortcuts: [{
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date());
-            }
-          }, {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
-            }
-          }, {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
-            }
-          }]
+		          shortcuts: [{
+		            text: '今天',
+		            onClick(picker) {
+		              picker.$emit('pick', new Date());
+		            }
+		          }, 
+		          {
+		            text: '昨天',
+		            onClick(picker) {
+		              const date = new Date();
+		              date.setTime(date.getTime() - 3600 * 1000 * 24);
+		              picker.$emit('pick', date);
+		            }
+		          }, 
+		          {
+		            text: '一周前',
+		            onClick(picker) {
+		              const date = new Date();
+		              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+		              picker.$emit('pick', date);
+		            }
+		          }]
         },
-	projectStates:'',
+      	projectStates:'',
       	projectCategorys:'',
       	checkedStatus:'undefined',
   		projectForm: {
@@ -134,7 +136,7 @@
       }
     },
     methods:{
-    	    	reset(){
+    	reset(){
     		this.checkedStatus = 'undefined',
     		this.projectForm = {
             name: '',
@@ -219,11 +221,18 @@
         }
     	},
     	findCurrentProjectInfo(){
-    		this.$http.get(this.HOST + "/findProjectInfoByEstateOwner?id="+this.projectId).then(response => {
+    		console.log("测试中1"+this.projectForm)
+    		console.log("测试中1"+JSON.stringify(this.projectForm))
+    		this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
           		this.projectForm = response.data
-          		this.checkedStatus = response.data.checkedStatus
+          		 this.checkedStatus = response.data.checkedStatus
+          		console.log("啦啦啦啦"+response.data.checkedStatus)
+          		// console.log("啦啦啦啦"+response.data.checkedStatus.id)
           		console.log("啦啦啦啦")
-          		console.log(this.projectForm)
+          		console.log("测试中2"+this.projectForm)
+          		console.log("测试中3"+JSON.stringify(response.data))
+    			console.log("测试中2"+JSON.stringify(this.projectForm))
+          		//console.log(this.projectForm)
         		}).catch(error => {
           		this.$refs.msgDialog.confirm("查询失败la")
         		})
@@ -247,15 +256,13 @@
     		}
     	},
     	submitForm(){
-    		console.log(JSON.stringify(this.projectForm))
-    		console.log(this.projectForm)
-    		var url = this.HOST + "/addProjectByEstateOwner"
+			var url = this.HOST + "/addProjectByEstateOwner"
         	this.$http.post(url, this.projectForm).then(response => {
         		console.log("成功了")
         		this.$emit('findAllProjectsByEstateOwner')
           	this.$refs.msgDialog.notify("添加成功")
         	}).catch(error => {
-          	this.$refs.msgDialog.confirm("添加失败")
+          	this.$refs.msgDialog.confirm("添加失败l")
         	})
     	},
     	findAllProjectStates() {
@@ -288,7 +295,8 @@
       this.findAllProjectStates()
     },
     components: {
-      msgDialog
+      msgDialog,
+      projectInfo
     }
   }
 </script>

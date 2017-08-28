@@ -12,11 +12,10 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <!-- 企业账号维护（设计单位） -->
+            <!-- 企业账号维护（设计单位）@clickRow="clickRow" -->
             <project-information-table 
             :projectTableData="projectTableData"
-            @clickRow="clickRow"
-            @handleSelectionChange="handleSelectionChange"></project-information-table>
+            @clickRow="clickRow"></project-information-table>
           </el-col>
         </el-row>
         <el-row>
@@ -87,7 +86,6 @@
           }).catch(error => {
           this.$refs.msgDialog.confirm("查询失败")
           })
-
         },
         smallFormat(data){
             return moment(data).format("YYYY-MM-DD")
@@ -106,10 +104,10 @@
         this.$refs.findProjectInfoByEstateOwner.findCurrentProjectInfo()
        },
        handleSelectionChange(selectedRows) {
-        this.tableSelectedRows = selectedRows
-       },
-       handleSelectionChange(selectedRows) {
-        this.tableSelectedRows = selectedRows
+        console.log("*********")
+        this.clickRowId = selectedRows[0].id
+        this.$refs.findAllUnitEngineerings.findAllUnitEngineerings()
+        this.$refs.findProjectInfoByEstateOwner.findCurrentProjectInfo()
        },
       findAllProjectsByEstateOwner(){
         this.$http.get(this.HOST + "/displayAllProjectByEstateOwners?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
