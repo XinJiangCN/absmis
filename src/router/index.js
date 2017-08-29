@@ -31,6 +31,8 @@ import builderIndustrialization from '../components/industrializationInfo/builde
 import projectByRealEstateEn from '../components/projectInfo/projectByRealEstateEn'
 import projectCheck from '../components/projectCheck/projectCheck'
 import projectByEstateOwner from '../components/projectInfo/projectByEstateOwner'
+//管理部门查询
+import queryProject from '../components/supervisor/queryProject.vue'
 
 //check basic information
 import traditionalInfoCheck from '../components/checkInformation/traditionalInfoCheck'
@@ -166,6 +168,46 @@ export default new Router({
         path: '/projectCheck',
         name: '项目信息审核',
         component: projectCheck
+    },
+    {
+        path: '/constructionEnInQuery',
+        name: '传统企业信息查询',
+        component: homePage
+    },
+    {
+        path: '/componentEnInQuery',
+        name: '构件企业信息查询',
+        component: homePage
+    },
+    {
+        path: '/subUnitEnInQuery',
+        name: '部品企业信息查询',
+        component: homePage
+    },
+    {
+        path: '/machineryEnInQuery',
+        name: '设备企业信息查询',
+        component: homePage
+    },
+    {
+        path: '/projectQuery',
+        name: '项目信息查询',
+        component: queryProject
+    },
+    {
+        path: '/query1',
+        name: '统计行业信息1',
+        component: homePage
+    },
+    {
+        path: '/query2',
+        name: '统计行业信息2',
+        component: homePage
+    },
+    {
+        path: '/query3',
+        name: '统计行业信息3',
+        component: homePage
     }
     ]
 })
