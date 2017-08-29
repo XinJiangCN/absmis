@@ -2,7 +2,7 @@
     <div>
     <el-row>
         <el-col :span="2">
-            <el-button @click="addDialogVisible = true">增加</el-button>
+            <el-button @click="setCurrent()">增加</el-button>
         </el-col>
         <el-col :span="2" >
             <el-button @click="deleteRowData">删除</el-button>
@@ -12,23 +12,24 @@
         </el-col>
     </el-row>
     <el-row>
-        <el-col :span="4">
+        <el-col :span="5">
             <el-table
             :data="subUnitEnIndustrializationTable"
             stripe
             border
             style="width:98%"
-            @selection-change="handleSelectionChange">
+            highlight-current-row
+            @current-change="handleCurrentChange">
                 <el-table-column
                   label="序号"
-                  type="selection"
+                  type="index"
                   width="55">
                 </el-table-column>
                 <el-table-column label="填报时间" prop="declareTime"> 
                 </el-table-column>
             </el-table>
         </el-col>
-        <el-col :span="20">
+        <el-col :span="19">
             <el-form :model="subUnitEnIndustrializationForm" label-width="100px">
                 <el-form-item>
                      <el-row>
@@ -179,7 +180,6 @@
                     <el-button @click="submitEditForm">提交</el-button>
                 </div>
             </div>
-                
         </el-col>
        </el-row>
         <msg-dialog ref="msgDialog"></msg-dialog>
@@ -204,10 +204,12 @@ export default{
                     }
                 }]
             },
+            //获取表格数据
+            subUnitEnIndustrializationTable:[],
             //被选中的行
-            selectedRows:[],
+            selectedRows:null,
             //删除行的id
-            ids:[],
+            id:'',
             //控制是提交还是修改
             submitVisible:true,
             //部品产业化的属性
@@ -216,8 +218,13 @@ export default{
         }
     },
     methods:{
-        handleSelectionChange(selected){
+        setCurrent(row) {
+            this.subUnitEnIndustrializationForm={integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:''}
+        },
+        handleCurrentChange(selected){
             this.selectedRows = selected
+            this.subUnitEnIndustrializationForm = this.selectedRows
+
         },
         getSubUnitEnIndustrializationTable(){
             var url = this.HOST+'/findAllSubUnitEnIndustrializations'
@@ -237,9 +244,9 @@ export default{
                 }
             }
             this.$http.post(url,this.subUnitEnIndustrializationForm).then(response=>{
-                    this.$refs.msgDialog.notify("数据提交成功")
+                    this.$refs.msgDialog.notify("数据添加成功")
                 }).catch(error=>{
-                    this.$refs.msgDialog.confirm("数据提交失败")
+                    this.$refs.msgDialog.confirm("数据添加失败")
                 })
                 this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:''}
             },
@@ -248,12 +255,8 @@ export default{
                 if (this.selectedRows.length == 0) {
                   this.$refs.msgDialog.confirm("请选择您要删除的产业化信息！")
                 } else {
-                    var i = 0;
-                    this.selectedRows.forEach(item => {
-                        this.ids[i] = item.id;
-                        i = i + 1
-                    })
-                    var url=this.HOST + "/deleteSubUnitEnIndustrializations?ids=" + this.ids
+                    this.id = this.selectedRows.id
+                    var url=this.HOST + "/deleteSubUnitEnIndustrialization?id=" + this.id
                     this.$http.delete(url).then(response => {
                         this.getSubUnitEnIndustrializationTable();
                         this.$refs.msgDialog.notify("删除成功")
@@ -264,13 +267,10 @@ export default{
             },
             //点击修改之后运行本方法
             showEditDialogVisible() {
-                if (this.selectedRows.length == 1) {
-                    this.submitVisible = false
-                    this.subUnitEnIndustrializationForm = this.selectedRows[0]
-                } else if (this.selectedRows.length == 0) {
-                    this.$refs.msgDialog.confirm("请选择您要修改的产业化信息！");
+                if (this.selectedRows.length == 0) {
+                    this.$refs.msgDialog.confirm("请选择您要修改的产业化信息！")
                 } else {
-                    this.$refs.msgDialog.confirm("仅可选择一个产业化信息进行修改！")
+                    this.submitVisible = false
                 }
             },
             //提交修改信息
@@ -284,10 +284,10 @@ export default{
               }
               this.$http.put(url,this.subUnitEnIndustrializationForm).then(response=>{
                 this.getSubUnitEnIndustrializationTable()
-                this.$refs.msgDialog.notify("数据提交成功")
+                this.$refs.msgDialog.notify("数据修改成功")
                 this.editDialogVisible = false
               }).catch(error=>{
-                this.$refs.msgDialog.confirm("数据提交失败")
+                this.$refs.msgDialog.confirm("数据修改失败")
               })
               this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:''}         
             },
