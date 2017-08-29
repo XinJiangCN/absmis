@@ -44,6 +44,25 @@
 
             <el-tab-pane label="项目单位工程信息审核" 
             name="unitEngineeringInfoCheck">
+              <el-row>
+                  <unitEngineering-information-table 
+                  :unitEngineeringTableData="unitEngineeringTableData"
+                  @handleSelectionChange="handleSelectionChange">
+                  </unitEngineering-information-table>
+              </el-row>
+              <el-row>
+                  <el-col :span="24">
+                      <el-pagination
+                          @size-change="handleSizeChangeU"
+                          @current-change="handleCurrentChangeU"
+                          :current-page="currentPageU"
+                          :page-sizes="[5, 10, 15, 20]"
+                          :page-size="pageSizeU"
+                          layout="total,sizes,prev,pager,next,jumper"
+                          :total="totalNumU">
+                      </el-pagination>
+                  </el-col>
+              </el-row>
                 
             </el-tab-pane>
         </el-tabs>
@@ -59,16 +78,21 @@
   import projectInfoCheckTable from '../projectCheck/projectInfoCheckTable'
   import  queryStartingTime from '../projectInfo/queryStartingTime'
   import  msgDialog from '../common/msgDialog'
+  import unitEngineeringInformationTable from '../projectInfo/unitEngineeringInformationTable'
   import projectInfoCheckPanel from '../projectCheck/projectInfoCheckPanel'
   export default {
     data: function() {
       return {
         pageSize:5,
         currentPage:1,
+        pageSizeU:5,
+        currentPageU:1,
         queryStartingTime:'',
         totalNum:100,
+        totalNumU:100,
         clickRowId:'1',
         projectId:'',
+        unitEngineeringTableData: [],
         //用来显示表格中的数据
         projectTableData: [],
         //提示信息框初始时不显示
@@ -175,13 +199,22 @@
           this.findAllProjects()
         },
        handleSizeChange(currentSize) {
-        this.pageSize = currentSize
+        this.pageSize= currentSize
         this.findAllProjects()
+       },
+       handleCurrentChangeU(currentPage){
+          this.currentPageU = currentPage
+          this.findAllUnitEngineerings()
+        },
+       handleSizeChangeU(currentSize) {
+        this.pageSizeU = currentSize
+        this.findAllUnitEngineerings()
        },
        clickRow(selectedRow) {
         this.clickRowId = selectedRow.id
         this.projectId = selectedRow.id
         this.findCurrentProjectInfo()
+        this.findAllUnitEngineerings()
        },
        handleSelectionChange(selectedRows) {
         this.tableSelectedRows = selectedRows
@@ -200,6 +233,18 @@
             })
 
       },
+       //查询所要显示的表格，或者刷新该表格使用
+      findAllUnitEngineerings() {
+        var url = this.HOST + "/displayAllUnitEngineeringsByPro?id="+this.projectId+"&page="+this.currentPageU+"&rows="+this.pageSizeU
+        //初始显示表格用的查询数据
+        //当前多少页 一页多少条
+        this.$http.get(url).then(response => {
+          this.unitEngineeringTableData = response.data.rows;
+          this.totalNumU = response.data.total;
+        }).catch(error => {
+          this.$refs.msgDialog.confirm("查询失败")
+        })
+      },
       findAllProjects(){
         this.$http.get(this.HOST + "/displayAllProjects?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
           this.projectTableData = response.data.rows;
@@ -217,7 +262,8 @@
       msgDialog,
       queryStartingTime,
       projectInfoCheckTable,
-      projectInfoCheckPanel
+      projectInfoCheckPanel,
+      unitEngineeringInformationTable
     }
   }
 </script>
