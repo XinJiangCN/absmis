@@ -18,6 +18,12 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
+      label="开工时间"
+      prop="startingTime"
+      width="180"
+      show-overflow-tooltip>
+    </el-table-column>
+    <el-table-column
       label="建筑面积"
        width="180"
       prop="constructionArea"
