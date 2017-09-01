@@ -33,10 +33,15 @@ import projectCheck from '../components/projectCheck/projectCheck'
 import projectByEstateOwner from '../components/projectInfo/projectByEstateOwner'
 //管理部门查询
 import queryProject from '../components/supervisor/queryProject.vue'
+<<<<<<< HEAD
 import queryMachineryEn from '../components/supervisor/queryMachineryEn.vue'
 import querySubUnitEn from '../components/supervisor/querySubUnitEn.vue'
 
 
+=======
+import constructionEnInQuery from '../components/supervisor/constructionEnInQuery.vue'
+import componentEnInQuery from '../components/supervisor/componentEnInQuery.vue'
+>>>>>>> e6d005269e67af9637cfa4713f808389fe0203ba
 //check basic information
 import traditionalInfoCheck from '../components/checkInformation/traditionalInfoCheck'
 import nonTraditionalInfoCheck from '../components/checkInformation/nonTraditionalInfoCheck'
@@ -175,12 +180,12 @@ export default new Router({
     {
         path: '/constructionEnInQuery',
         name: '传统企业信息查询',
-        component: homePage
+        component: constructionEnInQuery
     },
     {
         path: '/componentEnInQuery',
         name: '构件企业信息查询',
-        component: homePage
+        component: componentEnInQuery
     },
     {
         path: '/subUnitEnInQuery',

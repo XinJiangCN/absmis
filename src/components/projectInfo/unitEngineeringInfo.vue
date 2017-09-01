@@ -125,6 +125,7 @@
         //定义添加和修改的对象初始值为空
         unitEngineeringForAddForm: {
           name: '', 
+          startingTime:'',
           constructionArea: '',
           undergroundNum: '', 
           overgroundNum: '', 
@@ -223,6 +224,7 @@
           // this.unitEngineeringForUpdateForm.checkedStatus = this.tableSelectedRows[0].checkedStatus;
           // this.unitEngineeringForUpdateForm.checkedStatus.id = this.tableSelectedRows[0].checkedStatus.id;
           this.unitEngineeringForUpdateForm.name = this.tableSelectedRows[0].name;
+          this.unitEngineeringForUpdateForm.startingTime = this.tableSelectedRows[0].startingTime;
           this.unitEngineeringForUpdateForm.constructionArea = this.tableSelectedRows[0].constructionArea;
           this.unitEngineeringForUpdateForm.undergroundNum = this.tableSelectedRows[0].undergroundNum;
           this.unitEngineeringForUpdateForm.overgroundNum = this.tableSelectedRows[0].overgroundNum;
@@ -283,7 +285,8 @@
           this.$refs.msgDialog.confirm("添加失败")
         })
          this.unitEngineeringForAddForm = {
-          name: '', 
+          name: '',
+          startingTime:'', 
           constructionArea: '',
           undergroundNum: '', 
           overgroundNum: '', 
@@ -357,6 +360,7 @@
         this.addDialogVisible = false;
         this.unitEngineeringForAddForm = {
           name: '', 
+          startingTime:'',
           constructionArea: '',
           undergroundNum: '', 
           overgroundNum: '', 

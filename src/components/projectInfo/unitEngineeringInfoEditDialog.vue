@@ -4,6 +4,17 @@
 	        <el-input v-model="unitEngineeringDialog.name">
 	        </el-input>
 	    </el-form-item>
+	    <el-form-item label="工程开工时间">
+			    <el-row :span="20">
+			    <el-date-picker
+			      v-model="unitEngineeringDialog.startingTime"
+			      align="right"
+			      type="date"
+			      placeholder="选择日期"
+			      :picker-options="pickerOptions1">
+			    </el-date-picker>
+			    </el-row>
+		</el-form-item>
 	    <el-form-item label="建筑面积">
 	        <el-input v-model="unitEngineeringDialog.constructionArea">
 	        </el-input>
