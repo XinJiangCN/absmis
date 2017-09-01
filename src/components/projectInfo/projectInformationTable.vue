@@ -6,8 +6,7 @@
     tooltip-effect="dark"
     style="width:100%"
     highlight-current-row
-    @row-click="rowClick"
-    @selection-change="handleSelectionChange">
+    @row-click="rowClick">
     <el-table-column
       type="selection"
       width="55">
@@ -34,10 +33,10 @@
     },
     props:['projectTableData'],
     methods:{
-      handleSelectionChange(selectedRows){
-        this.selectedRows = selectedRows
-        this.$emit('handleSelectionChange',this.selectedRows)
-      },
+      // handleSelectionChange(selectedRows){
+      //   this.selectedRows = selectedRows
+      //   this.$emit('handleSelectionChange',this.selectedRows)
+      // },
       rowClick(selectedRow){
         this.currentRow = selectedRow
         this.$emit('clickRow',this.currentRow)

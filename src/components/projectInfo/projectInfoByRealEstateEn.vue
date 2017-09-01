@@ -256,10 +256,10 @@
     		}
     	},
     	submitForm(){
-			var url = this.HOST + "/addProjectByEstateOwner"
+			var url = this.HOST + "/addProjectByRealEstateEn"
         	this.$http.post(url, this.projectForm).then(response => {
         		console.log("成功了")
-        		this.$emit('findAllProjectsByEstateOwner')
+        		this.$emit('findAllProjectsByRealEstateEn')
           	this.$refs.msgDialog.notify("添加成功")
         	}).catch(error => {
           	this.$refs.msgDialog.confirm("添加失败l")

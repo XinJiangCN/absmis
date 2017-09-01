@@ -1,32 +1,21 @@
 <template>
-<div id="projectInfoByEstate">
+<div id="projectInfoByEstateOwner">
    <div>
      <el-row :gutter="8">
      <!-- 第一列 -->
       <el-col :span="8">
         <el-row>
           <el-col :span="24">
-            <el-collapse>
-                <el-collapse-item title="开工起止时间" name="1">
-                    <div>
-                    <el-date-picker
-                    v-model="queryStartingTime"
-                    type="daterange"
-                    placeholder="选择日期范围">
-                  </el-date-picker>        
-                  <el-button type="text" :plain="true" @click="findByStartingTime">查询</el-button>
-                  </div>
-                </el-collapse-item>
-            </el-collapse>
+           <queryStartingTime :queryStartingTime="queryStartingTime" @findByStartingTime="findByStartingTime"> 
+           </queryStartingTime>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <!-- 企业账号维护（设计单位） -->
+            <!-- 企业账号维护（设计单位）@clickRow="clickRow" -->
             <project-information-table 
             :projectTableData="projectTableData"
-            @clickRow="clickRow"
-            @handleSelectionChange="handleSelectionChange"></project-information-table>
+            @clickRow="clickRow"></project-information-table>
           </el-col>
         </el-row>
         <el-row>
@@ -48,7 +37,7 @@
         <el-tabs v-model="activeName2" type="card">
             <el-tab-pane label="项目基本信息" 
             name="projectInfo">
-                <project-info-by-estate-owner @findAllProjectsByRealEstateEn="findAllProjectsByRealEstateEn" :projectId="clickRowId" ref="findProjectInfo">
+                <project-info-by-estate-owner @findAllProjectsByEstateOwner="findAllProjectsByEstateOwner" :projectId="clickRowId" ref="findProjectInfoByEstateOwner">
                 </project-info-by-estate-owner>
             </el-tab-pane>
 
@@ -87,7 +76,8 @@
         }
       },
       methods: {
-       findByStartingTime(){
+       findByStartingTime(param){
+          this.queryStartingTime = param
           this.$http.get(this.HOST + "/queryProjectByEstateOwner?startTime="+this.smallFormat(this.queryStartingTime[0])+"&endTime="+this.smallFormat(this.queryStartingTime[1])+"&page="+this.currentPage+"&rows="+this.pageSize).then(response => {
 
           this.projectTableData = response.data.rows;
@@ -96,31 +86,30 @@
           }).catch(error => {
           this.$refs.msgDialog.confirm("查询失败")
           })
-
         },
         smallFormat(data){
             return moment(data).format("YYYY-MM-DD")
         },
         handleCurrentChange(currentPage){
           this.currentPage = currentPage
-          this.findAllProjectsByRealEstateEn()
+          this.findAllProjectsByEstateOwner()
         },
        handleSizeChange(currentSize) {
         this.pageSize = currentSize
-        this.findAllProjectsByRealEstateEn()
+        this.findAllProjectsByEstateOwner()
        },
        clickRow(selectedRow) {
         this.clickRowId = selectedRow.id
         this.$refs.findAllUnitEngineerings.findAllUnitEngineerings()
-        this.$refs.findProjectInfo.findCurrentProjectInfo()
+        this.$refs.findProjectInfoByEstateOwner.findCurrentProjectInfo()
        },
        handleSelectionChange(selectedRows) {
-        this.tableSelectedRows = selectedRows
+        console.log("*********")
+        this.clickRowId = selectedRows[0].id
+        this.$refs.findAllUnitEngineerings.findAllUnitEngineerings()
+        this.$refs.findProjectInfoByEstateOwner.findCurrentProjectInfo()
        },
-       handleSelectionChange(selectedRows) {
-        this.tableSelectedRows = selectedRows
-       },
-      findAllProjectsByRealEstateEn(){
+      findAllProjectsByEstateOwner(){
         this.$http.get(this.HOST + "/displayAllProjectByEstateOwners?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
           this.projectTableData = response.data.rows;
           this.totalNum = response.data.total;
@@ -131,7 +120,7 @@
 
     },
     created() {
-      this.findAllProjectsByRealEstateEn()
+      this.findAllProjectsByEstateOwner()
     },
     components: {
       msgDialog,

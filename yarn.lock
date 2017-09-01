@@ -154,8 +154,12 @@ async-validator@1.6.9:
 <<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/async-validator/-/async-validator-1.6.9.tgz#a8309daa8b83421cdbd4628e026d6abb25192d34"
 =======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/async-validator/-/async-validator-1.6.9.tgz#a8309daa8b83421cdbd4628e026d6abb25192d34"
+=======
   resolved "http://registry.npm.taobao.org/async-validator/download/async-validator-1.6.9.tgz#a8309daa8b83421cdbd4628e026d6abb25192d34"
 >>>>>>> 23d77f02262dda490d57b4cde249843b39985845
+>>>>>>> 9fcd171267f6b7c0ac9b471ac37d8d7c33b89023
 
 async@^2.1.2:
   version "2.5.0"
@@ -202,8 +206,12 @@ axios@^0.16.2:
 <<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.16.2.tgz#ba4f92f17167dfbab40983785454b9ac149c3c6d"
 =======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.16.2.tgz#ba4f92f17167dfbab40983785454b9ac149c3c6d"
+=======
   resolved "http://registry.npm.taobao.org/axios/download/axios-0.16.2.tgz#ba4f92f17167dfbab40983785454b9ac149c3c6d"
 >>>>>>> 23d77f02262dda490d57b4cde249843b39985845
+>>>>>>> 9fcd171267f6b7c0ac9b471ac37d8d7c33b89023
   dependencies:
     follow-redirects "^1.2.3"
     is-buffer "^1.1.5"
@@ -369,8 +377,12 @@ babel-helper-vue-jsx-merge-props@^2.0.0:
 <<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-2.0.2.tgz#aceb1c373588279e2755ea1cfd35c22394fd33f8"
 =======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-2.0.2.tgz#aceb1c373588279e2755ea1cfd35c22394fd33f8"
+=======
   resolved "http://registry.npm.taobao.org/babel-helper-vue-jsx-merge-props/download/babel-helper-vue-jsx-merge-props-2.0.2.tgz#aceb1c373588279e2755ea1cfd35c22394fd33f8"
 >>>>>>> 23d77f02262dda490d57b4cde249843b39985845
+>>>>>>> 9fcd171267f6b7c0ac9b471ac37d8d7c33b89023
 
 babel-helpers@^6.24.1:
   version "6.24.1"
@@ -1386,8 +1398,12 @@ deepmerge@^1.2.0:
 <<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-1.5.0.tgz#00bc5b88fd23b8130f9f5049071c3420e07a5465"
 =======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-1.5.0.tgz#00bc5b88fd23b8130f9f5049071c3420e07a5465"
+=======
   resolved "http://registry.npm.taobao.org/deepmerge/download/deepmerge-1.5.0.tgz#00bc5b88fd23b8130f9f5049071c3420e07a5465"
 >>>>>>> 23d77f02262dda490d57b4cde249843b39985845
+>>>>>>> 9fcd171267f6b7c0ac9b471ac37d8d7c33b89023
 
 defined@^1.0.0:
   version "1.0.0"
@@ -1514,8 +1530,12 @@ element-ui@^1.4.1:
 <<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-1.4.1.tgz#f4471cadb43dc779c3098dc73634aea94d03f255"
 =======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-1.4.1.tgz#f4471cadb43dc779c3098dc73634aea94d03f255"
+=======
   resolved "http://registry.npm.taobao.org/element-ui/download/element-ui-1.4.1.tgz#f4471cadb43dc779c3098dc73634aea94d03f255"
 >>>>>>> 23d77f02262dda490d57b4cde249843b39985845
+>>>>>>> 9fcd171267f6b7c0ac9b471ac37d8d7c33b89023
   dependencies:
     async-validator "1.6.9"
     babel-helper-vue-jsx-merge-props "^2.0.0"
@@ -1757,8 +1777,12 @@ follow-redirects@^1.2.3:
 <<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.2.4.tgz#355e8f4d16876b43f577b0d5ce2668b9723214ea"
 =======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.2.4.tgz#355e8f4d16876b43f577b0d5ce2668b9723214ea"
+=======
   resolved "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.2.4.tgz#355e8f4d16876b43f577b0d5ce2668b9723214ea"
 >>>>>>> 23d77f02262dda490d57b4cde249843b39985845
+>>>>>>> 9fcd171267f6b7c0ac9b471ac37d8d7c33b89023
   dependencies:
     debug "^2.4.5"
 
@@ -3828,8 +3852,12 @@ throttle-debounce@^1.0.1:
 <<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-1.0.1.tgz#dad0fe130f9daf3719fdea33dc36a8e6ba7f30b5"
 =======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-1.0.1.tgz#dad0fe130f9daf3719fdea33dc36a8e6ba7f30b5"
+=======
   resolved "http://registry.npm.taobao.org/throttle-debounce/download/throttle-debounce-1.0.1.tgz#dad0fe130f9daf3719fdea33dc36a8e6ba7f30b5"
 >>>>>>> 23d77f02262dda490d57b4cde249843b39985845
+>>>>>>> 9fcd171267f6b7c0ac9b471ac37d8d7c33b89023
 
 time-stamp@^2.0.0:
   version "2.0.0"

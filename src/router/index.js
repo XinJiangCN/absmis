@@ -23,15 +23,26 @@ import machineryEnBasicInfo from '../components/basicInfo/machineryEnBasicInfo'
 //industrialization info
 import subUnitEnIndustrialization from '../components/industrializationInfo/subUnitEnIndustrialization.vue'
 import machineryEnIndustrialization from '../components/industrializationInfo/machineryEnIndustrialization.vue'
+import realEstateEnIndustrialization from'../components/industrializationInfo/realEstateEnIndustrialization.vue'
+import componentEnIndustrialization from '../components/industrializationInfo/ComponentEnIndustrialization.vue'
+import designerIndustrialization from '../components/industrializationInfo/designerIndustrialization.vue'
+import builderIndustrialization from '../components/industrializationInfo/builderIndustrialization.vue'
 //项目信息提交+审核
-import project from '../components/projectInfo/project.vue'
+import projectByRealEstateEn from '../components/projectInfo/projectByRealEstateEn'
 import projectCheck from '../components/projectCheck/projectCheck'
 import projectByEstateOwner from '../components/projectInfo/projectByEstateOwner'
+//管理部门查询
+import queryProject from '../components/supervisor/queryProject.vue'
+import queryMachineryEn from '../components/supervisor/queryMachineryEn.vue'
+import querySubUnitEn from '../components/supervisor/querySubUnitEn.vue'
+
 
 //check basic information
 import traditionalInfoCheck from '../components/checkInformation/traditionalInfoCheck'
 import nonTraditionalInfoCheck from '../components/checkInformation/nonTraditionalInfoCheck'
-
+//check industrializationInfo
+import traditionalInCheck from '../components/checkIndustrilizationInfo/traditionalInCheck.vue'
+import componentEnInCheck from '../components/checkIndustrilizationInfo/componentEnInCheck.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -99,22 +110,22 @@ export default new Router({
     {
         path: '/realEstateEnIn',
         name: '房地产-产业化信息',
-        component: changePasswd
+        component: realEstateEnIndustrialization
     },
     {
         path: '/designerIn',
         name: '设计单位-产业化信息',
-        component: changePasswd
+        component: designerIndustrialization
     },
     {
         path: '/builderIn',
         name: '施工单位-产业化信息',
-        component: changePasswd
+        component: builderIndustrialization
     },
     {
         path: '/componentEnIn',
         name: '构件企业-产业化信息',
-        component: changePasswd
+        component: componentEnIndustrialization
     },
     {
         path:'/machineryEnIn',
@@ -129,12 +140,12 @@ export default new Router({
     {
         path: '/traditionalInCheck',
         name: '传统企业-产业化审核',
-        component: changePasswd
+        component: traditionalInCheck
     },
     {
         path: '/componentEnInCheck',
         name: '构件企业-产业化审核',
-        component: changePasswd
+        component: componentEnInCheck
     },
     {
         path: '/subUnitEnInCheck',
@@ -149,7 +160,7 @@ export default new Router({
     {
         path: '/realEstateEnProject',
         name: '房地产-项目信息',
-        component: project
+        component: projectByRealEstateEn
     },
     {
         path: '/estateOwnerProject',
@@ -160,6 +171,46 @@ export default new Router({
         path: '/projectCheck',
         name: '项目信息审核',
         component: projectCheck
+    },
+    {
+        path: '/constructionEnInQuery',
+        name: '传统企业信息查询',
+        component: homePage
+    },
+    {
+        path: '/componentEnInQuery',
+        name: '构件企业信息查询',
+        component: homePage
+    },
+    {
+        path: '/subUnitEnInQuery',
+        name: '部品企业信息查询',
+        component: querySubUnitEn
+    },
+    {
+        path: '/machineryEnInQuery',
+        name: '设备企业信息查询',
+        component: queryMachineryEn
+    },
+    {
+        path: '/projectQuery',
+        name: '项目信息查询',
+        component: queryProject
+    },
+    {
+        path: '/query1',
+        name: '统计行业信息1',
+        component: homePage
+    },
+    {
+        path: '/query2',
+        name: '统计行业信息2',
+        component: homePage
+    },
+    {
+        path: '/query3',
+        name: '统计行业信息3',
+        component: homePage
     }
     ]
 })

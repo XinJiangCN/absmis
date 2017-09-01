@@ -187,7 +187,6 @@
 </template>
 <script>
 import msgDialog from '../common/msgDialog'
-
 export default{
     data(){
         return{
@@ -214,7 +213,6 @@ export default{
             submitVisible:true,
             //部品产业化的属性
             subUnitEnIndustrializationForm:{integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:''}
-
         }
     },
     methods:{
@@ -224,7 +222,6 @@ export default{
         handleCurrentChange(selected){
             this.selectedRows = selected
             this.subUnitEnIndustrializationForm = this.selectedRows
-
         },
         getSubUnitEnIndustrializationTable(){
             var url = this.HOST+'/findAllSubUnitEnIndustrializations'
@@ -291,8 +288,6 @@ export default{
               })
               this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:''}         
             },
-
-
     },
     created(){
         this.getSubUnitEnIndustrializationTable()
