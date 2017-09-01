@@ -222,6 +222,10 @@ export default{
         handleCurrentChange(selected){
             this.selectedRows = selected
             this.subUnitEnIndustrializationForm = this.selectedRows
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5bbdbe0ef2bd4a68eda00856c82461c2076d0f01
         },
         getSubUnitEnIndustrializationTable(){
             var url = this.HOST+'/findAllSubUnitEnIndustrializations'
