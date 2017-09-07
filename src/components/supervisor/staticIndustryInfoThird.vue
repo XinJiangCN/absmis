@@ -230,6 +230,7 @@ import msgDialog from '../common/msgDialog'
 				var url = this.HOST + "/queryQuarterProject?year="+this.selectedYearForProjectStatus+"&quarter="+this.selectedQuarterForProjectStatus
 				this.$http.get(url).then(response=>{
 					this.projectStatusInfoData=response.data
+					this.$refs.industryMsg.notify("查询成功")
 				}).catch(error=>{
 					this.$refs.industryMsg.confirm("查询失败")
 				})
@@ -238,6 +239,7 @@ import msgDialog from '../common/msgDialog'
 				var url = this.HOST + "/queryQuarterFormProject?year="+this.selectedYearForIndustryInfoOne+"&quarter="+this.selectedQuarterForIndustryInfoOne
 				this.$http.get(url).then(response=>{
 					this.industryInfoDataOne=response.data
+					this.$refs.industryMsg.notify("查询成功")
 				}).catch(error=>{
 					this.$refs.industryMsg.confirm("查询失败")
 				})
@@ -246,6 +248,7 @@ import msgDialog from '../common/msgDialog'
 				var url = this.HOST + "/queryQuarterUnitEngineering?year="+this.selectedYearForIndustryInfoTwo+"&quarter="+this.selectedQuarterForIndustryInfoTwo
 				this.$http.get(url).then(response=>{
 					this.industryInfoDataTwo=response.data
+					this.$refs.industryMsg.notify("查询成功")
 				}).catch(error=>{
 					this.$refs.industryMsg.confirm("查询失败")
 				})
