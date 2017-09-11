@@ -37,7 +37,11 @@ import queryMachineryEn from '../components/supervisor/queryMachineryEn.vue'
 import querySubUnitEn from '../components/supervisor/querySubUnitEn.vue'
 import constructionEnInQuery from '../components/supervisor/constructionEnInQuery.vue'
 import componentEnInQuery from '../components/supervisor/componentEnInQuery.vue'
+
+//test
+import test from '../components/supervisor/test.vue'
 import staticIndustryInfoThird from '../components/supervisor/staticIndustryInfoThird.vue'
+
 
 //check basic information
 import traditionalInfoCheck from '../components/checkInformation/traditionalInfoCheck'
@@ -202,7 +206,7 @@ export default new Router({
     {
         path: '/query1',
         name: '统计行业信息1',
-        component: homePage
+        component: test
     },
     {
         path: '/query2',
