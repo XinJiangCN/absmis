@@ -1,42 +1,35 @@
 <template>
     <el-tabs v-model="activeName2" type="card">
-        <el-tab-pane label="设计单位" 
-            name="designerAccountMaintain">
+        <el-tab-pane label="设计单位">
             <designer-account-maintain>
             </designer-account-maintain>
         </el-tab-pane>
 
-        <el-tab-pane label="房地产企业" 
-            name="realEstateEnAccountMaintain">
+        <el-tab-pane label="房地产企业">
             <real-estate-en-account-maintain>
             </real-estate-en-account-maintain>
         </el-tab-pane>
 
-        <el-tab-pane label="施工单位" 
-            name="builderAccountMaintain">
+        <el-tab-pane label="施工单位">
             <builder-account-maintain>
             </builder-account-maintain>
         </el-tab-pane>
 
-        <el-tab-pane label="构件生产企业" 
-            name="componentEnAccountMaintain">
+        <el-tab-pane label="构件生产企业">
             <component-en-account-maintain>
             </component-en-account-maintain>
         </el-tab-pane>
 
-        <el-tab-pane label="部品生产企业" 
-            name="subUnitEnAccountMaintain">
+        <el-tab-pane label="部品生产企业">
              <sub-unit-en-account-maintain></sub-unit-en-account-maintain>
         </el-tab-pane>
 
-        <el-tab-pane label="设备生产企业" 
-            name="machineryEnAccountMaintain">
+        <el-tab-pane label="设备生产企业">
             <machinery-en-account-maintain>
             </machinery-en-account-maintain>
         </el-tab-pane>
         
-        <el-tab-pane label="建设单位" 
-            name="estateOwnerAccountMaintain">
+        <el-tab-pane label="建设单位">
             <estate-owner-account-maintain>
             </estate-owner-account-maintain>   
         </el-tab-pane>

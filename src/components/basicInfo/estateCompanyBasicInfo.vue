@@ -33,7 +33,7 @@
         </el-row>
         <el-row>
             <el-col :span="18">
-                <el-form-item label="本单位从事装配式建筑当前累计">
+                <el-form-item label="本单位从事装配式建筑初始累计">
                     <el-input v-model="estateInformation.cumulant"></el-input>
                 </el-form-item>
             </el-col>
