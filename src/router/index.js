@@ -37,21 +37,9 @@ import queryMachineryEn from '../components/supervisor/queryMachineryEn.vue'
 import querySubUnitEn from '../components/supervisor/querySubUnitEn.vue'
 import constructionEnInQuery from '../components/supervisor/constructionEnInQuery.vue'
 import componentEnInQuery from '../components/supervisor/componentEnInQuery.vue'
-<<<<<<< HEAD
-<<<<<<< HEAD
-//test
-import test from '../components/supervisor/test.vue'
-=======
-import staticIndustryInfoThird from '../components/supervisor/staticIndustryInfoThird.vue'
->>>>>>> 1d9e9446f08e8df27def51c41b53634eaf1dc04a
-=======
-
 //test
 import test from '../components/supervisor/test.vue'
 import staticIndustryInfoThird from '../components/supervisor/staticIndustryInfoThird.vue'
-
->>>>>>> a4502a2cbb331008fc9358f7216b399ff784f218
-
 //check basic information
 import traditionalInfoCheck from '../components/checkInformation/traditionalInfoCheck'
 import nonTraditionalInfoCheck from '../components/checkInformation/nonTraditionalInfoCheck'
