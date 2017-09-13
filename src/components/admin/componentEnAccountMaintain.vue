@@ -119,7 +119,7 @@
 
         <el-form>
             <label>
-            <h3>您确定重置此用户的密码吗？</h3>
+                您确定重置此用户的密码吗？
             </label>
         </el-form>
         <div slot="footer">
@@ -148,6 +148,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                 componentEnTableData:[],
                 //用来绑定搜索框中的内容
                 searchContent:'',
+                searchContentFinal:'',
                 //增加用的对话框，初始为不显示
                 addDialogVisible:false,
                 //修改用，初始不显示对话框
@@ -178,6 +179,8 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
         },
         methods: {
             handleSearch(){
+                this.searchContentFinal = this.searchContent
+                this.findAllComponentEns()
             },
             //选中行之后，触发本方法
             handleSelectionChange(selectedRows){
@@ -282,7 +285,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             //查询所要显示的表格，或者刷新该表格使用
             findAllComponentEns(){
                 //初始显示表格用的查询数据
-                var url= this.HOST + "/displayAllComponentEns?page="+this.currentPage+"&rows="+this.currentPageSize
+                var url= this.HOST + "/queryComponentEnByName?nameQuery="+this.searchContentFinal+"&page="+this.currentPage+"&rows="+this.currentPageSize
                 this.$http.get(url).then(response=>{
                     this.componentEnTableData = response.data.rows
                     this.totalNumber = response.data.total
@@ -300,9 +303,6 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                 this.currentPage = newPage
                 this.findAllComponentEns()
             }
-        },
-        //watch负责监听，当监听对象发生变化时，运行对应的方法
-        watch: {
         },
         //页面加载时运行
         created(){

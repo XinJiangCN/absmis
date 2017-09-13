@@ -33,6 +33,16 @@
             <estate-owner-account-maintain>
             </estate-owner-account-maintain>   
         </el-tab-pane>
+
+        <el-tab-pane label="业务管理员">
+            <business-administrator-maintain>
+            </business-administrator-maintain>   
+        </el-tab-pane>
+
+        <el-tab-pane label="管理员">
+            <administrator-maintain>
+            </administrator-maintain>   
+        </el-tab-pane>
       </el-tabs>
 </template>
 
@@ -44,6 +54,8 @@ import componentEnAccountMaintain from './componentEnAccountMaintain'
 import subUnitEnAccountMaintain from './subUnitEnAccountMaintain'
 import machineryEnAccountMaintain from './machineryEnAccountMaintain'
 import estateOwnerAccountMaintain from './estateOwnerAccountMaintain'
+import businessAdministratorMaintain from './businessAdministratorMaintain'
+import administratorMaintain from './administratorMaintain'
 export default{
     components:{
         designerAccountMaintain,
@@ -52,7 +64,9 @@ export default{
         componentEnAccountMaintain,
         subUnitEnAccountMaintain,
         machineryEnAccountMaintain,
-        estateOwnerAccountMaintain
+        estateOwnerAccountMaintain,
+        businessAdministratorMaintain,
+        administratorMaintain
     }
 }
 </script>
