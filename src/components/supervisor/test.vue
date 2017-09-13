@@ -82,8 +82,8 @@
         this.findAllProjectCategorys()
        },
         findAllProjectCategorys() {
-            this.$http.get(this.HOST + "/findAll?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
-              this.projectCategorys = response.data.rows;
+            this.$http.get(this.HOST + "/testPage?page="+this.currentPage+"&rows="+this.pageSize).then(response => {
+              this.projectCategorys = response.data.applicationStructureType;
               this.totalNum = response.data.total;
               console.log(this.totalNum+"size")
             }).catch(error => {
