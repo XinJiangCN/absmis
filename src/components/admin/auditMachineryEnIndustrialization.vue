@@ -29,9 +29,10 @@
                 stripe
                 border
                 style="width:75%"
-                @selection-change="handleSelectionChange">
+                highlight-current-row
+                @current-change="handleSelectionChange">
                     <el-table-column
-                      type="selection"
+                      type="index"
                       width="55">
                     </el-table-column>
                     <el-table-column label="企业名称" prop="machineryEn.name" > 
@@ -82,7 +83,7 @@
                 //审核对话框
                 auditDialogVisible: false,
                 //被选择的行
-                selectedRows:[],
+                selectedRows:null,
                 //选择行企业的id
                 id:'',
                 //显示内容
@@ -136,11 +137,7 @@
             },
            //点击行触发的事件
             showMachineryEnIndustrializationData() {
-                if (this.selectedRows.length == 1) {        
-                    this.machineryEnTable = this.selectedRows[0]
-                } else {
-                    this.$refs.msgDialog.confirm("一次只能对一个企业进行审核")     
-                }
+                this.machineryEnTable = this.selectedRows
             },
             //点击通过
             passAudit(){
@@ -155,9 +152,10 @@
             },
             //点击驳回
              rebutAudit(){
-                this.machineryEnTable.checkedStatus={id:3}
+                this.machineryEnTable.checkedStatus={id:2}
                 var url = this.HOST+'/updateMachineryEnIndustrialization'
                 this.$http.put(url,this.machineryEnTable).then(response=>{
+                    this.findAllMachineryEnIndustrializationsTable()
                     this.$refs.msgDialog.notify("修改审核状态为修改重申成功")
                 }).catch(error => {
                     this.$refs.msgDialog.confirm("修改审核状态失败")

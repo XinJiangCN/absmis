@@ -18,9 +18,10 @@
             stripe
             border
             style="width:60%"
-            @selection-change="handleSelectionChange">
+            highlight-current-row
+            @current-change="handleSelectionChange">
                 <el-table-column
-                  type="selection"
+                  type="index"
                   width="55">
                 </el-table-column>
                 <el-table-column label="企业名称" prop="subUnitEn.name" > 
@@ -115,7 +116,7 @@
                 //总条数
                 totalNumber:0,
                 //被选择的行
-                selectedRows:[],
+                selectedRows:null,
                 //选择行企业的id
                 id:'',
                 //对话框显示内容
@@ -165,18 +166,14 @@
             handleSelectionChange(selectedRows){
                 this.subUnitEnIndustrializationData={integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',checkedStatus:{id:''}}
                 this.selectedRows = selectedRows
-                this.id = this.selectedRows[0].id
-                this.showSubUnitEnIndustrializationData()
+                this.id = this.selectedRows.id
+                this.subUnitEnIndustrializationData = this.selectedRows
+                this.fillAuditsubUnitEnIndustrializationData()
                 
             },
             //点击行触发的事件
             showSubUnitEnIndustrializationData() {
-                if (this.selectedRows.length == 1) {        
-                        this.subUnitEnIndustrializationData = this.selectedRows[0]
-                        this.fillAuditsubUnitEnIndustrializationData()
-                } else {
-                    this.$refs.msgDialog.confirm("一次只能对一个企业进行审核")     
-                }
+                
             },
 
             //对话框中点击通过
@@ -192,7 +189,7 @@
             },
             //对话框点击驳回
              rebutAudit(){
-                this.subUnitEnIndustrializationData.checkedStatus={id:3}
+                this.subUnitEnIndustrializationData.checkedStatus={id:2}
                 var url = this.HOST+'/updateSubUnitEnIndustrialization'
                 this.$http.put(url,this.subUnitEnIndustrializationData).then(response=>{
                     this.$refs.msgDialog.notify("修改审核状态为修改重申成功")
