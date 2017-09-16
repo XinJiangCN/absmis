@@ -4,11 +4,11 @@
             <el-col :span="10">
                 <span>填报起止时间</span>
                 <el-date-picker
-                  v-model="startStopTime"
+                  v-model="searchTime"
                   type="daterange"
                   placeholder="选择日期范围">
                 </el-date-picker>
-                <el-button @click="">查询</el-button>
+                <el-button @click="handleSearch">查询</el-button>
             </el-col>
             <el-col :span="2">
                 <el-button @click="addDialogVisible = true">增加</el-button>
@@ -25,10 +25,11 @@
         stripe
         border
         style="width:80%"
-        @selection-change="handleSelectionChange">
+        highlight-current-row
+        @current-change="handleCurrentChange">
             <el-table-column
               label="序号"
-              type="selection"
+              type="index"
               width="55">
             </el-table-column>
             <el-table-column label="填报时间" prop="declareTime" > 
@@ -42,7 +43,7 @@
         </el-table>
             <el-pagination
               @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
+              @current-change="handlePageChange"
               :current-page="currentPage"
               :page-sizes="[5,10,15,20,]"
               :page-size="currentPageSize"
@@ -53,9 +54,19 @@
         <el-dialog title="增加施工设备企业产业化信息" :visible.sync="addDialogVisible">
             <el-form :model="machineryEnIndustrializationForm" label-width="200px" class="demo-ruleForm">
                 <el-form-item>
-                     <el-row>
-                        <el-col :span="3">填报时间</el-col>
-                        <el-col :span="10">
+                     <el-row >
+                        <el-col :span="3" :pull="6">
+                            <el-input  type="number" auto-complete="off" v-model.number="machineryEnIndustrializationForm.year" min="2000">
+                            </el-input>
+                        </el-col>
+                        <el-col :span="2" :pull="6">年份</el-col>
+                        <el-col :span="3" :pull="6">
+                            <el-input  type="number" auto-complete="off" v-model.number="machineryEnIndustrializationForm.quarter" min="1" max="4">
+                            </el-input>
+                        </el-col>
+                        <el-col :span="2" :pull="6">季度</el-col>
+                        <el-col :span="3" :pull="6">填报时间</el-col>
+                        <el-col :span="10" :pull="6">
                             <el-date-picker
                               v-model="machineryEnIndustrializationForm.declareTime"
                               align="right"
@@ -109,8 +120,18 @@
             <el-form :model="machineryEnIndustrializationForm" label-width="200px" class="demo-ruleForm">
                 <el-form-item>
                      <el-row>
-                        <el-col :span="3">填报时间</el-col>
-                        <el-col :span="10">
+                        <el-col :span="3" :pull="6">
+                            <el-input  type="number" auto-complete="off" v-model.number="machineryEnIndustrializationForm.year" min="2000">
+                            </el-input>
+                        </el-col>
+                        <el-col :span="2" :pull="6">年份</el-col>
+                        <el-col :span="3" :pull="6">
+                            <el-input  type="number" auto-complete="off" v-model.number="machineryEnIndustrializationForm.quarter" min="1" max="4">
+                            </el-input>
+                        </el-col>
+                        <el-col :span="2" :pull="6">季度</el-col>
+                        <el-col :span="3" :pull="6">填报时间</el-col>
+                        <el-col :span="10" :pull="6">
                             <el-date-picker
                               v-model="machineryEnIndustrializationForm.declareTime"
                               align="right"
@@ -168,11 +189,11 @@ export default{
     data(){
         return{
             //填报起止时间
-            startStopTime:'',
+            searchTime:'',
             //表格显示的数据
             machineryEnIndustrializationTable:[],
             //被选择的行
-            selectedRows:[],
+            selectedRows:null,
             //对话框显示
             addDialogVisible:false,
             editDialogVisible:false,
@@ -182,7 +203,7 @@ export default{
             currentPageSize:5,
             totalNumber:0,
             //删除时所用的id
-            ids:[],
+            id:'',
             //默认当前时间
             currentDate:'',
             pickerOptions1: {
@@ -196,12 +217,29 @@ export default{
                 }]
             },
             //部品产业化的属性
-            machineryEnIndustrializationForm:{integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:''}
+            machineryEnIndustrializationForm:{integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:''}
 
         }
     },
     methods:{
-        handleSelectionChange(selected){
+        //查询按钮处理事件
+        handleSearch(){
+            if(this.searchTime ==''){
+                this.$refs.msgDialog.confirm("请输入要查询的内容")
+            }else{
+                var startTime = this.moment(this.searchTime[0]).format('YYYY-MM-DD')
+                var endTime = this.moment(this.searchTime[(this.searchTime.length)-1]).format('YYYY-MM-DD')
+                var url = this.HOST+'/queryMachineryEnInCheck?startTime='+startTime+'&endTime='+endTime+'&page='+this.currentPage+'&rows='+this.currentPageSize
+                this.$http.get(url).then(response=>{
+                    this.machineryEnIndustrializationTable = response.data.rows
+                    this.totalNumber = response.data.total
+                }).catch(error=>{
+                    this.$refs.msgDialog.confirm("查询错误")
+                })
+            }
+        },
+        //选中表格中某一行触发的事件
+        handleCurrentChange(selected){
             this.selectedRows = selected
         },
         //显示条数发生改变时触发本事件
@@ -210,7 +248,7 @@ export default{
             this.getMachineryEnIndustrializationTable()
         },
         //当前页数发生改变时触发本事件
-        handleCurrentChange(newPage){
+        handlePageChange(newPage){
             this.currentPage = newPage
             this.getMachineryEnIndustrializationTable()
         },
@@ -228,12 +266,8 @@ export default{
             if (this.selectedRows.length == 0) {
               this.$refs.msgDialog.confirm("请选择您要删除的产业化信息！")
             } else {
-                var i = 0;
-                this.selectedRows.forEach(item => {
-                    this.ids[i] = item.id;
-                    i = i + 1
-                })
-                var url=this.HOST + "/deleteMachineryEnIndustrializations?ids=" + this.ids
+                this.id = this.selectedRows.id
+                var url=this.HOST + "/deleteMachineryEnIndustrialization?id=" + this.id
                 this.$http.delete(url).then(response => {
                     this.getMachineryEnIndustrializationTable();
                     this.$refs.msgDialog.notify("删除成功")
@@ -258,21 +292,21 @@ export default{
           }).catch(error=>{
             this.$refs.msgDialog.confirm("数据提交失败")
           })
-          this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:''}
+          this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:''}
         },
         //点击修改之后运行本方法
         showEditDialogVisible() {
-            if (this.selectedRows.length == 1) {
-              this.editDialogVisible = true;
-              this.machineryEnIndustrializationForm.integralWall = this.selectedRows[0].integralWall
-              this.machineryEnIndustrializationForm.specialTransportEquipment = this.selectedRows[0].specialTransportEquipment
-              this.machineryEnIndustrializationForm.specialConstructionEquipment = this.selectedRows[0].specialConstructionEquipment
-              this.machineryEnIndustrializationForm.declareTime = this.selectedRows[0].declareTime
-            } else if (this.selectedRows.length == 0) {
+            if (this.selectedRows.length == 0) {
               this.$refs.msgDialog.confirm("请选择您要修改的产业化信息！");
             } else {
-              this.$refs.msgDialog.confirm("仅可选择一个产业化信息进行修改！")
-            }
+              this.editDialogVisible = true;
+              this.machineryEnIndustrializationForm.integralWall = this.selectedRows.integralWall
+              this.machineryEnIndustrializationForm.specialTransportEquipment = this.selectedRows.specialTransportEquipment
+              this.machineryEnIndustrializationForm.specialConstructionEquipment = this.selectedRows.specialConstructionEquipment
+              this.machineryEnIndustrializationForm.declareTime = this.selectedRows.declareTime
+              this.machineryEnIndustrializationForm.year = this.selectedRows.year
+              this.machineryEnIndustrializationForm.quarter = this.selectedRows.quarter
+            } 
         },
         //提交修改信息
         submitEditForm(){
@@ -290,7 +324,7 @@ export default{
           }).catch(error=>{
             this.$refs.msgDialog.confirm("数据提交失败")
           })
-          this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:''}           
+          this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:''}           
         },
 
 

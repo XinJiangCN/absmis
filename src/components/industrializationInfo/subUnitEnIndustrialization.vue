@@ -34,7 +34,17 @@
                 <el-form-item>
                      <el-row>
                      <!-- v-model="subUnitEnIndustrializationForm.declareTime" -->
-                        <el-col :span="3">填报时间</el-col>
+                        <el-col :span="3">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.year" min="2000">
+                            </el-input>
+                        </el-col>
+                        <el-col :span="2">年份</el-col>
+                        <el-col :span="3">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.quarter" min="1" max="4">
+                            </el-input>
+                        </el-col>
+                        <el-col :span="2">季度</el-col>
+                        <el-col :span="2">填报时间</el-col>
                         <el-col :span="8">
                             <el-date-picker
                               v-model="subUnitEnIndustrializationForm.declareTime"
@@ -56,16 +66,16 @@
                 <el-form-item label="整体墙板">
                     <el-row >
                         <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralWallNum">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralWallNum" min="0">
                             </el-input>
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralWallAbility">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralWallAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralWallScale">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralWallScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
                         </el-col>
@@ -75,16 +85,16 @@
                 <el-form-item label="结构保温装饰一体化外墙">
                     <el-row >
                         <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integrativeExternalWallNum">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integrativeExternalWallNum" min="0">
                             </el-input>
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integrativeExternalWallAbility">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integrativeExternalWallAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integrativeExternalWallScale">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integrativeExternalWallScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
                         </el-col>
@@ -94,16 +104,16 @@
                 <el-form-item label="预制楼梯">
                     <el-row >
                         <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.prebuiltStairsNum">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.prebuiltStairsNum" min="0">
                             </el-input>
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.prebuiltStairsAbility">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.prebuiltStairsAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.prebuiltStairsScale">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.prebuiltStairsScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
                         </el-col>
@@ -114,16 +124,16 @@
                 <el-form-item label="整体厨房">
                     <el-row >
                         <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralKitchenNum">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralKitchenNum" min="0">
                             </el-input>
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralKitchenAbility">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralKitchenAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralKitchenScale">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralKitchenScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
                         </el-col>
@@ -134,16 +144,16 @@
                 <el-form-item label="整体卫生间">
                     <el-row >
                         <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralToiletNum">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralToiletNum" min="0">
                             </el-input>
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralToiletAbility">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralToiletAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralToiletScale">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralToiletScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
                         </el-col>
@@ -154,16 +164,16 @@
                 <el-form-item label="整体内装体系">
                     <el-row>
                         <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralInteriorDecorationNum">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralInteriorDecorationNum" min="0">
                             </el-input>
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralInteriorDecorationAbility">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralInteriorDecorationAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
                         </el-col>
                         <el-col :span="5"  :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralInteriorDecorationScale">
+                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralInteriorDecorationScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
                         </el-col>
@@ -212,7 +222,7 @@ export default{
             //控制是提交还是修改
             submitVisible:true,
             //部品产业化的属性
-            subUnitEnIndustrializationForm:{integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:''}
+            subUnitEnIndustrializationForm:{integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:''}
         }
     },
     methods:{
@@ -241,6 +251,7 @@ export default{
                 }
             }
             this.$http.post(url,this.subUnitEnIndustrializationForm).then(response=>{
+                    this.getSubUnitEnIndustrializationTable();
                     this.$refs.msgDialog.notify("数据添加成功")
                 }).catch(error=>{
                     this.$refs.msgDialog.confirm("数据添加失败")
