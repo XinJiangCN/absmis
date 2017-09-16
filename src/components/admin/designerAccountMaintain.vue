@@ -119,7 +119,7 @@
 
         <el-form>
             <label>
-            <h3>您确定重置此用户的密码吗？</h3>
+                您确定重置此用户的密码吗？
             </label>
         </el-form>
         <div slot="footer">
@@ -148,6 +148,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                 designerTableData:[],
                 //用来绑定搜索框中的内容
                 searchContent:'',
+                searchContentFinal:'',
                 //增加用的对话框，初始为不显示
                 addDialogVisible:false,
                 //修改用，初始不显示对话框
@@ -179,6 +180,8 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
         },
         methods: {
             handleSearch(){
+                this.searchContentFinal = this.searchContent
+                this.findAllDesigners()
             },
             //选中行之后，触发本方法
             handleSelectionChange(selectedRows){
@@ -283,7 +286,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             //查询所要显示的表格，或者刷新该表格使用
             findAllDesigners(){
                 //初始显示表格用的查询数据
-                var url= this.HOST + "/displayAllDesigners?page="+this.currentPage+"&rows="+this.currentPageSize
+                var url= this.HOST + "/queryDesignerByName?nameQuery="+this.searchContentFinal+"&page="+this.currentPage+"&rows="+this.currentPageSize
                 this.$http.get(url).then(response=>{
                     this.designerTableData = response.data.rows
                     this.totalNumber = response.data.total

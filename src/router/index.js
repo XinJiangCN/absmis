@@ -37,13 +37,19 @@ import queryMachineryEn from '../components/supervisor/queryMachineryEn.vue'
 import querySubUnitEn from '../components/supervisor/querySubUnitEn.vue'
 import constructionEnInQuery from '../components/supervisor/constructionEnInQuery.vue'
 import componentEnInQuery from '../components/supervisor/componentEnInQuery.vue'
-
+//test
+import test from '../components/supervisor/test.vue'
+import staticIndustryInfoThird from '../components/supervisor/staticIndustryInfoThird.vue'
 //check basic information
 import traditionalInfoCheck from '../components/checkInformation/traditionalInfoCheck'
 import nonTraditionalInfoCheck from '../components/checkInformation/nonTraditionalInfoCheck'
 //check industrializationInfo
 import traditionalInCheck from '../components/checkIndustrilizationInfo/traditionalInCheck.vue'
 import componentEnInCheck from '../components/checkIndustrilizationInfo/componentEnInCheck.vue'
+//统计信息查询
+import queryIndustrilization from '../components/supervisor/queryIndustrilizationInfo'
+import queryEnterpriseInfo from '../components/supervisor/queryEnterpriseInfo'
+
 Vue.use(Router)
 
 export default new Router({
@@ -201,17 +207,17 @@ export default new Router({
     {
         path: '/query1',
         name: '统计行业信息1',
-        component: homePage
+        component: queryEnterpriseInfo
     },
     {
         path: '/query2',
         name: '统计行业信息2',
-        component: homePage
+        component: queryIndustrilization
     },
     {
         path: '/query3',
         name: '统计行业信息3',
-        component: homePage
+        component: staticIndustryInfoThird
     }
     ]
 })

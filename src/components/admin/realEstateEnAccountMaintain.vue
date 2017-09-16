@@ -123,7 +123,7 @@
 <el-dialog title="重置密码" :visible.sync="resetPwdConfirmationDialogVisible">
 
   <el-form>
-    <label>您确定重置该密码吗？</label>
+    <label>您确定重置此用户的密码吗？</label>
   </el-form>
   <div slot="footer">
     <el-button @click="resetPwdConfirmationDialogVisible = false"> 取 消
@@ -155,6 +155,7 @@
         realEstateEnTableData: [],
         //用来绑定搜索框中的内容
         searchContent: '',
+        searchContentFinal:'',
         //增加用的对话框，初始为不显示
         addDialogVisible: false,
         //修改用，初始不显示对话框
@@ -187,6 +188,8 @@
         this.findAllRealEstateEns();
       },
       handleSearch() {
+        this.searchContentFinal = this.searchContent
+        this.findAllRealEstateEns()
       },
       //选中行之后，触发本方法
       handleSelectionChange(selectedRows) {
@@ -277,7 +280,7 @@
         var url = this.HOST + "/resetPsd?id="+this.tableSelectedRows[0].id
         this.$http.post(url).then(response=>{
           this.$refs.msgDialog.notify(response.data.username +"的密码已经重置为用户名")
-          this.findAllDesigners()
+          this.findAllRealEstateEns()
         }).catch(response=>{
           this.$refs.msgDialog.confirm("重置失败！")
         })
@@ -290,7 +293,7 @@
       },
       //查询所要显示的表格，或者刷新该表格使用
       findAllRealEstateEns() {
-        var url = this.HOST + "/displayAllRealEstateEns?page="+this.currentPage+"&rows="+this.pageSize
+        var url = this.HOST + "/queryRealEstateEnByName?nameQuery="+this.searchContentFinal+"&page="+this.currentPage+"&rows="+this.pageSize
         //初始显示表格用的查询数据
         //当前多少页 一页多少条
         this.$http.get(url).then(response => {
