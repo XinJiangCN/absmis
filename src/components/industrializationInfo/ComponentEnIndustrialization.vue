@@ -7,44 +7,173 @@
 			<label>企业建筑产业化信息</label>
 			</h4>
 		</div>
-		<el-button @click="add">增加</el-button>
-		<el-button @click="remove(selectedRowId)">删除</el-button>
-		<el-button @click="update(selectedRowId)">修改</el-button>
-		<el-table
-		:data="componentIndustrializationInfoData"
-		highlight-current-row
-		border
-		@row-click="handleRowChange"
-		style="width: 100%">		
-		<el-table-column
-		prop="componentEn.name"
-		label="企业名称">
-		</el-table-column>
-		<el-table-column
-		prop="declareTime"
-		label="填报时间">
-		</el-table-column>
-		</el-table>
-		<el-pagination
-		@current-change="handlePageNumChange"
-		@size-change="handlePageSizeChange"
-	    :current-page="pageNum"
-	    :page-size="pageSize"
-	    :page-sizes="[5,10,15,20]"
-	    layout="total, sizes, prev, pager, next, jumper"
-	    :total="totalComponentIndustrializationData">
-		</el-pagination>
-		<el-dialog v-model="showAddDialog">
-			<el-form ref="componentCompanyForm">
-				<el-form-item>
+		<el-col :span="6">
+			<el-button-group>
+				<el-button type="primary" @click="add">增加</el-button>
+				<el-button type="primary" @click="remove(selectedRowId)">删除</el-button>
+				<el-button type="primary" @click="update(selectedRowId)">修改</el-button>
+			</el-button-group>	
+			<br><br>
+			<el-table
+			:data="componentIndustrializationInfoData"
+			highlight-current-row
+			border
+			@row-click="handleRowChange"
+			style="width: 100%">		
+			<el-table-column
+			prop="componentEn.name"
+			label="企业名称">
+			</el-table-column>
+			<el-table-column
+			prop="declareTime"
+			label="填报时间">
+			</el-table-column>
+			</el-table>
+			<el-pagination
+			@current-change="handlePageNumChange"
+			@size-change="handlePageSizeChange"
+		    :current-page="pageNum"
+		    :page-size="pageSize"
+		    :page-sizes="[5,10,15,20]"
+		    layout="total, sizes, prev, pager, next"
+		    :total="totalComponentIndustrializationData">
+			</el-pagination>
+			<el-table
+			:data="tempData"
+			highlight-current-row
+			border
+			@row-click="handleRowChange"
+			style="width: 100%">		
+			<el-table-column
+			prop="year"
+			label="填报时间">
+			</el-table-column>
+			</el-table>
+		</el-col>
+		<el-col :span="18">
+			<el-row>
+				<el-col :span="3">填报时间：</el-col>
+				<el-col :span="5">
 					<el-date-picker
-				      v-model="declareTime"
+				      v-model="selectedRow.declareTime"
 				      align="right"
 				      type="date"
 				      placeholder="选择日期"
 				      :picker-options="pickerOptions1"
 				      :format="yyyy-MM-dd">
 			    	</el-date-picker>
+				</el-col>
+				<el-col :span="5">填报年份：</el-col>
+				<el-col :span="4">
+					<el-input
+					v-model="selectedRow.year"
+					align="right"
+					type="number"
+					min='2000'
+					></el-input>
+				</el-col>
+				<el-col :span="3">填报季度：</el-col>
+				<el-col :span="4">
+					<el-input
+					v-model="selectedRow.quarter"
+					align="right"
+					type="number"
+					min='1'
+					max='4'
+					></el-input>
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-col :span="6">
+					生产的主要构件和部品系列
+				</el-col>
+				<el-col :span="6">
+					生产线条数（条）
+				</el-col>
+				<el-col :span="6">
+					生产能力
+				</el-col>
+				<el-col :span="6">
+					应用规模
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-col :span="24">
+					<el-row>
+						<el-col :span="6">
+							预制装配混凝土结构构件
+						</el-col>				
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteNum" type='number' class="input"></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteAbility" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteScale" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>		
+					</el-row>
+					<el-row>
+						<el-col :span="6">钢结构构件</el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelNum" type='number' class="input"></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelAbility"type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelScale" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>	
+					</el-row>
+					<el-row>
+						<el-col :span="6">木结构构件</el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberNum" type='number' class="input"></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberAbility" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberScale" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>	
+					</el-row>
+					<el-row>
+						<el-col :span="6">其他结构的构件</el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherNum" type='number' class="input"></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherAbility" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherScale" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>	
+					</el-row>	
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-button type="primary" @click="">暂存</el-button>
+				<el-button type="primary" @click="confirmUpdate">提交</el-button>
+			</el-row>
+		</el-col>
+
+		<el-dialog v-model="showAddDialog">
+			<el-form ref="componentCompanyForm">
+				<el-form-item>
+					<el-col :span="4">
+						填报时间：
+					</el-col>
+					<el-col :span="5">
+						<el-date-picker
+					      v-model="addData.declareTime"
+					      align="right"
+					      type="date"
+					      placeholder="选择日期"
+					      :picker-options="pickerOptions1"
+					      :format="yyyy-MM-dd">
+				    	</el-date-picker>
+					</el-col>	
+				</el-form-item>
+				<el-form-item>
+					<el-col :span="4">
+						填报年份：
+					</el-col>
+					<el-col :span="5">
+						<el-input
+						v-model="addData.year"
+						align="right"
+						type="number"
+						min='2000'
+						></el-input>
+					</el-col>
+					<el-col :span="4">
+						填报季度：
+					</el-col>
+					<el-col :span="5">
+						<el-input
+						v-model="addData.quarter"
+						align="right"
+						type="number"
+						min='1'
+						max='4'
+						></el-input>
+					</el-col>						
 				</el-form-item>
 				<el-form-item>
 					<el-row>
@@ -67,27 +196,27 @@
 								<el-col :span="6">
 									<el-checkbox label="预制装配混凝土结构构件"></el-checkbox>	
 								</el-col>				
-								<el-col :span="6"><el-input v-model.number="prebuiltConcreteNum" type='number' ></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltConcreteAbility" type='number' ><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltConcreteScale" type='number' ><template slot="append">万平方米</template></el-input></el-col>		
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteNum" type='number' min='0'></el-input></el-col>
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>		
 							</el-row>
 							<el-row>
 								<el-col :span="6"><el-checkbox label="钢结构构件"></el-checkbox></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltSteelNum" type='number' ></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltSteelAbility"type='number' ><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltSteelScale" type='number' ><template slot="append">万平方米</template></el-input></el-col>	
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelNum" type='number' min='0'></el-input></el-col>
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelAbility"type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
 							</el-row>
 							<el-row>
 								<el-col :span="6"><el-checkbox label="木结构构件"></el-checkbox></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltTimberNum" type='number' ></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltTimberAbility" type='number' ><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltTimberScale" type='number' ><template slot="append">万平方米</template></el-input></el-col>	
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberNum" type='number' min='0'></el-input></el-col>
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
 							</el-row>
 							<el-row>
 								<el-col :span="6"><el-checkbox label="其他结构的构件"></el-checkbox></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltOtherNum" type='number' ></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltOtherAbility" type='number' ><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="prebuiltOtherScale" type='number' ><template slot="append">万平方米</template></el-input></el-col>	
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherNum" type='number' min='0'></el-input></el-col>
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
+								<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
 							</el-row>	
 						</el-col>
 					</el-row>	
@@ -96,103 +225,47 @@
 				<el-button type="primary" @click="submit">提交</el-button>
 			</el-form>	
 		</el-dialog>
-		<el-dialog v-model="showUpdateDialog">
-			<el-form ref="componentCompanyForm">
-				<el-form-item>
-					<el-date-picker
-				      v-model="updateData.declareTime"
-				      align="right"
-				      type="date"
-				      placeholder="选择日期"
-				      :picker-options="pickerOptions1"
-				      :format="yyyy-MM-dd">
-			    	</el-date-picker>
-				</el-form-item>
-				<el-form-item>
-					<el-row>
-						<el-col :span="6">
-							生产的主要构件和部品系列
-						</el-col>
-						<el-col :span="6">
-							生产线条数（条）
-						</el-col>
-						<el-col :span="6">
-							生产能力
-						</el-col>
-						<el-col :span="6">
-							应用规模
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="24">
-							<el-row>
-								<el-col :span="6">
-									<el-checkbox label="预制装配混凝土结构构件"></el-checkbox>	
-								</el-col>				
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltConcreteNum" type='number' ></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltConcreteAbility" type='number' ><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltConcreteScale" type='number' ><template slot="append">万平方米</template></el-input></el-col>		
-							</el-row>
-							<el-row>
-								<el-col :span="6"><el-checkbox label="钢结构构件"></el-checkbox></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltSteelNum" type='number' ></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltSteelAbility"type='number' ><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltSteelScale" type='number' ><template slot="append">万平方米</template></el-input></el-col>	
-							</el-row>
-							<el-row>
-								<el-col :span="6"><el-checkbox label="木结构构件"></el-checkbox></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltTimberNum" type='number' ></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltTimberAbility" type='number' ><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltTimberScale" type='number' ><template slot="append">万平方米</template></el-input></el-col>	
-							</el-row>
-							<el-row>
-								<el-col :span="6"><el-checkbox label="其他结构的构件"></el-checkbox></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltOtherNum" type='number' ></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltOtherAbility" type='number' ><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="updateData.prebuiltOtherScale" type='number' ><template slot="append">万平方米</template></el-input></el-col>	
-							</el-row>	
-						</el-col>
-					</el-row>	
-				</el-form-item>
-				<el-button type="primary" @click="tempStore">暂存</el-button>
-				<el-button type="primary" @click="confirmUpdate">提交</el-button>
-			</el-form>	
-		</el-dialog>
-				
+		<msg-dialog ref="msgDialog"></msg-dialog>		
 	</div>
 </template>
 <script type="text/javascript">
+import msgDialog from '../common/msgDialog.vue'
 	export default{
 		data:function(){
 			return{
-				/*生产条数*/
-			    //预制装配混凝土结构
-			    prebuiltConcreteNum:'',
-			    //钢结构
-			    prebuiltSteelNum:'',
-			    //木结构
-			    prebuiltTimberNum:'',
-			    //其他结构的构件
-			    prebuiltOtherNum:'',
-			    /*生产能力*/
-			    //预制装配混凝土结构
-			    prebuiltConcreteAbility:'',
-			    //钢结构
-			    prebuiltSteelAbility:'',
-			    //木结构
-			    prebuiltTimberAbility:'',
-			    //其他结构的构件
-			    prebuiltOtherAbility:'',
+				addData:{
+					declareTime:'',
+					year:'',
+					quarter:'',
+					/*生产条数*/
+				    //预制装配混凝土结构
+				    prebuiltConcreteNum:'',
+				    //钢结构
+				    prebuiltSteelNum:'',
+				    //木结构
+				    prebuiltTimberNum:'',
+				    //其他结构的构件
+				    prebuiltOtherNum:'',
+				    /*生产能力*/
+				    //预制装配混凝土结构
+				    prebuiltConcreteAbility:'',
+				    //钢结构
+				    prebuiltSteelAbility:'',
+				    //木结构
+				    prebuiltTimberAbility:'',
+				    //其他结构的构件
+				    prebuiltOtherAbility:'',
 
-			    /*应用规模*/
-			    //预制装配混凝土结构
-			    prebuiltConcreteScale:'',
-			    //钢结构
-			    prebuiltSteelScale:'',
-			    //木结构
-			    prebuiltTimberScale:'',
-			    //其他结构的构件
-			    prebuiltOtherScale:'',
+				    /*应用规模*/
+				    //预制装配混凝土结构
+				    prebuiltConcreteScale:'',
+				    //钢结构
+				    prebuiltSteelScale:'',
+				    //木结构
+				    prebuiltTimberScale:'',
+				    //其他结构的构件
+				    prebuiltOtherScale:'',
+				},				
 				updateData:{
 					id:'',
 					/*生产条数*/
@@ -226,6 +299,7 @@
 				    componentEn:'',
 				    checkedStatus:''
 				},
+				tempData:'',
 				componentIndustrializationInfoData:'',
 				declareTime:'',
 				pageNum:1,
@@ -234,6 +308,8 @@
 				showAddDialog:false,
 				showUpdateDialog:false,
 				selectedRow:'',
+				selectedYear:'',
+				selectedQuarter:'',
 				selectedRowId:'',
 				checkedStatus:'',
 				pickerOptions1: {
@@ -262,10 +338,13 @@
 		},
 		created:function(){
 			var currentDate= new Date();
+			var currMonth=currentDate.getMonth()
 			var preDate =new Date(currentDate.getTime()- 24*60*60*1000);
-			this.declareTime=preDate
+			this.addData.declareTime=preDate
+			this.addData.year=currentDate.getFullYear()
+			this.addData.quarter=Math.floor( ( currMonth % 3 == 0 ? ( currMonth / 3 ) : ( currMonth / 3 + 1 ) ) )
 			this.getAllComponentEnIndustralization()
-
+			
 		},
 		methods:{
 			getAllComponentEnIndustralization:function(){
@@ -274,14 +353,13 @@
 					this.componentIndustrializationInfoData=response.data.rows
 					this.totalComponentIndustrializationData=response.data.total
 				}).catch(response=>{
-					alert("获取构件产业化信息失败！")
+					this.$refs.msgDialog.notify("获取构件产业化信息失败！")
 				})
 			},			
 			handleRowChange:function(val){
 				this.selectedRow=val
 				this.selectedRowId=val.id
 				this.checkedStatus=val.checkedStatus
-
 			},
 			handlePageNumChange:function(val){
 				this.pageNum=val
@@ -292,108 +370,90 @@
 				this.getAllComponentEnIndustralization()
 			},
 			tempStore:function(){
-				
+				var storage = window.localStorage
+				var tempAddData = ''
+				var tempUpdateData = []
+				storage.setItem("tempAddData",JSON.stringify(this.addData))
+				storage.setItem("tempUpdateData",JSON.stringify(this.selectedRow))
+				var json=storage.getItem("tempAddData");
+            	this.tempData=JSON.parse(json);
+				// this.tempData=this.addData
+				this.addData.prebuiltConcreteNum=''
+				this.addData.prebuiltSteelNum=''
+				this.addData.prebuiltTimberNum=''
+				this.addData.prebuiltOtherNum=''
+				this.addData.prebuiltConcreteAbility=''
+				this.addData.prebuiltSteelAbility=''
+				this.addData.prebuiltTimberAbility=''
+				this.addData.prebuiltOtherAbility=''
+				this.addData.prebuiltConcreteScale=''
+				this.addData.prebuiltSteelScale=''
+				this.addData.prebuiltTimberScale=''
+				this.addData.prebuiltOtherScale=''
+				console.log("this.tempData="+JSON.stringify(this.tempData))
+				this.showAddDialog=false
 			},
 			add:function(){
 				this.showAddDialog=true
 			},
 			submit:function(){
 				var url=this.HOST+'/addComponentEnIndustrialization'
-				this.$http.post(url,{
-					/*生产条数*/
-				    //预制装配混凝土结构
-				    prebuiltConcreteNum:this.prebuiltConcreteNum,
-				    //钢结构
-				    prebuiltSteelNum:this.prebuiltSteelNum,
-				    //木结构
-				    prebuiltTimberNum:this.prebuiltTimberNum,
-				    //其他结构的构件
-				    prebuiltOtherNum:this.prebuiltOtherNum,
-				    /*生产能力*/
-				    //预制装配混凝土结构
-				    prebuiltConcreteAbility:this.prebuiltConcreteAbility,
-				    //钢结构
-				    prebuiltSteelAbility:this.prebuiltSteelAbility,
-				    //木结构
-				    prebuiltTimberAbility:this.prebuiltTimberAbility,
-				    //其他结构的构件
-				    prebuiltOtherAbility:this.prebuiltOtherAbility,
-
-				    /*应用规模*/
-				    //预制装配混凝土结构
-				    prebuiltConcreteScale:this.prebuiltConcreteScale,
-				    //钢结构
-				    prebuiltSteelScale:this.prebuiltSteelScale,
-				    //木结构
-				    prebuiltTimberScale:this.prebuiltTimberScale,
-				    //其他结构的构件
-				    prebuiltOtherScale:this.prebuiltOtherScale,
-				    declareTime:this.declareTime
-				}).then(response=>{
+				for (var data in this.addData) {
+					if (this.addData[data] == 0) {
+						this.$refs.msgDialog.confirm("请将内容填写完整！")
+					}
+				}
+				this.$http.post(url,this.addData).then(response=>{
 					this.showAddDialog=false
 					this.getAllComponentEnIndustralization()
-					this.$message({
-						type:'success',
-						message:'已成功添加'
-					})
-					this.prebuiltConcreteNum=''
-					this.prebuiltSteelNum=''
-					this.prebuiltTimberNum=''
-					this.prebuiltOtherNum=''
-					this.prebuiltConcreteAbility=''
-					this.prebuiltSteelAbility=''
-					this.prebuiltTimberAbility=''
-					this.prebuiltOtherAbility=''
-					this.prebuiltConcreteScale=''
-					this.prebuiltSteelScale=''
-					this.prebuiltTimberScale=''
-					this.prebuiltOtherScale=''
+					this.$refs.msgDialog.notify("添加成功！")
+					this.addData.prebuiltConcreteNum=''
+					this.addData.prebuiltSteelNum=''
+					this.addData.prebuiltTimberNum=''
+					this.addData.prebuiltOtherNum=''
+					this.addData.prebuiltConcreteAbility=''
+					this.addData.prebuiltSteelAbility=''
+					this.addData.prebuiltTimberAbility=''
+					this.addData.prebuiltOtherAbility=''
+					this.addData.prebuiltConcreteScale=''
+					this.addData.prebuiltSteelScale=''
+					this.addData.prebuiltTimberScale=''
+					this.addData.prebuiltOtherScale=''
 					
 				}).catch(response=>{
-					alert("添加失败")
+					if (response=='Error: Request failed with status code 500') {
+						this.$refs.msgDialog.confirm("不可添加同年同一季度，请检查增加信息")
+					}
 				})
 			},
 			update:function(val){
 				if (val) {
-					this.showUpdateDialog=true
-					this.updateData.id=this.selectedRow.id
-					this.updateData.declareTime=this.selectedRow.declareTime
-					this.updateData.prebuiltConcreteNum=this.selectedRow.prebuiltConcreteNum
-					this.updateData.prebuiltSteelNum=this.selectedRow.prebuiltSteelNum
-					this.updateData.prebuiltTimberNum=this.selectedRow.prebuiltTimberNum
-					this.updateData.prebuiltOtherNum=this.selectedRow.prebuiltOtherNum
-					this.updateData.prebuiltConcreteAbility=this.selectedRow.prebuiltConcreteAbility
-					this.updateData.prebuiltSteelAbility=this.selectedRow.prebuiltSteelAbility
-					this.updateData.prebuiltTimberAbility=this.selectedRow.prebuiltTimberAbility
-					this.updateData.prebuiltOtherAbility=this.selectedRow.prebuiltOtherAbility
-					this.updateData.prebuiltConcreteScale=this.selectedRow.prebuiltConcreteScale
-					this.updateData.prebuiltSteelScale=this.selectedRow.prebuiltSteelScale
-					this.updateData.prebuiltTimberScale=this.selectedRow.prebuiltTimberScale
-					this.updateData.prebuiltOtherScale=this.selectedRow.prebuiltOtherScale
-					this.updateData.componentEn=this.selectedRow.componentEn
-					this.updateData.checkedStatus=this.selectedRow.checkedStatus
+
 				}else{
-					alert("请选择要修改的一行！")
+					this.$refs.msgDialog.confirm("请选择要删除的一行！")
 				}
 				
 			},
 			confirmUpdate:function(){
-				var url=this.HOST+'/updateComponentEnIndustrialization'
-				this.$http.put(url,this.updateData).then(response=>{
-					this.showUpdateDialog=false
-					this.getAllComponentEnIndustralization()
-					this.$message({
-						type:'success',
-						message:'成功修改数据'
+				if (this.checkedStatus==null||this.checkedStatus.id==2) {
+					var url=this.HOST+'/updateComponentEnIndustrialization'
+					this.$http.put(url,this.selectedRow).then(response=>{
+						this.getAllComponentEnIndustralization()
+						this.$refs.msgDialog.notify("成功修改数据！")
+					}).catch(response=>{
+						this.$refs.msgDialog.notify("修改数据失败！")
 					})
-				}).catch(response=>{
-					this.showUpdateDialog=false
-					alert("修改数据失败")
-				})
+				}else if (this.checkedStatus.id==3) {
+					this.$refs.msgDialog.confirm("审核未通过！不可以修改")
+				}else if(this.checkedStatus.id==1){
+					this.$refs.msgDialog.confirm("已审核通过！不可以修改！")
+				}
+			
+				
 			},
 			remove:function(val){
 				if (val) {
-					if (this.checkedStatus==null) {						
+					if (this.checkedStatus==null||this.checkedStatus.id==2) {
 						var url=this.HOST+'/deleteComponentEnIndustrialization?id='+this.selectedRowId
 						this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
 				          confirmButtonText: '确定',
@@ -401,34 +461,28 @@
 				          type: 'warning'
 				        }).then(()=>{
 				        	this.$http.delete(url).then(response=>{
-								this.$message({
-									type:'success',
-									message:'已成功删除'
-								})
+								this.$refs.msgDialog.notify("成功删除数据！")
 								this.getAllComponentEnIndustralization()
 							}).catch(response=>{
-								this.$message({
-									type:'info',
-									message:'删除失败'
-								})
+								this.$refs.msgDialog.notify("删除数据失败！")
 							})
 				        }).catch(()=>{
-				        	this.$message({
-				        		type:'info',
-				        		message:'已取消删除'
-				        	})
+				        	this.$refs.msgDialog.notify("已取消删除！")
 				        })
 						
-					}else if (this.checkedStatus.id==2) {
-						alert("审核未通过！")
+					}else if (this.checkedStatus.id==3) {
+						this.$refs.msgDialog.confirm("审核未通过！")
 					}else if(this.checkedStatus.id==1){
-						alert("已审核，不可以删除")
+						this.$refs.msgDialog.confirm("已审核，不可以删除！")
 					}
 				}else{
-					alert("请选择要删除的一行！")
+					this.$refs.msgDialog.confirm("请选择要删除的一行！")
 				}
 			},
 
+		},
+		components:{
+			msgDialog
 		}
 	}
 </script>
