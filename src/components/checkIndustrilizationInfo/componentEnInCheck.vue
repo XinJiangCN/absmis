@@ -102,11 +102,13 @@
 			</el-row>
 		</el-col>
 	</el-col>
+	<msg-dialog ref="msgDialog"></msg-dialog>
 </div>
 	
 </template>
 <script type="text/javascript">
 import moment from 'moment'
+import msgDialog from '../common/msgDialog.vue'
 	export default{
 		data(){
 			return{
@@ -126,17 +128,17 @@ import moment from 'moment'
 		},
 		methods:{
 			getComponentInfoData:function(){
-				var url = this.HOST+'/displayAllComponentEnIndustrializations?page='+this.pageNum+'&rows='+this.pageSize
+				var url = this.HOST+'/displayAllComponentEnIndustrializationsBySubmit?page='+this.pageNum+'&rows='+this.pageSize
 				this.$http.get(url).then(response=>{
 					this.companyInfoData=response.data.rows
 					this.total=response.data.total
 				}).catch(response=>{
-					alert("获取数据失败")
+					this.$refs.msgDialog.notify("获取数据失败")
 				})
 			},
 			searchTraditionalInfo:function(){
 				if (this.selectedCompanyName==''||this.searchTime=='') {
-					alert("请检查查询条件")
+					this.$refs.msgDialog.confirm("请检查查询条件")
 				}else{
 					var startTime=moment(this.searchTime[0]).format("YYYY-MM-DD")
 					var endTime=moment(this.searchTime[1]).format("YYYY-MM-DD")
@@ -145,7 +147,7 @@ import moment from 'moment'
 						this.companyInfoData=response.data.rows
 						this.total=response.data.total
 					}).catch(response=>{
-						alert("查询出错")
+						this.$refs.msgDialog.notify("查询出错")
 					})
 				}
 			},
@@ -168,36 +170,35 @@ import moment from 'moment'
 					this.$http.post(url).then(response=>{
 						this.getComponentInfoData()	
 						this.selectedId=''			
-						this.$message({
-							type:'success',
-							message:'成功驳回'
-						})
+						this.$refs.msgDialog.notify("成功驳回！")
 					}).catch(response=>{
-						alert("驳回失败！")
+						this.$refs.msgDialog.notify("驳回失败！")
 					})
 				}else{
-					alert("请选择要审核的企业产业化信息")
+
+					this.$refs.msgDialog.confirm("请选择要审核的企业产业化信息")				
 				}
 				
 			},
 			passCheck:function(val){
+				// /checkComponentEnIndustrialization
 				if (val) {
 					var url=this.HOST+'/checkComponentEnIndustrialization?id='+this.selectedId+'&constructionEnId='+this.selectedComponentEnId+'&checkedStatusId='+1
 					this.$http.post(url).then(response=>{
 						this.getComponentInfoData()				
 						this.selectedId=''
-						this.$message({
-							type:'success',
-							message:'审核通过'
-						})
+						this.$refs.msgDialog.notify("审核通过！")
 					}).catch(response=>{
-						alert("审核失败！")
+						this.$refs.msgDialog.notify("审核失败！")
 					})
 				}else{
-					alert("请选择要审核的企业产业化信息")
+					this.$refs.msgDialog.confirm("请选择要审核的企业产业化信息！")
 				}
 				
 			}
+		},
+		components:{
+			msgDialog
 		}
 	}
 </script>

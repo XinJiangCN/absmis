@@ -38,17 +38,6 @@
 		    layout="total, sizes, prev, pager, next"
 		    :total="totalComponentIndustrializationData">
 			</el-pagination>
-			<el-table
-			:data="tempData"
-			highlight-current-row
-			border
-			@row-click="handleRowChange"
-			style="width: 100%">		
-			<el-table-column
-			prop="year"
-			label="填报时间">
-			</el-table-column>
-			</el-table>
 		</el-col>
 		<el-col :span="18">
 			<el-row>
@@ -103,33 +92,33 @@
 						<el-col :span="6">
 							预制装配混凝土结构构件
 						</el-col>				
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteNum" type='number' class="input"></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteAbility" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteScale" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>		
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteNum" type='number' min='0'></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>		
 					</el-row>
 					<el-row>
 						<el-col :span="6">钢结构构件</el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelNum" type='number' class="input"></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelAbility"type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelScale" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>	
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelNum" type='number' min='0'></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelAbility"type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
 					</el-row>
 					<el-row>
 						<el-col :span="6">木结构构件</el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberNum" type='number' class="input"></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberAbility" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberScale" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>	
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberNum" type='number' min='0'></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
 					</el-row>
 					<el-row>
 						<el-col :span="6">其他结构的构件</el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherNum" type='number' class="input"></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherAbility" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherScale" type='number' class="input"><template slot="append">万平方米</template></el-input></el-col>	
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherNum" type='number' min='0'></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
 					</el-row>	
 				</el-col>
 			</el-row>
 			<el-row>
-				<el-button type="primary" @click="">暂存</el-button>
-				<el-button type="primary" @click="confirmUpdate">提交</el-button>
+				<el-button type="primary" @click="confirmUpdate('tempStore')">暂存</el-button>
+				<el-button type="primary" @click="confirmUpdate('submit')">提交</el-button>
 			</el-row>
 		</el-col>
 
@@ -194,26 +183,26 @@
 						<el-col :span="24">
 							<el-row>
 								<el-col :span="6">
-									<el-checkbox label="预制装配混凝土结构构件"></el-checkbox>	
+									预制装配混凝土结构构件
 								</el-col>				
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteNum" type='number' min='0'></el-input></el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>		
 							</el-row>
 							<el-row>
-								<el-col :span="6"><el-checkbox label="钢结构构件"></el-checkbox></el-col>
+								<el-col :span="6">钢结构构件</el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelNum" type='number' min='0'></el-input></el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelAbility"type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
 							</el-row>
 							<el-row>
-								<el-col :span="6"><el-checkbox label="木结构构件"></el-checkbox></el-col>
+								<el-col :span="6">木结构构件</el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberNum" type='number' min='0'></el-input></el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
 							</el-row>
 							<el-row>
-								<el-col :span="6"><el-checkbox label="其他结构的构件"></el-checkbox></el-col>
+								<el-col :span="6">其他结构的构件</el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherNum" type='number' min='0'></el-input></el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
 								<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
@@ -221,8 +210,8 @@
 						</el-col>
 					</el-row>	
 				</el-form-item>
-				<el-button type="primary" @click="tempStore">暂存</el-button>
-				<el-button type="primary" @click="submit">提交</el-button>
+				<el-button type="primary" @click="submit('tempStore')">暂存</el-button>
+				<el-button type="primary" @click="submit('submit')">提交</el-button>
 			</el-form>	
 		</el-dialog>
 		<msg-dialog ref="msgDialog"></msg-dialog>		
@@ -237,6 +226,7 @@ import msgDialog from '../common/msgDialog.vue'
 					declareTime:'',
 					year:'',
 					quarter:'',
+					submit:'',
 					/*生产条数*/
 				    //预制装配混凝土结构
 				    prebuiltConcreteNum:'',
@@ -297,21 +287,18 @@ import msgDialog from '../common/msgDialog.vue'
 				    //其他结构的构件
 				    prebuiltOtherScale:'',
 				    componentEn:'',
-				    checkedStatus:''
+				    checkedStatus:'',
+				    submit:''
 				},
-				tempData:'',
 				componentIndustrializationInfoData:'',
-				declareTime:'',
 				pageNum:1,
 				pageSize:10,
 				totalComponentIndustrializationData:'',
 				showAddDialog:false,
-				showUpdateDialog:false,
 				selectedRow:'',
-				selectedYear:'',
-				selectedQuarter:'',
 				selectedRowId:'',
 				checkedStatus:'',
+				isSubmit:'',
 				pickerOptions1: {
 		          shortcuts: [{
 		            text: '今天',
@@ -343,8 +330,7 @@ import msgDialog from '../common/msgDialog.vue'
 			this.addData.declareTime=preDate
 			this.addData.year=currentDate.getFullYear()
 			this.addData.quarter=Math.floor( ( currMonth % 3 == 0 ? ( currMonth / 3 ) : ( currMonth / 3 + 1 ) ) )
-			this.getAllComponentEnIndustralization()
-			
+			this.getAllComponentEnIndustralization()		
 		},
 		methods:{
 			getAllComponentEnIndustralization:function(){
@@ -360,6 +346,7 @@ import msgDialog from '../common/msgDialog.vue'
 				this.selectedRow=val
 				this.selectedRowId=val.id
 				this.checkedStatus=val.checkedStatus
+				this.isSubmit=val.submit
 			},
 			handlePageNumChange:function(val){
 				this.pageNum=val
@@ -369,40 +356,23 @@ import msgDialog from '../common/msgDialog.vue'
 				this.pageSize=val
 				this.getAllComponentEnIndustralization()
 			},
-			tempStore:function(){
-				var storage = window.localStorage
-				var tempAddData = ''
-				var tempUpdateData = []
-				storage.setItem("tempAddData",JSON.stringify(this.addData))
-				storage.setItem("tempUpdateData",JSON.stringify(this.selectedRow))
-				var json=storage.getItem("tempAddData");
-            	this.tempData=JSON.parse(json);
-				// this.tempData=this.addData
-				this.addData.prebuiltConcreteNum=''
-				this.addData.prebuiltSteelNum=''
-				this.addData.prebuiltTimberNum=''
-				this.addData.prebuiltOtherNum=''
-				this.addData.prebuiltConcreteAbility=''
-				this.addData.prebuiltSteelAbility=''
-				this.addData.prebuiltTimberAbility=''
-				this.addData.prebuiltOtherAbility=''
-				this.addData.prebuiltConcreteScale=''
-				this.addData.prebuiltSteelScale=''
-				this.addData.prebuiltTimberScale=''
-				this.addData.prebuiltOtherScale=''
-				console.log("this.tempData="+JSON.stringify(this.tempData))
-				this.showAddDialog=false
-			},
 			add:function(){
 				this.showAddDialog=true
 			},
-			submit:function(){
+			submit:function(val){
+				if (val=="tempStore") {
+					this.addData.submit='false'
+				}else{
+					this.addData.submit=true
+				}
 				var url=this.HOST+'/addComponentEnIndustrialization'
 				for (var data in this.addData) {
-					if (this.addData[data] == 0) {
+					if (this.addData[data] == '') {
 						this.$refs.msgDialog.confirm("请将内容填写完整！")
+						return
 					}
 				}
+				
 				this.$http.post(url,this.addData).then(response=>{
 					this.showAddDialog=false
 					this.getAllComponentEnIndustralization()
@@ -419,7 +389,7 @@ import msgDialog from '../common/msgDialog.vue'
 					this.addData.prebuiltSteelScale=''
 					this.addData.prebuiltTimberScale=''
 					this.addData.prebuiltOtherScale=''
-					
+					this.addData.submit=''					
 				}).catch(response=>{
 					if (response=='Error: Request failed with status code 500') {
 						this.$refs.msgDialog.confirm("不可添加同年同一季度，请检查增加信息")
@@ -434,8 +404,27 @@ import msgDialog from '../common/msgDialog.vue'
 				}
 				
 			},
-			confirmUpdate:function(){
-				if (this.checkedStatus==null||this.checkedStatus.id==2) {
+			confirmUpdate:function(val){
+				if (val=='tempStore') {
+					this.selectedRow.submit='false'
+				}else{
+					this.selectedRow.submit=true
+				}
+
+				if (this.isSubmit==true) {
+					if (this.checkedStatus==2) {
+						var url=this.HOST+'/updateComponentEnIndustrialization'
+						this.$http.put(url,this.selectedRow).then(response=>{
+							this.getAllComponentEnIndustralization()
+							this.$refs.msgDialog.notify("成功修改驳回信息！")
+						}).catch(response=>{
+							this.$refs.msgDialog.notify("修改驳回信息失败！")
+						})
+					}else{
+						this.$refs.msgDialog.confirm("信息已提交,不可以修改！")
+						this.getAllComponentEnIndustralization()
+					}					
+				}else {
 					var url=this.HOST+'/updateComponentEnIndustrialization'
 					this.$http.put(url,this.selectedRow).then(response=>{
 						this.getAllComponentEnIndustralization()
@@ -443,17 +432,31 @@ import msgDialog from '../common/msgDialog.vue'
 					}).catch(response=>{
 						this.$refs.msgDialog.notify("修改数据失败！")
 					})
-				}else if (this.checkedStatus.id==3) {
-					this.$refs.msgDialog.confirm("审核未通过！不可以修改")
-				}else if(this.checkedStatus.id==1){
-					this.$refs.msgDialog.confirm("已审核通过！不可以修改！")
-				}
-			
-				
+				}			
 			},
 			remove:function(val){
 				if (val) {
-					if (this.checkedStatus==null||this.checkedStatus.id==2) {
+					if (this.isSubmit==true) {
+						if (this.checkedStatus==null || this.checkedStatus.id==1 || this.checkedStatus.id==3) {
+							this.$refs.msgDialog.confirm("信息已提交，不可以删除！")
+						}else{
+							var url=this.HOST+'/deleteComponentEnIndustrialization?id='+this.selectedRowId
+							this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+					          confirmButtonText: '确定',
+					          cancelButtonText: '取消',
+					          type: 'warning'
+					        }).then(()=>{
+					        	this.$http.delete(url).then(response=>{
+									this.$refs.msgDialog.notify("成功删除数据！")
+									this.getAllComponentEnIndustralization()
+								}).catch(response=>{
+									this.$refs.msgDialog.notify("删除数据失败！")
+								})
+					        }).catch(()=>{
+					        	this.$refs.msgDialog.notify("已取消删除！")
+					        })
+						}
+					}else{
 						var url=this.HOST+'/deleteComponentEnIndustrialization?id='+this.selectedRowId
 						this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
 				          confirmButtonText: '确定',
@@ -466,14 +469,9 @@ import msgDialog from '../common/msgDialog.vue'
 							}).catch(response=>{
 								this.$refs.msgDialog.notify("删除数据失败！")
 							})
-				        }).catch(()=>{
+				        }).catch(()=>{				        	
 				        	this.$refs.msgDialog.notify("已取消删除！")
 				        })
-						
-					}else if (this.checkedStatus.id==3) {
-						this.$refs.msgDialog.confirm("审核未通过！")
-					}else if(this.checkedStatus.id==1){
-						this.$refs.msgDialog.confirm("已审核，不可以删除！")
 					}
 				}else{
 					this.$refs.msgDialog.confirm("请选择要删除的一行！")
