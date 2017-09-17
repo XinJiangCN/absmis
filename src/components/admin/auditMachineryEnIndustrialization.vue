@@ -88,8 +88,8 @@
                 id:'',
                 //显示内容
                 machineryEnIndustrializationData:[],
-                                //被选中的产业化信息
-                machineryEnTable:{integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',checkedStatus:{id:''}} 
+                //被选中的产业化信息
+                machineryEnTable:{integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',checkedStatus:{id:''},submit:true} 
             }
         
         },
@@ -117,7 +117,7 @@
             },
             //获取页面表格数据
             findAllMachineryEnIndustrializationsTable(){
-                var url = this.HOST + '/displayAllMachineryEnIndustrializations?page='+this.currentPage+"&rows="+this.currentPageSize
+                var url = this.HOST + '/displayAllMachineryEnIndustrializationsBySubmit?page='+this.currentPage+"&rows="+this.currentPageSize
                 this.$http.get(url).then(response=>{
                     this.machineryEnIndustrializationData = response.data.rows
                     this.totalNumber = response.data.total
@@ -138,6 +138,7 @@
            //点击行触发的事件
             showMachineryEnIndustrializationData() {
                 this.machineryEnTable = this.selectedRows
+                alert(this.machineryEnTable.submit)
             },
             //点击通过
             passAudit(){

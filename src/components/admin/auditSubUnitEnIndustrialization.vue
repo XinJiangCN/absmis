@@ -144,7 +144,7 @@
             },
             //获取页面表格数据
             findAllSubUnitEnIndustrializationsTable(){
-                var url = this.HOST + '/displayAllSubUnitEnIndustrializations?page='+this.currentPage+"&rows="+this.currentPageSize
+                var url = this.HOST + '/displayAllSubUnitEnIndustrializationsBySubmit?page='+this.currentPage+"&rows="+this.currentPageSize
                 this.$http.get(url).then(response=>{
                     this.subUnitEnIndustrializationTable = response.data.rows
                     this.totalNumber = response.data.total

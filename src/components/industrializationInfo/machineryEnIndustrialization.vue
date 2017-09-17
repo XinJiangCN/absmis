@@ -55,18 +55,18 @@
             <el-form :model="machineryEnIndustrializationForm" label-width="200px" class="demo-ruleForm">
                 <el-form-item>
                      <el-row >
-                        <el-col :span="3" :pull="6">
+                        <el-col :span="2" :pull="10">年份</el-col>
+                        <el-col :span="4" :pull="10">
                             <el-input  type="number" auto-complete="off" v-model.number="machineryEnIndustrializationForm.year" min="2000">
                             </el-input>
                         </el-col>
-                        <el-col :span="2" :pull="6">年份</el-col>
-                        <el-col :span="3" :pull="6">
+                        <el-col :span="2" :pull="10">季度</el-col>
+                        <el-col :span="3" :pull="10">
                             <el-input  type="number" auto-complete="off" v-model.number="machineryEnIndustrializationForm.quarter" min="1" max="4">
                             </el-input>
                         </el-col>
-                        <el-col :span="2" :pull="6">季度</el-col>
-                        <el-col :span="3" :pull="6">填报时间</el-col>
-                        <el-col :span="10" :pull="6">
+                        <el-col :span="4" :pull="8">填报时间</el-col>
+                        <el-col :span="8" :pull="8">
                             <el-date-picker
                               v-model="machineryEnIndustrializationForm.declareTime"
                               align="right"
@@ -111,7 +111,7 @@
                 </el-form-item>
             </el-form>
             <div slot="footer">
-                <el-button @click="">暂存</el-button>
+                <el-button @click="temporarySaveForm">暂存</el-button>
                 <el-button  @click="submitAddForm">提交</el-button>
             </div>
         </el-dialog>
@@ -120,18 +120,19 @@
             <el-form :model="machineryEnIndustrializationForm" label-width="200px" class="demo-ruleForm">
                 <el-form-item>
                      <el-row>
-                        <el-col :span="3" :pull="6">
+                        <el-col :span="2" :pull="10">年份</el-col>
+                        <el-col :span="4" :pull="10">
                             <el-input  type="number" auto-complete="off" v-model.number="machineryEnIndustrializationForm.year" min="2000">
                             </el-input>
                         </el-col>
-                        <el-col :span="2" :pull="6">年份</el-col>
-                        <el-col :span="3" :pull="6">
+                        <el-col :span="2" :pull="10">季度</el-col>
+                        <el-col :span="3" :pull="10">
                             <el-input  type="number" auto-complete="off" v-model.number="machineryEnIndustrializationForm.quarter" min="1" max="4">
                             </el-input>
                         </el-col>
-                        <el-col :span="2" :pull="6">季度</el-col>
-                        <el-col :span="3" :pull="6">填报时间</el-col>
-                        <el-col :span="10" :pull="6">
+                        
+                        <el-col :span="4" :pull="8">填报时间</el-col>
+                        <el-col :span="8" :pull="8">
                             <el-date-picker
                               v-model="machineryEnIndustrializationForm.declareTime"
                               align="right"
@@ -176,7 +177,7 @@
                 </el-form-item>
             </el-form>
             <div slot="footer">
-                <el-button @click="">暂存</el-button>
+                <el-button @click="temporarySaveForm">暂存</el-button>
                 <el-button  @click="submitEditForm">提交</el-button>
             </div>
         </el-dialog>
@@ -216,8 +217,8 @@ export default{
                     }
                 }]
             },
-            //部品产业化的属性
-            machineryEnIndustrializationForm:{integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:''}
+            //部品产业化的属性(这里submit初始值设置为true是为了下面表单提交的时候通过测试)
+            machineryEnIndustrializationForm:{integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:'',submit:true}
 
         }
     },
@@ -276,6 +277,26 @@ export default{
                 })
             }
         },
+        //暂存表单
+        temporarySaveForm(){
+          var url = this.HOST+"/addMachineryEnIndustrialization"
+          for(var data in this.machineryEnIndustrializationForm){
+                if(this.machineryEnIndustrializationForm[data]==0){                    
+                    this.$refs.msgDialog.confirm("您有未填写的内容，请仔细检查，再重新提交")
+                    return
+                }
+            }
+          this.machineryEnIndustrializationForm.submit = false
+          this.$http.post(url,this.machineryEnIndustrializationForm).then(response=>{
+            this.getMachineryEnIndustrializationTable()
+            this.$refs.msgDialog.notify("数据暂存成功")
+            this.addDialogVisible = false
+            this.editDialogVisible = false
+          }).catch(error=>{
+            this.$refs.msgDialog.confirm("数据暂存失败")
+          })
+          this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:'',submit:true}
+        },
         //提交增加信息
         submitAddForm(){
           var url = this.HOST+"/addMachineryEnIndustrialization"
@@ -292,20 +313,18 @@ export default{
           }).catch(error=>{
             this.$refs.msgDialog.confirm("数据提交失败")
           })
-          this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:''}
+          this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:'',submit:true}
         },
         //点击修改之后运行本方法
         showEditDialogVisible() {
             if (this.selectedRows.length == 0) {
               this.$refs.msgDialog.confirm("请选择您要修改的产业化信息！");
-            } else {
-              this.editDialogVisible = true;
-              this.machineryEnIndustrializationForm.integralWall = this.selectedRows.integralWall
-              this.machineryEnIndustrializationForm.specialTransportEquipment = this.selectedRows.specialTransportEquipment
-              this.machineryEnIndustrializationForm.specialConstructionEquipment = this.selectedRows.specialConstructionEquipment
-              this.machineryEnIndustrializationForm.declareTime = this.selectedRows.declareTime
-              this.machineryEnIndustrializationForm.year = this.selectedRows.year
-              this.machineryEnIndustrializationForm.quarter = this.selectedRows.quarter
+            } else if(this.selectedRows.submit){ 
+                this.$refs.msgDialog.confirm("提交的数据不能修改")
+            }else {
+              this.editDialogVisible = true
+              this.machineryEnIndustrializationForm = this.selectedRows
+              this.machineryEnIndustrializationForm.submit = true
             } 
         },
         //提交修改信息
@@ -317,14 +336,14 @@ export default{
                     return
                 }
           }
-          this.$http.put(url,this.machineryEnIndustrializationForm).then(response=>{
+            this.$http.put(url,this.machineryEnIndustrializationForm).then(response=>{
             this.getMachineryEnIndustrializationTable()
             this.$refs.msgDialog.notify("数据提交成功")
             this.editDialogVisible = false
           }).catch(error=>{
             this.$refs.msgDialog.confirm("数据提交失败")
           })
-          this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:''}           
+          this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:'',submit:true}         
         },
 
 

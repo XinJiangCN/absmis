@@ -182,11 +182,11 @@
             </el-form>
             <div align="center">
                 <div v-if="this.submitVisible">
-                    <el-button @click="">暂存</el-button>
+                    <el-button @click="temporarySaveForm">暂存</el-button>
                     <el-button @click="submitAddForm">提交</el-button>
                 </div>
                 <div v-else="this.submitVisible">
-                    <el-button @click="">暂存</el-button>
+                    <el-button @click="temporarySaveForm">暂存</el-button>
                     <el-button @click="submitEditForm">提交</el-button>
                 </div>
             </div>
@@ -222,12 +222,12 @@ export default{
             //控制是提交还是修改
             submitVisible:true,
             //部品产业化的属性
-            subUnitEnIndustrializationForm:{integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:''}
+            subUnitEnIndustrializationForm:{integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}
         }
     },
     methods:{
         setCurrent(row) {
-            this.subUnitEnIndustrializationForm={integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:''}
+            this.subUnitEnIndustrializationForm={integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}
         },
         handleCurrentChange(selected){
             this.selectedRows = selected
@@ -240,6 +240,24 @@ export default{
             }).catch(error=>{
                 this.$refs.msgDialog.confirm("获取表格数据失败")
             })
+        },
+        //暂存表单
+        temporarySaveForm(){
+            var url = this.HOST+"/addSubUnitEnIndustrialization"
+            for(var data in this.subUnitEnIndustrializationForm){
+                if(this.subUnitEnIndustrializationForm[data]==0){
+                    this.$refs.msgDialog.confirm("您有未填写的内容，请仔细检查，再重新提交")
+                    return
+                }
+            }
+            this.subUnitEnIndustrializationForm.submit = false
+            this.$http.post(url,this.subUnitEnIndustrializationForm).then(response=>{
+                    this.getSubUnitEnIndustrializationTable();
+                    this.$refs.msgDialog.notify("数据暂存成功")
+                }).catch(error=>{
+                    this.$refs.msgDialog.confirm("数据暂存失败")
+                })
+                this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}
         },
         //提交表单信息
         submitAddForm(){
@@ -256,7 +274,7 @@ export default{
                 }).catch(error=>{
                     this.$refs.msgDialog.confirm("数据添加失败")
                 })
-                this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:''}
+                this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}
             },
             //删除
             deleteRowData() {
@@ -277,8 +295,12 @@ export default{
             showEditDialogVisible() {
                 if (this.selectedRows.length == 0) {
                     this.$refs.msgDialog.confirm("请选择您要修改的产业化信息！")
-                } else {
+                }else if(this.selectedRows.submit){ 
+                    this.$refs.msgDialog.confirm("提交的数据不能修改")
+                    this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}
+                }else{
                     this.submitVisible = false
+                    this.subUnitEnIndustrializationForm.submit = true
                 }
             },
             //提交修改信息
@@ -297,8 +319,8 @@ export default{
               }).catch(error=>{
                 this.$refs.msgDialog.confirm("数据修改失败")
               })
-              this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:''}         
-            },
+              this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}         
+                  },
     },
     created(){
         this.getSubUnitEnIndustrializationTable()
