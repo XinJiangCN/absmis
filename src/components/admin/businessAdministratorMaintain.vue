@@ -210,28 +210,36 @@
       },
       //点击确定进行添加保存
       submitAddForm() {
-        this.addDialogVisible = false;
-        this.enterpriseForAddForm.password = this.enterpriseForAddForm.username
-        var url = this.HOST + "/addAdmin"
-        this.$http.post(url, this.enterpriseForAddForm).then(response => {
-          this.findAllBusinessAdmins();
-          this.$refs.msgDialog.notify("添加成功")
-        }).catch(error => {
-          this.$refs.msgDialog.confirm("添加失败")
-        })
-        this.enterpriseForAddForm = {}
+        if(!this.enterpriseForAddForm.username){
+          this.$refs.msgDialog.confirm("用户名不能为空")
+        }else{
+          this.addDialogVisible = false;
+          this.enterpriseForAddForm.password = this.enterpriseForAddForm.username
+          var url = this.HOST + "/addAdmin"
+          this.$http.post(url, this.enterpriseForAddForm).then(response => {
+            this.findAllBusinessAdmins();
+            this.$refs.msgDialog.notify("添加成功")
+          }).catch(error => {
+            this.$refs.msgDialog.confirm("添加失败")
+          })
+          this.enterpriseForAddForm = {}
+        }
       },
       //点击确定进行修改保存
       submitUpdateForm() {
-        this.editDialogVisible = false;
-        this.enterpriseForUpdate.username=this.enterpriseForUpdateForm.username
-        var url = this.HOST + "/updateAdmin"
-        this.$http.put(url, this.enterpriseForUpdate).then(response => {
-          this.findAllBusinessAdmins();
-          this.$refs.msgDialog.notify("修改成功")
-        }).catch(error => {
-          this.$refs.msgDialog.confirm("修改失败")
-        })
+        if(!this.enterpriseForUpdateForm.username){
+          this.$refs.msgDialog.confirm("用户名不能为空")
+        }else{
+          this.editDialogVisible = false;
+          this.enterpriseForUpdate.username=this.enterpriseForUpdateForm.username
+          var url = this.HOST + "/updateAdmin"
+          this.$http.put(url, this.enterpriseForUpdate).then(response => {
+            this.findAllBusinessAdmins();
+            this.$refs.msgDialog.notify("修改成功")
+          }).catch(error => {
+            this.$refs.msgDialog.confirm("修改失败")
+          })
+        }
       },
       //点击删除时运行本方法
       delConfirmation() {

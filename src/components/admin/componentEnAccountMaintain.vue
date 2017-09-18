@@ -189,16 +189,20 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             },
             //点击确定进行添加保存
             submitAddForm(){
-                this.addDialogVisible=false
-                this.enterpriseForAddForm.password = this.enterpriseForAddForm.username
-                var url = this.HOST + "/addComponentEn"
-                this.$http.post(url,this.enterpriseForAddForm).then(response=>{
-                    this.findAllComponentEns()
-                    this.$refs.msgDialog.notify("添加成功")
-                }).catch(error=>{
-                    this.$refs.msgDialog.confirm("添加失败")
-                })
-                this.enterpriseForAddForm={}
+                if(!this.enterpriseForAddForm.username||!this.enterpriseForAddForm.name){
+                    this.$refs.msgDialog.confirm("用户名和企业名称均不能为空")
+                }else{
+                    this.addDialogVisible=false
+                    this.enterpriseForAddForm.password = this.enterpriseForAddForm.username
+                    var url = this.HOST + "/addComponentEn"
+                    this.$http.post(url,this.enterpriseForAddForm).then(response=>{
+                        this.findAllComponentEns()
+                        this.$refs.msgDialog.notify("添加成功")
+                    }).catch(error=>{
+                        this.$refs.msgDialog.confirm("添加失败")
+                    })
+                    this.enterpriseForAddForm={}
+                }
             },
             //点击修改之后运行本方法
             showUpdateDialogVisible(){
@@ -216,9 +220,12 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             },
             //点击确定进行修改保存
             submitUpdateForm(){
-                this.updateDialogVisible=false
-                this.enterpriseForUpdate.name=this.enterpriseForUpdateForm.name
-                this.enterpriseForUpdate.username=this.enterpriseForUpdateForm.username
+                if(!this.enterpriseForUpdateForm.username||!this.enterpriseForUpdateForm.name){
+                    this.$refs.msgDialog.confirm("用户名和企业名称均不能为空")
+                }else{
+                    this.updateDialogVisible=false
+                    this.enterpriseForUpdate.name=this.enterpriseForUpdateForm.name
+                    this.enterpriseForUpdate.username=this.enterpriseForUpdateForm.username
                     var url = this.HOST + "/updateComponentEn"
                     this.$http.put(url,this.enterpriseForUpdate).then(response=>{
                         this.findAllComponentEns() 
@@ -226,6 +233,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                     }).catch(error=>{
                         this.$refs.msgDialog.confirm("修改失败")
                     })
+                }
             },
             //点击删除时运行本方法
             delConfirmation(){
