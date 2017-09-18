@@ -74,11 +74,12 @@
 				</el-row>
 			</el-col>
 		</el-row>
-		
+		<msg-dialog ref="msgDialog"></msg-dialog>
 	</div>
 </template>
 <script type="text/javascript">
 import moment from 'moment'
+import msgDialog from '../common/msgDialog.vue'
 	export default{
 		data:function(){
 			return{
@@ -98,12 +99,12 @@ import moment from 'moment'
 		},
 		methods:{
 			getComponentCompanyInfoData:function(){
-				var url=this.HOST+'/displayAllConstructionEnIndustrializations?page='+this.pageNum+'&rows='+this.pageSize
+				var url=this.HOST+'/displayAllConstructionEnIndustrializationsBySubmit?page='+this.pageNum+'&rows='+this.pageSize
 				this.$http.get(url).then(response=>{
 					this.traditionalInfoData=response.data.rows
 					this.total=response.data.total
 				}).catch(response=>{
-					alert("获取数据失败")
+					this.$refs.msgDialog.notify("获取数据失败")
 				})
 			},
 			handleRowChange:function(val){	
@@ -121,7 +122,7 @@ import moment from 'moment'
 			},
 			searchTraditionalInfo:function(){
 				if (this.selectedCompanyName==''||this.searchTime=='') {
-					alert("请检查查询条件")
+					this.$refs.msgDialog.confirm("请检查查询条件")
 				}else{
 					var startTime=moment(this.searchTime[0]).format("YYYY-MM-DD")
 					var endTime=moment(this.searchTime[1]).format("YYYY-MM-DD")
@@ -130,7 +131,7 @@ import moment from 'moment'
 						this.traditionalInfoData=response.data.rows
 						this.total=response.data.total
 					}).catch(response=>{
-						alert("查询出错")
+						this.$refs.msgDialog.notify("查询出现错误！")
 					})
 				}
 			},
@@ -138,30 +139,33 @@ import moment from 'moment'
 				if (val) {
 					var url1 = this.HOST+'/checkConstructionEnIndustrialization?id='+this.selectedId+'&checkedStatusId='+1+'&constructionEnId='+this.selectedConstructionId			
 					this.$http.post(url1).then(response=>{
-						alert("修改通过！")
+						this.$refs.msgDialog.notify("通过审核！")
 						this.getComponentCompanyInfoData()
 					}).catch(response=>{
-						alert("修改出错")
+						this.$refs.msgDialog.notify("审核通过失败！")
 					})
 				}else{
-					alert("请选择要审核的企业产业化信息")
+					this.$refs.msgDialog.confirm("请选择要审核的企业产业化信息")
 				}
 				
 			},
 			failCheck:function(val){
 				if (val) {
-					var url = this.HOST+'/checkConstructionEnIndustrialization?id='+this.selectedId+'&checkedStatusId='+3+'&constructionEnId='+this.selectedConstructionId	
+					var url = this.HOST+'/checkConstructionEnIndustrialization?id='+this.selectedId+'&checkedStatusId='+2+'&constructionEnId='+this.selectedConstructionId	
 					this.$http.post(url).then(response=>{
-						alert("成功驳回！")
+						this.$refs.msgDialog.notify("成功驳回！")
 						this.getComponentCompanyInfoData()
 					}).catch(response=>{
-						alert("驳回出错")
+						this.$refs.msgDialog.notify("驳回出错")
 					})
 				}else{
-					alert("请选择要审核的企业产业化信息")
+					this.$refs.msgDialog.confirm("请选择要审核的企业产业化信息")
 				}
 				
 			}
+		},
+		components:{
+			msgDialog
 		}
 	}
 </script>

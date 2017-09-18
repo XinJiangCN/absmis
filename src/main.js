@@ -16,7 +16,6 @@ axios.defaults.withCredentials=true
 
 Vue.prototype.$http = axios
 Vue.prototype.moment = moment
-
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 

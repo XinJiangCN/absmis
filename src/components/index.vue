@@ -6,30 +6,27 @@
         <index-header></index-header>
         <!-- Row for the main index part-->
         <el-row :gutter="20">
-        <!-- Left for the navigation bar -->
-        <el-col :span="6">
-        <div id="navBar">
-            <nav-bar></nav-bar>
-        </div>
-        </el-col>
-        <!-- Right part for the view offerred by the router,
-                 with the transition effects-->
-        <el-col :span="18">
+            <!-- Left for the navigation bar -->
+            <el-col :span="6">
+                <div id="navBar">
+                    <nav-bar></nav-bar>
+                </div>
+            </el-col>
+            <!-- Right part for the view offerred by the router,
+                     with the transition effects-->
+            <el-col :span="18">
 
-        <div id="view">
-
-            <el-row>
-            <view-header></view-header>
-            </el-row>
-            <el-row>
-            <transition name="el-fade-in">
-
-            <router-view></router-view>
-            </transition>
-
-            </el-row>
-        </div>
-        </el-col>
+                <div id="view">
+                    <el-row>
+                        <view-header></view-header>
+                    </el-row>
+                    <el-row>
+                        <transition name="el-fade-in">
+                            <router-view></router-view>
+                        </transition>
+                    </el-row>
+                </div>
+            </el-col>
         </el-row>
     </div>
     <!--Footer Part
@@ -97,4 +94,5 @@ export default {
 #push {
     height:60px;
 }
+
 </style>

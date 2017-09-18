@@ -50,6 +50,7 @@
     </el-col>
 </el-row>
 <!-- 调用子组件，为了利用ref来调用子组件中的方法，实际无显示效果 -->
+
   <msg-dialog ref="msgDialog"></msg-dialog>
   </div>
 </div>

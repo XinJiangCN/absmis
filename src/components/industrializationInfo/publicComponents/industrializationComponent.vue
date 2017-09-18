@@ -2,8 +2,8 @@
 <div id="body">
 	<el-row>
 		<el-button @click="add">增加</el-button>
-		<el-button @click="remove(selectedRow,rowIndex)">删除</el-button>
-		<el-button @click="update(selectedRow,rowIndex)">修改</el-button>
+		<el-button @click="remove(selectedRow)">删除</el-button>
+		<el-button @click="update(selectedRow)">修改</el-button>
 	</el-row>
 	<el-table
 	:data="industrializationInfoData"
@@ -39,19 +39,43 @@
 	</el-pagination>
 	<el-dialog v-model="showAddDialog" title="增加">
 		<el-form>		
-			<el-form :label-position="labelPosition" :rules="rules">
+			<el-form>
 				<el-form-item>
-					<el-col :span="10">
+					<el-col :span="5">
 						填报时间：
 					</el-col>
-					<el-col :span="14">
+					<el-col :span="7">
 						<el-date-picker
-					      v-model="selectTime"
+					      v-model="addData.declareTime"
 					      align="right"
 					      type="date"
 					      placeholder="选择日期"
 					      :picker-options="pickerOptions1">
 					    </el-date-picker>
+					</el-col>
+				</el-form-item>
+				<el-form-item>
+					<el-col :span="5">
+						填报年份：
+					</el-col>
+					<el-col :span="7">
+						<el-input
+						type='number'
+						v-model="addData.year"
+						align="right"
+						></el-input>
+					</el-col>
+					<el-col :span="5">
+						填报季度：
+					</el-col>
+					<el-col :span="7">
+						<el-input
+						type='number'
+						v-model="addData.quarter"
+						align="right"
+						max='4'
+						min='1'
+						></el-input>
 					</el-col>
 				</el-form-item>
 				<el-form-item prop="data">
@@ -59,7 +83,7 @@
 						新增装配式混凝土结构建筑的数量:
 					</el-col>
 					<el-col :span="14">
-						<el-input v-model.number="addNewConcrete" type='number' maxLength='5' placeholder="请输入内容"><template slot="append">万平方米</template></el-input>
+						<el-input v-model.number="addData.addNewConcrete" type='number' maxLength='5' placeholder="请输入内容"><template slot="append">万平方米</template></el-input>
 					</el-col>	
 				</el-form-item>
 				<el-form-item prop="data">
@@ -67,7 +91,7 @@
 						新增装配式钢结构建筑的数量:
 					</el-col>
 					<el-col :span="14">
-						<el-input v-model.number="addNewSteel" type='number' placeholder="请输入内容"><template slot="append">万平方米</template></el-input>
+						<el-input v-model.number="addData.addNewSteel" type='number' placeholder="请输入内容"><template slot="append">万平方米</template></el-input>
 					</el-col>
 				</el-form-item>			
 				<el-form-item prop="data">
@@ -75,22 +99,22 @@
 						新增装配式木建筑的数量:
 					</el-col>
 					<el-col :span="14">
-						<el-input v-model.number="addNewTimber" type='number' placeholder="请输入内容"><template slot="append">万平方米</template></el-input>
+						<el-input v-model.number="addData.addNewTimber" type='number' placeholder="请输入内容"><template slot="append">万平方米</template></el-input>
 					</el-col>
 				</el-form-item>		
 			</el-form>
-			<el-button type="primary" @click="tempStore">暂存</el-button>
-			<el-button type="primary" @click="submit">提交</el-button>
+			<el-button type="primary" @click="submit('tempStore')">暂存</el-button>
+			<el-button type="primary" @click="submit('submit')">提交</el-button>
 		</el-form>
 	</el-dialog>
 	<el-dialog v-model="showUpdateDialog" title="修改">
 		<el-form>		
-			<el-form :label-position="labelPosition" :rules="rules" v-model="addDialogForm">
+			<el-form>
 				<el-form-item>
-					<el-col :span="10">
+					<el-col :span="5">
 						填报时间：
 					</el-col>
-					<el-col :span="14">
+					<el-col :span="7">
 						<el-date-picker
 					      v-model="updateData.declareTime"
 					      align="right"
@@ -98,6 +122,30 @@
 					      placeholder="选择日期"
 					      :picker-options="pickerOptions1">
 					    </el-date-picker>
+					</el-col>
+				</el-form-item>
+				<el-form-item>
+					<el-col :span="5">
+						填报年份：
+					</el-col>
+					<el-col :span="7">
+						<el-input
+						type='number'
+						v-model="updateData.year"
+						align="right"
+						></el-input>
+					</el-col>
+					<el-col :span="5">
+						填报季度：
+					</el-col>
+					<el-col :span="7">
+						<el-input
+						type='number'
+						v-model="updateData.quarter"
+						align="right"
+						max='4'
+						min='1'
+						></el-input>
 					</el-col>
 				</el-form-item>
 				<el-form-item prop="data">
@@ -126,22 +174,32 @@
 				</el-form-item>		
 			</el-form>
 			<el-button type="primary" @click="cancelUpdate">取消</el-button>
-			<el-button type="primary" @click="confirmUpdate">确定</el-button>
+			<el-button type="primary" @click="confirmUpdate('tempStore')">暂存</el-button>
+			<el-button type="primary" @click="confirmUpdate('submit')">提交</el-button>
 		</el-form>
 	</el-dialog>
+	<msg-dialog ref="msgDialog"></msg-dialog>
 </div>
 </template>
 <script type="text/javascript">
 import moment from 'moment'
+import msgDialog from '../../../components/common/msgDialog.vue'
 	export default{
 		data:function(){
 			return{
-				//新增装配式混凝土结构建筑的数量
-				addNewConcrete:'',
-				//新增装配式钢结构建筑的数量
-    			addNewSteel:'',
-    			// 新增装配式木建筑的数量
-    			addNewTimber:'',
+				addData:{
+					//新增装配式混凝土结构建筑的数量
+					addNewConcrete:'',
+					//新增装配式钢结构建筑的数量
+	    			addNewSteel:'',
+	    			// 新增装配式木建筑的数量
+	    			addNewTimber:'',
+	    			//是否是提交状态
+	    			submit:'',
+	    			declareTime:'',
+	    			year:'',
+	    			quarter:''
+				},			
     			//要更新的数据行
     			updateData:{
     				id:'',
@@ -149,17 +207,14 @@ import moment from 'moment'
     				addNewConcrete:'',
     				addNewSteel:'',
     				addNewTimber:'',
+    				year:'',
+    				quarter:'',
     				checkedStatus:'',
-    				constructionEn:''
+    				submit:''
     			},
     			tempUpdateData:'',
-    			isTemp:false,
-    			rowIndex:'',
     			showAddDialog:false,
     			showUpdateDialog:false,
-    			addDialogForm:'',
-    			updateDialogForm:'',
-				selectTime:'',
 				selectedRow:'',
 				selectedRowId:'',
 				//表格数据总条数
@@ -168,9 +223,10 @@ import moment from 'moment'
 				industrializationInfoData:'',
 				//当前行的审核状态id，用于判断是否可以修改.删除
 				checkedStatus:'',
+				//判断是否是提交状态
+				isSubmit:'',
 				pageSize:10,
 				pageNum:1,
-				labelPosition:'left',
 				pickerOptions1: {
 		          shortcuts: [{
 		            text: '今天',
@@ -193,23 +249,16 @@ import moment from 'moment'
 		            }
 		          }]
 		        },
-		        rules:{
-		        }
 			}
 		},
 		created:function(){
-			var currentDate= new Date();
-			var preDate =new Date(currentDate.getTime()- 24*60*60*1000);
-			this.selectTime=preDate
+			var currentDate= new Date()
+			var currMonth=currentDate.getMonth()
+			var preDate =new Date(currentDate.getTime()- 24*60*60*1000)
+			this.addData.declareTime=preDate
+			this.addData.year=currentDate.getFullYear()
+			this.addData.quarter=Math.floor( ( currMonth % 3 == 0 ? ( currMonth / 3 ) : ( currMonth / 3 + 1 ) ) )
 			this.getAllIndustrializationInfo()			
-		},
-		watch:function(){
-			pageNum:{
-				handler:{
-					this.getAllIndustrializationInfo()
-				}
-				deep:true
-			}
 		},
 		methods:{
 			getAllIndustrializationInfo:function(){
@@ -218,45 +267,43 @@ import moment from 'moment'
 					this.industrializationInfoData=response.data.rows
 					this.totalIndustrializationInfoData=response.data.total
 				}).catch(response=>{
-					alert("获取产业化信息失败"+response.date)
+					this.$refs.msgDialog.confirm("获取产业化信息失败!")
 				})
 			},
-			submit:function(){
-				var url=this.HOST+'/addConstructionEnIndustrialization'
-				for(var data in this.addDialogForm){
-					if (this.addDialogForm[data]==0) {
-						alert("填写内容有误，请仔细检查！")
+			//暂存和提交
+			submit:function(val){
+				if (val=='tempStore') {
+					this.addData.submit='false'
+				}else{
+					this.addData.submit=true
+				}
+				for(var data in this.addData){
+					if (this.addData[data]=='') {
+						console.log("this.addData[data]"+data+"==="+this.addData[data])
+						this.$refs.msgDialog.confirm("请将内容填写完整！")
 						return
 					}
-
 				}
-				this.$http.post(url,{
-					addNewConcrete:this.addNewConcrete,
-					addNewSteel:this.addNewSteel,
-					addNewTimber:this.addNewTimber,
-					declareTime:this.selectTime
-				}).then(response=>{
-					this.addNewConcrete=''
-					this.addNewSteel=''
-					this.addNewTimber=''
-					this.declareTime=''
+				var url=this.HOST+'/addConstructionEnIndustrialization'
+				this.$http.post(url,this.addData).then(response=>{					
 					this.getAllIndustrializationInfo()
-					alert("提交成功")
+					this.showAddDialog=false	
+					this.addData.addNewTimber=''
+					this.addData.addNewConcrete=''
+					this.addData.addNewSteel=''
+					this.addData.submit=''
+					this.$refs.msgDialog.notify("成功提交！")
 				}).catch(response=>{
-					alert("提交失败")
-				})
-				this.showAddDialog=false				
+					if (response=='Error: Request failed with status code 500') {
+						this.$refs.msgDialog.confirm("不可添加同年同一季度，请检查增加信息")
+					}
+				})							
 			},
 			handleSelectionChange:function(val){
 				this.selectedRow=val
 				this.selectedRowId=val.id
-				this.checkedStatus=val.checkedStatus.id
-				for (var i =0;; i++) {
-					if (val==this.industrializationInfoData[i]){
-						this.rowIndex=i
-						break
-					}
-				}
+				this.checkedStatus=val.checkedStatus
+				this.isSubmit=val.submit
 			},
 			handlePageNumChange:function(val){
 				this.pageNum=val
@@ -266,75 +313,55 @@ import moment from 'moment'
 				this.pageSize=val
 				this.getAllIndustrializationInfo()
 			},
-			tempStore:function(){
-				this.industrializationInfoData.push({
-					addNewConcrete:this.addNewConcrete,
-					addNewSteel:this.addNewSteel,
-					addNewTimber:this.addNewTimber,
-					declareTime:moment(this.declareTime).format("YYYY-MM-DD")
-				})			
-				this.addNewConcrete=''
-				this.addNewTimber=''
-				this.addNewSteel=''
-				this.declareTime=''
-				this.showAddDialog=false
-			},
 			add:function(){
 				this.showAddDialog=true
 			},
-			update:function(val,index){
+			update:function(val){
 				if (val) {
-					if (val.id) {
-						if (this.checkedStatus==1) {
-							alert("已审核，无需修改")
-						}else if (this.checkedStatus==2) {
-							alert("审核未通过！")
+					if (this.isSubmit==true) {
+						if (this.checkedStatus==null || this.checkedStatus.id==1 || this.checkedStatus.id==3) {
+							this.$refs.msgDialog.confirm("已提交审核，不可修改！")
 						}else{
 							this.showUpdateDialog=true
+							this.updateData.id=val.id
 							this.updateData.addNewConcrete=val.addNewConcrete
 							this.updateData.addNewSteel=val.addNewSteel
 							this.updateData.addNewTimber=val.addNewTimber
 							this.updateData.declareTime=val.declareTime
+							this.updateData.year=val.year
+							this.updateData.quarter=val.quarter
 							this.updateData.checkedStatus=val.checkedStatus
 						}
 					}else{
+						this.showUpdateDialog=true
+						this.updateData.id=val.id
 						this.updateData.addNewConcrete=val.addNewConcrete
 						this.updateData.addNewSteel=val.addNewSteel
 						this.updateData.addNewTimber=val.addNewTimber
 						this.updateData.declareTime=val.declareTime
-						this.updateData.checkedStatus=val.checkedStatus
-						this.isTemp=true
-					}
-					
+						this.updateData.year=val.year
+						this.updateData.quarter=val.quarter
+						this.updateData.checkedStatus=val.checkedStatus				
+					}				
 				}else{
-					alert("请选择要修改的一行！")
+					this.$refs.msgDialog.confirm("请选择要修改的一行！")
 				}
 			},
-			confirmUpdate:function(){
-				if (this.isTemp) {
-					this.isTemp=false
+			confirmUpdate:function(val){
+				if (val=='tempStore') {
+					this.updateData.submit='false'
 				}else{
-					var url=this.HOST+'/updateConstructionEnIndustrialization'
-					// console.log(JSON.stringify(this.updateData))	
-					this.$http.put(url,{
-						id:this.selectedRowId,
-						addNewConcrete:this.updateData.addNewConcrete,
-						addNewTimber:this.updateData.addNewTimber,
-						addNewSteel:this.updateData.addNewSteel,
-						declareTime:this.updateData.declareTime,
-						checkedStatus:this.updateData.checkedStatus,
-					}).then(response=>{
-						alert("修改成功！")
-						this.getAllIndustrializationInfo()
-						this.showUpdateDialog=false
-						this.isTemp=false
-					}).catch(response=>{
-						alert("修改失败！")
-						this.showUpdateDialog=false
-						this.isTemp=false
-					})		
+					this.updateData.submit=true
 				}
-				
+				var url=this.HOST+'/updateConstructionEnIndustrialization'
+				this.$http.put(url,this.updateData).then(response=>{
+					this.$refs.msgDialog.notify("成功修改！")
+					this.getAllIndustrializationInfo()
+					this.showUpdateDialog=false
+				}).catch(response=>{
+					this.$refs.msgDialog.notify("修改失败！")
+					this.showUpdateDialog=false
+				})		
 			},
 			cancelUpdate:function(){
 				this.showUpdateDialog=false
@@ -344,13 +371,11 @@ import moment from 'moment'
 				this.updateData.declareTime=''
 				this.updateData.checkedStatus=''
 			},
-			remove:function(val,index){
+			remove:function(val){
 				if (val) {
-					if (val.id) {
-						if (this.checkedStatus==1) {
-							alert("已审核，不可以删除")
-						}else if (this.checkedStatus==2) {
-							alert("审核未通过！")
+					if (this.isSubmit==true) {
+						if (this.checkedStatus==null || this.checkedStatus.id==1 || this.checkedStatus.id==3) {
+							this.$refs.msgDialog.confirm("信息已提交，不可以修改！")
 						}else{
 							var url=this.HOST+'/deleteConstructionEnIndustrialization?id='+this.selectedRowId
 							this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -359,32 +384,39 @@ import moment from 'moment'
 					          type: 'warning'
 					        }).then(()=>{
 					        	this.$http.delete(url).then(response=>{
-									this.$message({
-										type:'success',
-										message:'已成功删除'
-									})
+									this.$refs.msgDialog.notify("成功删除驳回数据！")
 									this.getAllIndustrializationInfo()
 								}).catch(response=>{
-									this.$message({
-										type:'info',
-										message:'删除失败'
-									})
+									this.$refs.msgDialog.notify("删除驳回数据失败！")
 								})
 					        }).catch(()=>{
-					        	this.$message({
-					        		type:'info',
-					        		message:'已取消删除'
-					        	})
-					        })						
-						}
+					        	this.$refs.msgDialog.notify("已取消删除驳回数据！")
+					        })					
+						}							
 					}else{
-						this.industrializationInfoData.splice(index, 1)
-						alert("成功删除暂存数据")
+						var url=this.HOST+'/deleteConstructionEnIndustrialization?id='+this.selectedRowId
+							this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+					          confirmButtonText: '确定',
+					          cancelButtonText: '取消',
+					          type: 'warning'
+					        }).then(()=>{
+					        	this.$http.delete(url).then(response=>{
+									this.$refs.msgDialog.notify("成功删除暂存数据！")
+									this.getAllIndustrializationInfo()
+								}).catch(response=>{
+									this.$refs.msgDialog.notify("删除暂存数据失败！")
+								})
+					        }).catch(()=>{
+					        	this.$refs.msgDialog.notify("已取消删除暂存数据！")
+					        })				
 					}
 				}else{
-					alert("请选择要删除的一行！")
+					this.$refs.msgDialog.confirm("请选择要删除的一行数据！")
 				}
-			}
+			},
+		},
+		components:{
+			msgDialog
 		}
 	}
 </script>
