@@ -1,39 +1,34 @@
 <template>
-<!DOCTYPE html>
-<div id="index">
     <div id="indexContent">
-        <!-- Header Part -->
-        <index-header></index-header>
+        <el-row class="header">
+            <!-- Header Part -->
+            <index-header></index-header>
+        </el-row>   
         <!-- Row for the main index part-->
-        <el-row :gutter="20">
+        <el-row :gutter="20" class="main">
             <!-- Left for the navigation bar -->
-            <el-col :span="6">
-                <div id="navBar">
-                    <nav-bar></nav-bar>
-                </div>
+            <el-col :span="5" id="navBar" class="menu">     
+                <nav-bar></nav-bar>
             </el-col>
             <!-- Right part for the view offerred by the router,
                      with the transition effects-->
-            <el-col :span="18">
-
-                <div id="view">
-                    <el-row>
-                        <view-header></view-header>
-                    </el-row>
-                    <el-row>
-                        <transition name="el-fade-in">
-                            <router-view></router-view>
-                        </transition>
-                    </el-row>
-                </div>
+            <el-col :span="18" class="content">
+                <el-row>
+                    <view-header></view-header>
+                </el-row>
+                <el-row>
+                    <transition name="el-fade-in">
+                        <router-view></router-view>
+                    </transition>
+                </el-row>
             </el-col>
         </el-row>
-    </div>
-    <!--Footer Part
-        The push div used to prevent overlaping when the content is full-->
-    <div id="push"></div>
-    <index-footer></index-footer>
-</div>
+        <!--Footer Part
+            The push div used to prevent overlaping when the content is full-->
+        <el-row class="footer">
+            <index-footer></index-footer>
+        </el-row>
+    </div>    
 </template>
 
 <script>
@@ -60,6 +55,12 @@ export default {
 </script>
 
 <style>
+html,body{
+    height:100%;
+    margin:0;
+    padding:0;
+}
+
 .el-row {
     margin-right: 0;
     margin-bottom: 20px;
@@ -88,11 +89,40 @@ export default {
     background-color: #f9fafc;
 }
 #indexContent {
-    min-height:100vh;         
-    margin-bottom:-70px; 
+    overflow-x: hidden;
+     
 }
-#push {
-    height:60px;
+.header{
+    width: 100%;
+    height: 80px;
+    position:absolute;
+    z-index:5;
+    top:0;
+    /*background-color:#475669;*/
 }
 
+.main{
+    width:100%;
+    overflow:auto;
+    top:80px;
+    bottom: 50px;
+    position:absolute;
+    z-index:10;
+}
+.menu{
+    position:fixed;
+    height: 77%;
+    background-color:#475669;
+}
+.content{
+    margin-left: 280px;
+}
+.footer{
+    background-color:#1F2D3D;  
+    height:50px;
+    width:100%;
+    position:absolute;
+    bottom: 0px;
+    left: 0px;
+}
 </style>

@@ -1,9 +1,9 @@
 <template>
 <div id="header">
-    <div style="font-size:35px">
-    	<p>装配式建筑系统</p>
+    <div class="headerContent">
+    	<p>装配式建筑信息系统</p>
     </div>
-    <div style="margin-right:-800px;margin-bottom:20px">
+    <div style="width:20%;float:left">
     	<p>{{ "当前用户：" + currentUser}}</p>
     </div>
 </div>
@@ -38,8 +38,15 @@ export default{
 </script>
 <style type="text/css">
 	#header{
-		height: 10%;
 		width: 100%;
-		margin: 0 auto;
+		/* margin: 0 auto; */
 	}
+  .headerContent{
+    font-size: 29px;
+    width: 70%;
+    float: left;
+    padding-top: 5px !important;
+    padding-left: 20px !important;
+    padding-bottom: 10px !important;
+  }
 </style>

@@ -1,7 +1,7 @@
 <template>
 <div id="body">
 	<el-row>
-		<el-button @click="add">增加</el-button>
+		<el-button @click="add" id="addBtn">增加</el-button>
 		<el-button @click="remove(selectedRow)">删除</el-button>
 		<el-button @click="update(selectedRow)">修改</el-button>
 	</el-row>
@@ -430,5 +430,6 @@ import msgDialog from '../../../components/common/msgDialog.vue'
 		height: 10%;
 		float: left;
 	}
+	
 </style>
 	
