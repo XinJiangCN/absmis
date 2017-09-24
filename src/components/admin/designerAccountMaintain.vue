@@ -119,7 +119,7 @@
 
         <el-form>
             <label>
-            <h3>您确定重置此用户的密码吗？</h3>
+                您确定重置此用户的密码吗？
             </label>
         </el-form>
         <div slot="footer">
@@ -148,6 +148,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                 designerTableData:[],
                 //用来绑定搜索框中的内容
                 searchContent:'',
+                searchContentFinal:'',
                 //增加用的对话框，初始为不显示
                 addDialogVisible:false,
                 //修改用，初始不显示对话框
@@ -179,6 +180,8 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
         },
         methods: {
             handleSearch(){
+                this.searchContentFinal = this.searchContent
+                this.findAllDesigners()
             },
             //选中行之后，触发本方法
             handleSelectionChange(selectedRows){
@@ -187,16 +190,20 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             },
             //点击确定进行添加保存
             submitAddForm(){
-                this.addDialogVisible=false
-                this.enterpriseForAddForm.password = this.enterpriseForAddForm.username
-                var url = this.HOST + "/addDesigner"
-                this.$http.post(url,this.enterpriseForAddForm).then(response=>{
-                    this.findAllDesigners()
-                    this.$refs.msgDialog.notify("添加成功")
-                }).catch(error=>{
-                    this.$refs.msgDialog.confirm("添加失败")
-                })
-                this.enterpriseForAddForm={}
+                if(!this.enterpriseForAddForm.name||!this.enterpriseForAddForm.username){
+                    this.$refs.msgDialog.confirm("用户名和企业名称均不能为空")
+                }else{
+                    this.addDialogVisible=false
+                    this.enterpriseForAddForm.password = this.enterpriseForAddForm.username
+                    var url = this.HOST + "/addDesigner"
+                    this.$http.post(url,this.enterpriseForAddForm).then(response=>{
+                        this.findAllDesigners()
+                        this.$refs.msgDialog.notify("添加成功")
+                    }).catch(error=>{
+                        this.$refs.msgDialog.confirm("添加失败")
+                    })
+                    this.enterpriseForAddForm={}
+                }
             },
             //点击修改之后运行本方法
             showUpdateDialogVisible(){
@@ -214,16 +221,20 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             },
             //点击确定进行修改保存
             submitUpdateForm(){
-                this.updateDialogVisible=false
-                this.enterpriseForUpdate.name=this.enterpriseForUpdateForm.name
-                this.enterpriseForUpdate.username=this.enterpriseForUpdateForm.username
-                    var url = this.HOST + "/updateDesigner"
-                    this.$http.put(url,this.enterpriseForUpdate).then(response=>{
-                        this.findAllDesigners() 
-                        this.$refs.msgDialog.notify("修改成功")
-                    }).catch(error=>{
-                        this.$refs.msgDialog.confirm("修改失败")
-                    })
+                if(!this.enterpriseForUpdateForm.name||!this.enterpriseForUpdateForm.username){
+                    this.$refs.msgDialog.confirm("用户名和企业名称均不能为空")
+                }else{
+                    this.updateDialogVisible=false
+                    this.enterpriseForUpdate.name=this.enterpriseForUpdateForm.name
+                    this.enterpriseForUpdate.username=this.enterpriseForUpdateForm.username
+                        var url = this.HOST + "/updateDesigner"
+                        this.$http.put(url,this.enterpriseForUpdate).then(response=>{
+                            this.findAllDesigners() 
+                            this.$refs.msgDialog.notify("修改成功")
+                        }).catch(error=>{
+                            this.$refs.msgDialog.confirm("修改失败")
+                        })
+                    }
             },
             //点击删除时运行本方法
             delConfirmation(){
@@ -283,7 +294,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
             //查询所要显示的表格，或者刷新该表格使用
             findAllDesigners(){
                 //初始显示表格用的查询数据
-                var url= this.HOST + "/displayAllDesigners?page="+this.currentPage+"&rows="+this.currentPageSize
+                var url= this.HOST + "/queryDesignerByName?nameQuery="+this.searchContentFinal+"&page="+this.currentPage+"&rows="+this.currentPageSize
                 this.$http.get(url).then(response=>{
                     this.designerTableData = response.data.rows
                     this.totalNumber = response.data.total
@@ -301,9 +312,6 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                 this.currentPage = newPage
                 this.findAllDesigners()
             },
-        },
-        //watch负责监听，当监听对象发生变化时，运行对应的方法
-        watch: {
         },
         //页面加载时运行
         created(){

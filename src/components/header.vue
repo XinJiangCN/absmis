@@ -6,6 +6,9 @@
     <div style="width:20%;float:left">
     	<p>{{ "当前用户：" + currentUser}}</p>
     </div>
+    <div style="float:margin-right">
+      <el-button type="primary" @click="logout">退出</el-button>
+    </div>
 </div>
 </template>
 
@@ -26,7 +29,13 @@ export default{
         }).catch(error => {
           
         })
+      },
+      logout() {
+        //初始显示表格用的查询数据
+        //当前多少页 一页多少条
+        window.location.href="http://localhost:8080/absmis/login"
       }
+
     },
     //watch负责监听，当监听对象发生变化时，运行对应的方法
     watch: {},

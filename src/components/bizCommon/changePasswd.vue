@@ -6,11 +6,11 @@
         </el-col>
 
         <el-col :span="8">
-            <el-input v-model="oldPasswd" type="password" v-    validate="'required'" name="password">
+            <el-input v-model="oldPasswd" type="password" v-validate="'required'" name="password" placement="right">
             </el-input>
 
             <span v-show="errors.has('password')">
-                {{ errors.first('password') }}
+                <label>{{ errors.first('password') }}</label>
             </span>
         </el-col>
     </el-row>

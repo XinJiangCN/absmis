@@ -123,7 +123,7 @@
     <el-dialog title="重置密码" :visible.sync="resetPwdConfirmationDialogVisible">
 
       <el-form>
-        <label>您确定重置该密码吗？</label>
+        <label>您确定重置此用户的密码吗？</label>
       </el-form>
       <div slot="footer">
         <el-button @click="resetPwdConfirmationDialogVisible = false"> 取 消
@@ -155,6 +155,7 @@
         builderTableData: [],
         //用来绑定搜索框中的内容
         searchContent: '',
+        searchContentFinal:'',
         //增加用的对话框，初始为不显示
         addDialogVisible: false,
         //修改用，初始不显示对话框
@@ -187,6 +188,8 @@
         this.findAllBuilders();
       },
       handleSearch() {
+        this.searchContentFinal = this.searchContent
+        this.findAllBuilders()
       },
       //选中行之后，触发本方法
       handleSelectionChange(selectedRows) {
@@ -209,29 +212,37 @@
       },
       //点击确定进行添加保存
       submitAddForm() {
-        this.addDialogVisible = false;
-        this.enterpriseForAddForm.password=this.enterpriseForAddForm.username
-        var url=this.HOST + "/addBuilder"
-        this.$http.post(url,this.enterpriseForAddForm).then(response => {
-          this.findAllBuilders();
-          this.$refs.msgDialog.notify("添加成功")
-        }).catch(error => {
-          this.$refs.msgDialog.confirm("添加失败")
-        })
-        this.enterpriseForAddForm = {}
+        if(!this.enterpriseForAddForm.username||!this.enterpriseForAddForm.name){
+          this.$refs.msgDialog.confirm("用户名和企业名称均不能为空")
+        }else{
+          this.addDialogVisible = false;
+          this.enterpriseForAddForm.password=this.enterpriseForAddForm.username
+          var url=this.HOST + "/addBuilder"
+          this.$http.post(url,this.enterpriseForAddForm).then(response => {
+            this.findAllBuilders();
+            this.$refs.msgDialog.notify("添加成功")
+          }).catch(error => {
+            this.$refs.msgDialog.confirm("添加失败")
+          })
+          this.enterpriseForAddForm = {}
+        }
       },
       //点击确定进行修改保存
       submitUpdateForm() {
-        this.editDialogVisible = false;
-        this.enterpriseForUpdate.name=this.enterpriseForUpdateForm.name
-        this.enterpriseForUpdate.username=this.enterpriseForUpdateForm.username
-        var url = this.HOST + "/updateBuilder"
-        this.$http.put(url,this.enterpriseForUpdate).then(response => {
-          this.findAllBuilders();
-          this.$refs.msgDialog.notify("修改成功")
-        }).catch(error => {
-          this.$refs.msgDialog.confirm("修改失败")
-        })
+        if(!this.enterpriseForUpdateForm.username||!this.enterpriseForUpdate.name){
+          this.$refs.msgDialog.confirm("用户名和企业名称均不能为空")
+        }else{
+          this.editDialogVisible = false;
+          this.enterpriseForUpdate.name=this.enterpriseForUpdateForm.name
+          this.enterpriseForUpdate.username=this.enterpriseForUpdateForm.username
+          var url = this.HOST + "/updateBuilder"
+          this.$http.put(url,this.enterpriseForUpdate).then(response => {
+            this.findAllBuilders();
+            this.$refs.msgDialog.notify("修改成功")
+          }).catch(error => {
+            this.$refs.msgDialog.confirm("修改失败")
+          })
+        }
       },
       //点击删除时运行本方法
       delConfirmation() {
@@ -277,8 +288,8 @@
           var url = this.HOST + "/resetPsd?id="+this.tableSelectedRows[0].id
           this.$http.post(url).then(response=>{
               this.$refs.msgDialog.notify(response.data.username +"的密码已经重置为用户名")
-              this.findAllDesigners()
-          }).catch(response=>{
+              this.findAllBuilders()
+          }).catch(error=>{
               this.$refs.msgDialog.confirm("重置失败！")
           })
       },
@@ -290,7 +301,7 @@
       },
       //查询所要显示的表格，或者刷新该表格使用
       findAllBuilders() {
-        var url=this.HOST + "/displayAllBuilders?page="+this.currentPage+"&rows="+this.pageSize
+        var url=this.HOST + "/queryBuilderByName?nameQuery="+this.searchContentFinal+"&page="+this.currentPage+"&rows="+this.pageSize
         //初始显示表格用的查询数据
         //当前多少页 一页多少条
         this.$http.get(url).then(response => {
@@ -301,8 +312,6 @@
         })
       }
     },
-    //watch负责监听，当监听对象发生变化时，运行对应的方法
-    watch: {},
     //页面加载时运行
     created() {
       this.findAllBuilders()

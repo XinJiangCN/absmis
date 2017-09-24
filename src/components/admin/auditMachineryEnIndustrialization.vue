@@ -29,9 +29,10 @@
                 stripe
                 border
                 style="width:75%"
-                @selection-change="handleSelectionChange">
+                highlight-current-row
+                @current-change="handleSelectionChange">
                     <el-table-column
-                      type="selection"
+                      type="index"
                       width="55">
                     </el-table-column>
                     <el-table-column label="企业名称" prop="machineryEn.name" > 
@@ -82,13 +83,13 @@
                 //审核对话框
                 auditDialogVisible: false,
                 //被选择的行
-                selectedRows:[],
+                selectedRows:null,
                 //选择行企业的id
                 id:'',
                 //显示内容
                 machineryEnIndustrializationData:[],
-                                //被选中的产业化信息
-                machineryEnTable:{integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',checkedStatus:{id:''}} 
+                //被选中的产业化信息
+                machineryEnTable:{integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',checkedStatus:{id:''},submit:true} 
             }
         
         },
@@ -116,7 +117,7 @@
             },
             //获取页面表格数据
             findAllMachineryEnIndustrializationsTable(){
-                var url = this.HOST + '/displayAllMachineryEnIndustrializations?page='+this.currentPage+"&rows="+this.currentPageSize
+                var url = this.HOST + '/displayAllMachineryEnIndustrializationsBySubmit?page='+this.currentPage+"&rows="+this.currentPageSize
                 this.$http.get(url).then(response=>{
                     this.machineryEnIndustrializationData = response.data.rows
                     this.totalNumber = response.data.total
@@ -136,11 +137,8 @@
             },
            //点击行触发的事件
             showMachineryEnIndustrializationData() {
-                if (this.selectedRows.length == 1) {        
-                    this.machineryEnTable = this.selectedRows[0]
-                } else {
-                    this.$refs.msgDialog.confirm("一次只能对一个企业进行审核")     
-                }
+                this.machineryEnTable = this.selectedRows
+                alert(this.machineryEnTable.submit)
             },
             //点击通过
             passAudit(){
@@ -155,9 +153,10 @@
             },
             //点击驳回
              rebutAudit(){
-                this.machineryEnTable.checkedStatus={id:3}
+                this.machineryEnTable.checkedStatus={id:2}
                 var url = this.HOST+'/updateMachineryEnIndustrialization'
                 this.$http.put(url,this.machineryEnTable).then(response=>{
+                    this.findAllMachineryEnIndustrializationsTable()
                     this.$refs.msgDialog.notify("修改审核状态为修改重申成功")
                 }).catch(error => {
                     this.$refs.msgDialog.confirm("修改审核状态失败")

@@ -37,10 +37,10 @@
 
     <el-row type="flex">
       <el-col :span="15">
-        <!-- 企业账号维护（设计单位） -->
-        <enterprise-information-table 
-            :enterpriseTableData="machineryEnTableData"
-            @handleSelectionChange="handleSelectionChange"></enterprise-information-table>
+        <!-- 管理员账号维护 -->
+        <enterprise-information-table-for-admin 
+            :enterpriseTableData="estateOwnerTableData"
+            @handleSelectionChange="handleSelectionChange"></enterprise-information-table-for-admin>
        </el-col>
     </el-row>
     
@@ -61,9 +61,9 @@
     <!-- Add Dialog -->
     <el-dialog title="添加" :visible.sync="addDialogVisible">
       <el-form>
-        <enterprise-information
+        <enterprise-information-for-admin
           :enterprise="enterpriseForAddForm"
-        ></enterprise-information>
+        ></enterprise-information-for-admin>
       </el-form>
 
       <div slot="footer">
@@ -79,14 +79,14 @@
     <!-- Edit Dialog-->
     <el-dialog title="修改" :visible.sync="editDialogVisible">
       <div>
-        <enterprise-information
+        <enterprise-information-for-admin
           :enterprise="enterpriseForUpdateForm"
-        ></enterprise-information>
+        ></enterprise-information-for-admin>
       </div>
 
       <div slot="footer">
             <el-button 
-                @click="enterpriseForUpdateForm={name:'',username:''}"
+                @click="enterpriseForUpdateForm={username:''}"
             >清 空</el-button>
 
             <el-button @click="editDialogVisible=false">取 消</el-button>
@@ -100,13 +100,13 @@
     <el-dialog title="删除" :visible.sync="delConfirmationDialogVisible">
       <el-row>
         <div>
-          <label>确认删除以下企业吗？</label>
+          <label>确认删除以下管理员账户吗？</label>
           <!-- 换行 -->
           <el-row>{{ }}</el-row>
           <el-row>
             <label v-for="row in tableSelectedRows">
               <el-row></el-row>
-              {{row.name}}
+              {{row.username}}
             </label>
           </el-row>
         </div>
@@ -123,7 +123,7 @@
     <el-dialog title="重置密码" :visible.sync="resetPwdConfirmationDialogVisible">
 
       <el-form>
-        <label>您确定重置此用户的密码吗？</label>
+        <label>您确定重置该密码吗？</label>
       </el-form>
       <div slot="footer">
         <el-button @click="resetPwdConfirmationDialogVisible = false"> 取 消
@@ -141,9 +141,9 @@
 </template>
 
 <script>
-  import enterpriseInformation from './enterpriseInformation'
+  import enterpriseInformationForAdmin from './enterpriseInformationForAdmin'
   import msgDialog from '../common/msgDialog'
-  import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
+  import enterpriseInformationTableForAdmin from '../bizCommon/enterpriseInformationTableForAdmin'
 
   export default {
     data() {
@@ -152,7 +152,7 @@
         currentPage:1,
         totalNum:'',
         //用来显示表格中的数据
-        machineryEnTableData: [],
+        estateOwnerTableData: [],
         //用来绑定搜索框中的内容
         searchContent: '',
         searchContentFinal:'',
@@ -167,9 +167,8 @@
         //控制重置密码提示框的显示，初始不显示
         resetPwdConfirmationDialogVisible: false,
         //定义添加和修改的对象初始值为空
-        enterpriseForAddForm: {name: '', username: '',password:''},
-        enterpriseForUpdateForm: {name: '', username: ''},
-        enterpriseForUpdate:'',
+        enterpriseForAddForm: {username: '',password:''},
+        enterpriseForUpdateForm: {username: ''},
         //定义当前行为空，当点击某行时，为本变量赋值
         tableSelectedRows: [],
         //定义当前是否选择多行，控制修改框中选择过多时提示信息的显示
@@ -181,15 +180,16 @@
     methods: {
       handleSizeChange(newPageSize){
         this.pageSize=newPageSize;
-        this.findAllMachineryEns();
+        this.findAllSupervisors();
       },
       handleCurrentChange(newPage){
         this.currentPage = newPage;
-        this.findAllMachineryEns();
+        this.findAllSupervisors();
       },
       handleSearch() {
-        this.searchContentFinal = this.searchContent
-        this.findAllMachineryEns()
+      	this.searchContentFinal=this.searchContent
+        this.findAllSupervisors()
+
       },
       //选中行之后，触发本方法
       handleSelectionChange(selectedRows) {
@@ -202,24 +202,23 @@
           this.editDialogVisible = true;
           this.enterpriseForUpdate=this.tableSelectedRows[0]
           //将选中行的具体信息提取出来，修改时用于绑定
-          this.enterpriseForUpdateForm.name = this.tableSelectedRows[0].name
           this.enterpriseForUpdateForm.username = this.tableSelectedRows[0].username
         } else if (this.tableSelectedRows.length == 0) {
-          this.$refs.msgDialog.confirm("请至少选择一个企业进行修改！");
+          this.$refs.msgDialog.confirm("请至少选择一个管理员账户进行修改！");
         } else {
-          this.$refs.msgDialog.confirm("仅可选择一个企业进行修改！")
+          this.$refs.msgDialog.confirm("仅可选择一个管理员账户进行修改！")
         }
       },
       //点击确定进行添加保存
       submitAddForm() {
-        if(!this.enterpriseForAddForm.username||!this.enterpriseForAddForm.name){
-          this.$refs.msgDialog.confirm("用户名和企业名称均不能为空")
+        if(!this.enterpriseForAddForm.username){
+          this.$refs.msgDialog.confirm("用户名不能为空")
         }else{
           this.addDialogVisible = false;
           this.enterpriseForAddForm.password = this.enterpriseForAddForm.username
-          var url = this.HOST + "/addMachineryEn"
+          var url = this.HOST + "/addSupervisor"
           this.$http.post(url, this.enterpriseForAddForm).then(response => {
-            this.findAllMachineryEns();
+            this.findAllSupervisors();
             this.$refs.msgDialog.notify("添加成功")
           }).catch(error => {
             this.$refs.msgDialog.confirm("添加失败")
@@ -229,15 +228,14 @@
       },
       //点击确定进行修改保存
       submitUpdateForm() {
-        if(!this.enterpriseForUpdateForm.username||!this.enterpriseForUpdateForm.name){
-          this.$refs.msgDialog.confirm("用户名和企业名称均不能为空")
+        if(!this.enterpriseForUpdateForm.username){
+          this.$refs.msgDialog.confirm("用户名不能为空")
         }else{
           this.editDialogVisible = false;
-          this.enterpriseForUpdate.name=this.enterpriseForUpdateForm.name
           this.enterpriseForUpdate.username=this.enterpriseForUpdateForm.username
-          var url = this.HOST + "/updateMachineryEn"
+          var url = this.HOST + "/updateSupervisor"
           this.$http.put(url, this.enterpriseForUpdate).then(response => {
-            this.findAllMachineryEns();
+            this.findAllSupervisors();
             this.$refs.msgDialog.notify("修改成功")
           }).catch(error => {
             this.$refs.msgDialog.confirm("修改失败")
@@ -247,7 +245,7 @@
       //点击删除时运行本方法
       delConfirmation() {
         if (this.tableSelectedRows.length == 0) {
-          this.$refs.msgDialog.confirm("请至少选择一个企业进行删除！")
+          this.$refs.msgDialog.confirm("请至少选择一个管理员账户进行删除！")
         } else {
           this.delConfirmationDialogVisible = true
         }
@@ -262,11 +260,11 @@
         });
         this.delRecord()
       },
-      //删除企业信息
+      //删除管理员信息
       delRecord() {
-        var url = this.HOST + "/deleteMachineryEns?ids=" + this.ids
+        var url = this.HOST + "/deleteSupervisors?ids=" + this.ids
         this.$http.delete(url).then(response => {
-          this.findAllMachineryEns();
+          this.findAllSupervisors();
           this.$refs.msgDialog.notify("删除成功")
         }).catch(response => {
           this.$refs.msgDialog.confirm("删除失败")
@@ -277,9 +275,9 @@
         if (this.tableSelectedRows.length == 1) {
           this.resetPwdConfirmationDialogVisible = true
         } else if (this.tableSelectedRows == 0) {
-          this.$refs.msgDialog.confirm("至少选择一个企业进行操作")
+          this.$refs.msgDialog.confirm("至少选择一个管理员账户进行操作")
         } else {
-          this.$refs.msgDialog.confirm("仅能选择一个企业进行操作")
+          this.$refs.msgDialog.confirm("仅能选择一个管理员账户进行操作")
         }
       },
       //进行密码重置
@@ -288,7 +286,7 @@
           var url = this.HOST + "/resetPsd?id="+this.tableSelectedRows[0].id
           this.$http.post(url).then(response=>{
               this.$refs.msgDialog.notify(response.data.username +"的密码已经重置为用户名")
-              this.findAllMachineryEns()
+              this.findAllSupervisors()
           }).catch(response=>{
               this.$refs.msgDialog.confirm("重置失败！")
           })
@@ -297,15 +295,15 @@
       cancelAdd() {
         //关闭添加对话框，并清空对话框中的内容
         this.addDialogVisible = false;
-        this.enterpriseForAddForm = {name: '', username: ''}
+        this.enterpriseForAddForm = {username: ''}
       },
       //查询所要显示的表格，或者刷新该表格使用
-      findAllMachineryEns() {
-        var url = this.HOST + "/queryMachineryEnByName?nameQuery="+this.searchContentFinal+"&page="+this.currentPage+"&rows="+this.pageSize
+      findAllSupervisors() {
+        var url = this.HOST + "/querySupervisorByName?nameQuery="+this.searchContentFinal+"&page="+this.currentPage+"&rows="+this.pageSize
         //初始显示表格用的查询数据
         //当前多少页 一页多少条
         this.$http.get(url).then(response =>{
-          this.machineryEnTableData = response.data.rows;
+          this.estateOwnerTableData = response.data.rows;
           this.totalNum = response.data.total;
         }).catch(error => {
           this.$refs.msgDialog.confirm("查询失败")
@@ -314,12 +312,12 @@
     },
     //页面加载时运行
     created() {
-      this.findAllMachineryEns()
+      this.findAllSupervisors()
     },
     components: {
-      enterpriseInformation,
+      enterpriseInformationForAdmin,
       msgDialog,
-      enterpriseInformationTable
+      enterpriseInformationTableForAdmin
     }
   }
 </script>
