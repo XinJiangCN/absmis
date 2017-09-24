@@ -12,8 +12,8 @@
             </el-col>
             <!-- Right part for the view offerred by the router,
                      with the transition effects-->
-            <el-col :span="18" class="content">
-                <el-row>
+            <el-col :span="17" class="content">
+                <el-row class="viewHeader">
                     <view-header></view-header>
                 </el-row>
                 <el-row>
@@ -93,32 +93,36 @@ html,body{
      
 }
 .header{
+    margin-top: 0px;
     width: 100%;
-    height: 80px;
+    height: 60px;
     position:absolute;
-    z-index:5;
     top:0;
-    /*background-color:#475669;*/
+    background-color:#E5E9F2;
 }
 
 .main{
     width:100%;
     overflow:auto;
-    top:80px;
-    bottom: 50px;
+    top:60px;
+    bottom: 30px;
     position:absolute;
-    z-index:10;
+    background-color: #F9FAFC; 
 }
 .menu{
     position:fixed;
-    height: 77%;
-    background-color:#475669;
+    height: 81%;
+    background-color:#E5E9F2;
 }
 .content{
     margin-left: 280px;
+    background-color: #F9FAFC; 
+}
+.viewHeader{
+    padding-top:5px;
 }
 .footer{
-    background-color:#1F2D3D;  
+    background-color:#EFF2F7;  
     height:50px;
     width:100%;
     position:absolute;

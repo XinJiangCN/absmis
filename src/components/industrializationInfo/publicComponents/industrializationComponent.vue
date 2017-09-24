@@ -83,7 +83,7 @@
 						新增装配式混凝土结构建筑的数量:
 					</el-col>
 					<el-col :span="14">
-						<el-input v-model.number="addData.addNewConcrete" type='number' maxLength='5' placeholder="请输入内容"><template slot="append">万平方米</template></el-input>
+						<el-input v-model.number="addData.addNewConcrete" type='number' maxLength='5' placeholder="请输入内容" min=0><template slot="append">万平方米</template></el-input>
 					</el-col>	
 				</el-form-item>
 				<el-form-item prop="data">
@@ -91,7 +91,7 @@
 						新增装配式钢结构建筑的数量:
 					</el-col>
 					<el-col :span="14">
-						<el-input v-model.number="addData.addNewSteel" type='number' placeholder="请输入内容"><template slot="append">万平方米</template></el-input>
+						<el-input v-model.number="addData.addNewSteel" type='number' placeholder="请输入内容" min=0><template slot="append">万平方米</template></el-input>
 					</el-col>
 				</el-form-item>			
 				<el-form-item prop="data">
@@ -99,7 +99,7 @@
 						新增装配式木建筑的数量:
 					</el-col>
 					<el-col :span="14">
-						<el-input v-model.number="addData.addNewTimber" type='number' placeholder="请输入内容"><template slot="append">万平方米</template></el-input>
+						<el-input v-model.number="addData.addNewTimber" type='number' placeholder="请输入内容" min=0><template slot="append">万平方米</template></el-input>
 					</el-col>
 				</el-form-item>		
 			</el-form>
@@ -278,9 +278,11 @@ import msgDialog from '../../../components/common/msgDialog.vue'
 					this.addData.submit=true
 				}
 				for(var data in this.addData){
-					if (this.addData[data]=='') {
-						console.log("this.addData[data]"+data+"==="+this.addData[data])
+					if (this.addData[data]==null) {
 						this.$refs.msgDialog.confirm("请将内容填写完整！")
+						return
+					}else if (this.addData[data]<0) {
+						this.$refs.msgDialog.confirm("请检查数据输入值，不可为负数！")
 						return
 					}
 				}

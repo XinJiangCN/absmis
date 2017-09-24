@@ -1,6 +1,6 @@
 <template>
 <div id="navBar">
-    <el-menu default-active="1-4-1" class="el-menu-vertical-demo" theme="dark" :router=true>
+    <el-menu default-active="1-4-1" class="el-menu-vertical-demo" theme="light" :router=true>
     <template slot="title"></template> 
     <div v-for="item in menuData">
     <el-menu-item :index="item.url" style="text-align: left;"><i class="el-icon-menu"></i>{{item.text}}</el-menu-item>

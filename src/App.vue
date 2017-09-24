@@ -23,10 +23,4 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-.el-form-item{
-  margin-bottom: 2px;
-}
-.el-input{
-  width: 180px;
-}
 </style>

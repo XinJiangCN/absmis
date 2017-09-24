@@ -49,16 +49,18 @@
 				      type="date"
 				      placeholder="选择日期"
 				      :picker-options="pickerOptions1"
-				      :format="yyyy-MM-dd">
+				      :format="yyyy-MM-dd"
+				      class="dateInput">
 			    	</el-date-picker>
 				</el-col>
-				<el-col :span="5">填报年份：</el-col>
+				<el-col :span="3" class="yearText">填报年份：</el-col>
 				<el-col :span="4">
 					<el-input
 					v-model="selectedRow.year"
 					align="right"
 					type="number"
-					min='2000'
+					min='1990'
+					class="timeInput"
 					></el-input>
 				</el-col>
 				<el-col :span="3">填报季度：</el-col>
@@ -69,6 +71,7 @@
 					type="number"
 					min='1'
 					max='4'
+					class="timeInput"
 					></el-input>
 				</el-col>
 			</el-row>
@@ -92,27 +95,27 @@
 						<el-col :span="6">
 							预制装配混凝土结构构件
 						</el-col>				
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteNum" type='number' min='0'></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>		
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteNum" type='number' min=0></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteAbility" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltConcreteScale" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>		
 					</el-row>
 					<el-row>
 						<el-col :span="6">钢结构构件</el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelNum" type='number' min='0'></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelAbility"type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelNum" type='number' min=0></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelAbility"type='number' min=0><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltSteelScale" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>	
 					</el-row>
 					<el-row>
 						<el-col :span="6">木结构构件</el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberNum" type='number' min='0'></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberNum" type='number' min=0></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberAbility" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltTimberScale" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>	
 					</el-row>
 					<el-row>
 						<el-col :span="6">其他结构的构件</el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherNum" type='number' min='0'></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
-						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherNum" type='number' min=0></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherAbility" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>
+						<el-col :span="6"><el-input v-model.number="selectedRow.prebuiltOtherScale" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>	
 					</el-row>	
 				</el-col>
 			</el-row>
@@ -123,96 +126,98 @@
 		</el-col>
 
 		<el-dialog v-model="showAddDialog">
-			<el-form ref="componentCompanyForm">
-				<el-form-item>
-					<el-col :span="4">
-						填报时间：
-					</el-col>
-					<el-col :span="5">
-						<el-date-picker
-					      v-model="addData.declareTime"
-					      align="right"
-					      type="date"
-					      placeholder="选择日期"
-					      :picker-options="pickerOptions1"
-					      :format="yyyy-MM-dd">
-				    	</el-date-picker>
-					</el-col>	
-				</el-form-item>
-				<el-form-item>
-					<el-col :span="4">
-						填报年份：
-					</el-col>
-					<el-col :span="5">
-						<el-input
-						v-model="addData.year"
-						align="right"
-						type="number"
-						min='2000'
-						></el-input>
-					</el-col>
-					<el-col :span="4">
-						填报季度：
-					</el-col>
-					<el-col :span="5">
-						<el-input
-						v-model="addData.quarter"
-						align="right"
-						type="number"
-						min='1'
-						max='4'
-						></el-input>
-					</el-col>						
-				</el-form-item>
-				<el-form-item>
-					<el-row>
-						<el-col :span="6">
-							生产的主要构件和部品系列
+			<el-form>
+				<el-form>
+					<el-form-item>
+						<el-col :span="4">
+							填报时间：
 						</el-col>
-						<el-col :span="6">
-							生产线条数（条）
+						<el-col :span="5">
+							<el-date-picker
+						      v-model="addData.declareTime"
+						      align="right"
+						      type="date"
+						      placeholder="选择日期"
+						      :picker-options="pickerOptions1"
+						      :format="yyyy-MM-dd">
+					    	</el-date-picker>
+						</el-col>	
+					</el-form-item>
+					<el-form-item>
+						<el-col :span="3">
+							填报年份：
 						</el-col>
-						<el-col :span="6">
-							生产能力
+						<el-col :span="5">
+							<el-input
+							v-model="addData.year"
+							align="right"
+							type="number"
+							min='2000'
+							></el-input>
 						</el-col>
-						<el-col :span="6">
-							应用规模
+						<el-col :span="3">
+							填报季度：
 						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="24">
-							<el-row>
-								<el-col :span="6">
-									预制装配混凝土结构构件
-								</el-col>				
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteNum" type='number' min='0'></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>		
-							</el-row>
-							<el-row>
-								<el-col :span="6">钢结构构件</el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelNum" type='number' min='0'></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelAbility"type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
-							</el-row>
-							<el-row>
-								<el-col :span="6">木结构构件</el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberNum" type='number' min='0'></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
-							</el-row>
-							<el-row>
-								<el-col :span="6">其他结构的构件</el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherNum" type='number' min='0'></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherAbility" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>
-								<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherScale" type='number' min='0'><template slot="append">万平方米</template></el-input></el-col>	
-							</el-row>	
-						</el-col>
-					</el-row>	
-				</el-form-item>
+						<el-col :span="5">
+							<el-input
+							v-model="addData.quarter"
+							align="right"
+							type="number"
+							min='1'
+							max='4'
+							></el-input>
+						</el-col>						
+					</el-form-item>
+					<el-form-item>
+						<el-row>
+							<el-col :span="6">
+								生产的主要构件和部品系列
+							</el-col>
+							<el-col :span="6">
+								生产线条数（条）
+							</el-col>
+							<el-col :span="6">
+								生产能力
+							</el-col>
+							<el-col :span="6">
+								应用规模
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="24">
+								<el-row>
+									<el-col :span="6">
+										预制装配混凝土结构构件
+									</el-col>				
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteNum" type='number' min=0></el-input></el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteAbility" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltConcreteScale" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>		
+								</el-row>
+								<el-row>
+									<el-col :span="6">钢结构构件</el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelNum" type='number' min=0></el-input></el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelAbility"type='number' min=0><template slot="append">万平方米</template></el-input></el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltSteelScale" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>	
+								</el-row>
+								<el-row>
+									<el-col :span="6">木结构构件</el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberNum" type='number' min=0></el-input></el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberAbility" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltTimberScale" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>	
+								</el-row>
+								<el-row>
+									<el-col :span="6">其他结构的构件</el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherNum" type='number' min=0></el-input></el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherAbility" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>
+									<el-col :span="6"><el-input v-model.number="addData.prebuiltOtherScale" type='number' min=0><template slot="append">万平方米</template></el-input></el-col>	
+								</el-row>	
+							</el-col>
+						</el-row>	
+					</el-form-item>			
+				</el-form>	
 				<el-button type="primary" @click="submit('tempStore')">暂存</el-button>
 				<el-button type="primary" @click="submit('submit')">提交</el-button>
-			</el-form>	
+			</el-form>		
 		</el-dialog>
 		<msg-dialog ref="msgDialog"></msg-dialog>		
 	</div>
@@ -367,8 +372,11 @@ import msgDialog from '../common/msgDialog.vue'
 				}
 				var url=this.HOST+'/addComponentEnIndustrialization'
 				for (var data in this.addData) {
-					if (this.addData[data] == '') {
+					if (this.addData[data] == null) {
 						this.$refs.msgDialog.confirm("请将内容填写完整！")
+						return
+					}else if (this.addData[data]<0) {
+						this.$refs.msgDialog.confirm("请检查数据输入值，不可为负数！")
 						return
 					}
 				}
@@ -490,5 +498,14 @@ import msgDialog from '../common/msgDialog.vue'
 		height: 10%;
 		float: left;
 		margin-top: -30px;
+	}
+	.timeInput{
+		width: 100px;
+	}
+	.dateInput{
+		width: 200px;
+	}
+	.yearText{
+		margin-left: 50px;
 	}
 </style>
