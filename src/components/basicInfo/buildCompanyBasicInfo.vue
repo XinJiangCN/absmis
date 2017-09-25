@@ -32,7 +32,7 @@
         <el-row>
             <el-col :span="18">
                 <el-form-item label="本单位从事装配式建筑初始累计" prop="cumulant">
-                    <el-input v-model="buildInformation.cumulant"></el-input>
+                    <el-input v-model.number="buildInformation.cumulant"></el-input>
                 </el-form-item>
             </el-col>
         </el-row>
@@ -103,7 +103,7 @@ export default {
                 ],
                 cumulant:[
                     {validator:checkCumulant,trigger:'blur'},
-                    {type:'number',message:'只能填写数字',trigger:'change'&'blur'}
+                    {type:'number',message:'只能填写数字',trigger:'change'}
                 ]
             }
         }

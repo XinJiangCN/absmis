@@ -34,7 +34,7 @@
         <el-row>
             <el-col :span="18">
                 <el-form-item label="本单位从事装配式建筑初始累计" prop="cumulant">
-                    <el-input v-model="estateInformation.cumulant"></el-input>
+                    <el-input v-model.number="estateInformation.cumulant"></el-input>
                 </el-form-item>
             </el-col>
         </el-row>
@@ -79,7 +79,7 @@ export default {
             this.$refs.msgForSubmit.confirm("获取失败！")
         })
     },
-    data: function() {
+    data() {
         var checkQualificationNo=(rule,value,callback)=>{
             if(!value)
                 callback(new Error("必填项"))
@@ -107,7 +107,7 @@ export default {
                 ],
                 cumulant:[
                     {validator:checkCumulant,trigger:'blur'},
-                    {type:'number',message:'只能填写数字',trigger:'change'&'blur'}
+                    {type:'number',message:'只能填写数字',trigger:'change'}
                 ]
             }
         }

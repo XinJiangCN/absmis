@@ -21,7 +21,7 @@
             </el-form-item>
 
             <el-form-item label="办公电话" prop="officePhone">
-                <el-input v-model="basicInfoData.officePhone"></el-input>
+                <el-input v-model.number="basicInfoData.officePhone"></el-input>
             </el-form-item>
         </el-row>
 
@@ -94,13 +94,16 @@ import msgDialog from '../../common/msgDialog'
                         {validator:checkContactPerson,trigger:'blur'}
                     ],
                     idNumber:[
-                        {validator:checkIdNumber,trigger:'blur'}
+                        {validator:checkIdNumber,trigger:'blur'},
+                        {pattern:/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,message:'请填写正确证件号',trigger:'change'}
                     ],
                     phoneNumber:[
-                        {validator:checkPhoneNumber,trigger:'blur'}
+                        {validator:checkPhoneNumber,trigger:'blur'},
+                        {pattern:/^1[3|4|5|7|8]\d{9}$/,message:'请输入正确的手机号',trigger:'change'}
                     ],
                     officePhone:[
-                        {validator:checkOfficePhone,trigger:'blur'}
+                        {validator:checkOfficePhone,trigger:'blur'},
+                        {type:'number',message:'请输入正确的电话号码',trigger:'change'}
                     ],
                     mailingAddress:[
                         {validator:checkMailingAddress,trigger:'blur'}
