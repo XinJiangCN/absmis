@@ -9,15 +9,18 @@
     @selection-change="handleSelectionChange">
     <el-table-column
       type="selection"
-      width="55">
+      width="55"
+      >
     </el-table-column>
     <el-table-column
       label="企业名称"
+      align="center"
       prop="name"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       label="用户名"
+      align="center"
       prop="username"
       show-overflow-tooltip>
     </el-table-column>

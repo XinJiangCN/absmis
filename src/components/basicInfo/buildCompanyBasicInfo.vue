@@ -1,7 +1,8 @@
 <template>
 <div>
-    <el-form :model="buildInformation" label-width="180px">
-        <part-basic-info :basicInfoData="buildInformation"></part-basic-info>
+    <el-form :model="buildInformation" label-width="180px" :rules="rules" ref="buildInformation">
+        <part-basic-info :basicInfoData="buildInformation" 
+        @checkOthers="checkOthers('buildInformation')" ref='partBasicInfo'></part-basic-info>
         <el-row>
             <el-col :span="6">
                 <label>企业类型: 施工单位</label>
@@ -10,7 +11,7 @@
         <el-row></el-row>
         <el-row>
             <el-col :span="9">
-                <el-form-item label="资质证书编号">
+                <el-form-item label="资质证书编号" prop="qualificationNo">
                     <el-input v-model="buildInformation.qualificationNo"></el-input>
                 </el-form-item>
             </el-col>
@@ -30,14 +31,14 @@
         </el-row>
         <el-row>
             <el-col :span="18">
-                <el-form-item label="本单位从事装配式建筑初始累计">
+                <el-form-item label="本单位从事装配式建筑初始累计" prop="cumulant">
                     <el-input v-model="buildInformation.cumulant"></el-input>
                 </el-form-item>
             </el-col>
         </el-row>
     </el-form>
     <all-type-basic-info :basicInfoData="buildInformation"
-        @submitForm="submitBasicInfoDialogVisible=true"
+        @submitForm="submitBasicInfoDialog"
     ></all-type-basic-info>
 
     <msg-dialog ref="msgForSubmit"></msg-dialog>
@@ -75,6 +76,18 @@ export default {
         })
     },
     data: function() {
+        var checkQualificationNo=(rule,value,callback)=>{
+            if(!value)
+                callback(new Error('必填项'))
+            else
+                callback()
+        }
+        var checkCumulant=(rule,value,callback)=>{
+            if(!value)
+                callback(new Error('必填项'))
+            else
+                callback()
+        }
         return {
             //用来存放当前使用者的所有信息
             buildInformation: {},
@@ -83,12 +96,21 @@ export default {
             //资质等级的Id，用于初始显示以及向后台提交
             builderQualificationId:'',
             //提交所有信息时的确认对话框
-            submitBasicInfoDialogVisible:false
+            submitBasicInfoDialogVisible:false,
+            rules:{
+                qualificationNo:[
+                    {validator:checkQualificationNo,trigger:'blur'}
+                ],
+                cumulant:[
+                    {validator:checkCumulant,trigger:'blur'},
+                    {type:'number',message:'只能填写数字',trigger:'change'&'blur'}
+                ]
+            }
         }
     },
     methods: {
         //当点击提交时触发本方法
-        handleSubmit: function() {
+        handleSubmit() {
             //关闭弹出框
             this.submitBasicInfoDialogVisible=false
             //将选择的资质等级赋值给将要提交的对象
@@ -98,6 +120,22 @@ export default {
                 this.$refs.msgForSubmit.notify("提交成功！")
             }).catch(error=>{
                 this.$refs.msgForSubmit.confirm("提交失败！")
+            })
+        },
+        submitBasicInfoDialog(){
+            this.$refs.partBasicInfo.check();
+        },
+        checkOthers(form){
+            this.$refs[form].validate((valid)=>{
+                if(valid){
+                    if(this.builderQualificationId!=''){
+                        this.submitBasicInfoDialogVisible=true
+                    }else{
+                        this.$refs.msgForSubmit.confirm('资质等级不能为空')
+                    }
+                }else{
+                    this.$refs.msgForSubmit.confirm("填写信息有误，请填写完整后再提交")
+                }
             })
         } 
     },

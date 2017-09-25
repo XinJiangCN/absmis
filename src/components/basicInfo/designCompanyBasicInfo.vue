@@ -1,8 +1,10 @@
 <template>
 <div>
-    <el-form :model="designInformation" label-width="180px">
+    <el-form :model="designInformation" label-width="180px" :rules="rules" ref="designInformation">
 
-        <part-basic-info :basicInfoData="designInformation"></part-basic-info>
+        <part-basic-info :basicInfoData="designInformation" ref="partBasicInfo"
+            @checkOthers="checkOthers('designInformation')"
+        ></part-basic-info>
         <el-row>
             <el-col :span="6">
                 <label>企业类型: 设计单位</label>
@@ -13,7 +15,7 @@
 
         <el-row>
             <el-col :span="9">
-                <el-form-item label="资质证书编号">
+                <el-form-item label="资质证书编号" prop="qualificationNo">
                     <el-input v-model="designInformation.qualificationNo"></el-input>
                 </el-form-item>
             </el-col>
@@ -34,14 +36,14 @@
 
         <el-row>
             <el-col :span="18">
-                <el-form-item label="本单位从事装配式建筑初始累计">
+                <el-form-item label="本单位从事装配式建筑初始累计" prop="cumulant">
                     <el-input v-model="designInformation.cumulant"></el-input>
                 </el-form-item>
             </el-col>
         </el-row>
     </el-form>
     <all-type-basic-info :basicInfoData="designInformation"
-        @submitForm="submitBasicInfoDialogVisible=true"
+        @submitForm="submitBasicInfoDialog"
     ></all-type-basic-info>
 
     <msg-dialog ref="msgForSubmit"></msg-dialog>
@@ -76,7 +78,19 @@ export default {
             this.$refs.msgForSubmit.confirm("获取失败！")
         })
     },
-    data: function() {
+    data() {
+        var checkQualificationNo=(rule,value,callback)=>{
+            if(!value)
+                callback(new Error("必填项"))
+            else
+                callback()
+        }
+        var checkCumulant=(rule,value,callback)=>{
+            if(!value)
+                callback(new Error("必填项"))
+            else
+                callback();
+        }
         return {
             //用来保存当前使用者的所有信息
             designInformation: {},
@@ -85,11 +99,20 @@ export default {
             //资质等级下拉框选项
             designerQualifications:[],
             //提交所有信息时的确认对话框
-            submitBasicInfoDialogVisible:false
+            submitBasicInfoDialogVisible:false,
+            rules:{
+                qualificationNo:[
+                    {validator:checkQualificationNo,trigger:'blur'}
+                ],
+                cumulant:[
+                    {validator:checkCumulant,trigger:'blur'},
+                    {type:'number',message:'只能填写数字',trigger:'change'&'blur'}
+                ],
+            }
         }
     },
     methods: {
-        handleSubmit: function() {
+        handleSubmit() {
             this.submitBasicInfoDialogVisible=false
             this.designInformation.designerQualification=this.designerQualificationId
             var url = this.HOST + '/updateDesigner'
@@ -97,6 +120,23 @@ export default {
                 this.$refs.msgForSubmit.notify("提交成功！")
             }).catch(error=>{
                 this.$refs.msgForSubmit.confirm("提交失败！")
+            })
+        },
+        submitBasicInfoDialog(){
+            this.$refs.partBasicInfo.check();
+
+        },
+        checkOthers(form){
+            this.$refs[form].validate((valid)=>{
+                if(valid){
+                    if(this.designerQualificationId!=''){
+                        this.submitBasicInfoDialogVisible=true
+                    }else{
+                        this.$refs.msgForSubmit.confirm('资质等级不能为空')
+                    }
+                }else{
+                    this.$refs.msgForSubmit.confirm("填写信息有误，请填写完整后再提交")
+                }
             })
         } 
     },

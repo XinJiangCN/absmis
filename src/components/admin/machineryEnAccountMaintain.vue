@@ -150,7 +150,7 @@
       return {
         pageSize:5,
         currentPage:1,
-        totalNum:'',
+        totalNum:0,
         //用来显示表格中的数据
         machineryEnTableData: [],
         //用来绑定搜索框中的内容

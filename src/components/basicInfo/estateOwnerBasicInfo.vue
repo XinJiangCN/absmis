@@ -2,7 +2,8 @@
 <div>
     <el-form :model="estateOwnerInformation" label-width="180px">
     <!-- 调用组件进行页面显示 -->
-        <part-basic-info :basicInfoData="estateOwnerInformation"></part-basic-info>
+        <part-basic-info :basicInfoData="estateOwnerInformation"
+        ref="partBasicInfo" @checkOthers="submit"></part-basic-info>
         <el-row>
             <el-col :span="6">
                 <label>企业类型：建设单位</label>
@@ -13,7 +14,7 @@
     </el-form>
     <!-- 调用组件进行页面显示 -->
     <all-type-basic-info :basicInfoData="estateOwnerInformation"
-        @submitForm="submitBasicInfoDialogVisible=true"
+        @submitForm="submitBasicInfoDialog"
     ></all-type-basic-info>
     <!-- 调用组件，目的是利用组件中的消息提示框，实际无显示意义 -->
     <msg-dialog ref="msgForSubmit"></msg-dialog>
@@ -41,7 +42,7 @@ export default {
             this.$refs.msgForSubmit.confirm("获取失败！")
         })
     },
-    data: function() {
+    data() {
         return {
             //用来存放当前使用者的所有信息
             estateOwnerInformation: {},
@@ -51,7 +52,7 @@ export default {
     },
     methods: {
         //点击提交时触发本方法
-        handleSubmit: function() {
+        handleSubmit() {
             //关闭对话框
             this.submitBasicInfoDialogVisible=false
             var url = this.HOST + '/updateEstateOwner'
@@ -60,6 +61,12 @@ export default {
             }).catch(error=>{
                 this.$refs.msgForSubmit.confirm("提交失败！")
             })
+        },
+        submitBasicInfoDialog(){
+            this.$refs.partBasicInfo.check();
+        },
+        submit(){
+            this.submitBasicInfoDialogVisible=true
         } 
     },
     components: {

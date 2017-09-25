@@ -173,7 +173,7 @@ import enterpriseInformationTable from '../bizCommon/enterpriseInformationTable'
                 //分页用，当前页显示数据条数
                 currentPageSize:5,
                 //分页用，本表格中数据总数
-                totalNumber:''
+                totalNumber:0
             }
         },
         methods: {
