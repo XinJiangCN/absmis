@@ -1,22 +1,22 @@
 <template>
 <div>
-    <el-form :model="buildInformation" label-width="180px">
+    <el-form :model="buildInformation" label-width="180px" :rules="rules">
         <part-basic-info :basicInfoData="buildInformation"></part-basic-info>
         <el-row>
             <el-col :span="6">
                 <label>企业类型: 施工单位</label>
             </el-col>
         </el-row>
-        <el-row></el-row>
+        <el-row>
+        </el-row>
         <el-row>
             <el-col :span="9">
-                <el-form-item label="资质证书编号">
+                <el-form-item label="资质证书编号" prop="qualificationNo">
                     <el-input v-model="buildInformation.qualificationNo"></el-input>
                 </el-form-item>
             </el-col>
-
             <el-col :span="9">
-                <el-form-item label="资质等级">
+                <el-form-item label="资质等级" prop="builderQualificationId">
                     <el-select v-model="builderQualificationId" placeholder="请选择">
                         <el-option
                             v-for="item in buildQualifications"
@@ -30,7 +30,7 @@
         </el-row>
         <el-row>
             <el-col :span="18">
-                <el-form-item label="本单位从事装配式建筑初始累计">
+                <el-form-item label="本单位从事装配式建筑初始累计" prop="cumulant">
                     <el-input v-model="buildInformation.cumulant"></el-input>
                 </el-form-item>
             </el-col>
@@ -76,6 +76,17 @@ export default {
     },
     data: function() {
         return {
+                rules: {
+                    qualificationNo: [
+                        { required: true, message: '请输入资质证书编号', trigger: 'blur' }
+                    ],
+                    builderQualificationId: [
+                        { required: true, message: '请选择资质等级', trigger: 'blur' }
+                    ],
+                    cumulant: [
+                        { required: true, message: '请输入本单位从事装配式建筑初始累计', trigger: 'blur' }
+                    ]
+                },
             //用来存放当前使用者的所有信息
             buildInformation: {},
             //资质等级下拉框选项

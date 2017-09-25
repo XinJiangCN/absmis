@@ -32,8 +32,8 @@
                 highlight-current-row
                 @current-change="handleSelectionChange">
                     <el-table-column
-                      type="index"
-                      width="55">
+                      label="序号"
+                      type="index">
                     </el-table-column>
                     <el-table-column label="企业名称" prop="machineryEn.name" > 
                     </el-table-column>
@@ -138,7 +138,6 @@
            //点击行触发的事件
             showMachineryEnIndustrializationData() {
                 this.machineryEnTable = this.selectedRows
-                alert(this.machineryEnTable.submit)
             },
             //点击通过
             passAudit(){

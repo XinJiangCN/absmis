@@ -30,164 +30,201 @@
             </el-table>
         </el-col>
         <el-col :span="19">
-            <el-form :model="subUnitEnIndustrializationForm" label-width="100px">
-                <el-form-item>
-                     <el-row>
-                     <!-- v-model="subUnitEnIndustrializationForm.declareTime" -->
-                        <el-col :span="3">
+            <el-form :model="subUnitEnIndustrializationForm" label-width="100px" :rules="rules" ref="subUnitEnIndustrializationForm">
+                <el-row :gutter="0">
+                    <el-col :span="2" :push="2">年份</el-col>
+                    <el-col :span="5" :pull="1">
+                        <el-form-item prop="year">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.year" min="2000">
                             </el-input>
-                        </el-col>
-                        <el-col :span="2">年份</el-col>
-                        <el-col :span="3">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.quarter" min="1" max="4">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="2" :pull="1">季度</el-col>
+                    <el-col :span="5" :pull="4" >
+                        <el-form-item prop="quarter">
+                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.quarter" min="1" max="4">
                             </el-input>
-                        </el-col>
-                        <el-col :span="2">季度</el-col>
-                        <el-col :span="2">填报时间</el-col>
-                        <el-col :span="8">
+                        </el-form-item>
+                    </el-col>
+                   
+                    <el-col :span="2" :pull="3">填报时间</el-col>
+                    <el-col :span="8" :pull="5" >
+                        <el-form-item prop="declareTime">
                             <el-date-picker
                               v-model="subUnitEnIndustrializationForm.declareTime"
                               align="right"
                               type="date"
                               placeholder="选择日期"
                               :picker-options="pickerOptions1">
-                            </el-date-picker>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
-                <el-form-item label="生产的主要构件和部品系列">
-                    <el-row>
-                        <el-col :span="5" :offset="1"><span>生产线数量(条)</span></el-col>
-                        <el-col :span="5" :offset="1"><span>生产能力</span></el-col>
-                        <el-col :span="5" :offset="1"><span>应用规模</span></el-input></el-col>
-                    </el-row>
-                </el-form-item>
-                <el-form-item label="整体墙板">
-                    <el-row >
-                        <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralWallNum" min="0">
-                            </el-input>
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                            </el-date-picker>  
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="3" :offset="1" :pull="1"><span>生产的主要构件和部品系列</span></el-col>
+                    <el-col :span="5" :pull="1"><span>生产线数量(条)</span></el-col>
+                    <el-col :span="5" :pull="1"><span>生产能力</span></el-col>
+                    <el-col :span="5" :pull="1"><span>应用规模</span></el-input></el-col>
+                </el-row>
+                <el-row :gutter="0">
+                    <el-col :span="3">
+                        整体墙板
+                    </el-col>
+                    <el-col :span="7" :pull="2">
+                        <el-form-item prop="integralWallNum">
+                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralWallNum" min="0">
+                             </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="4">
+                        <el-form-item prop="integralWallAbility">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralWallAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="6">
+                        <el-form-item  prop="integralWallScale">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralWallScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
-
-                <el-form-item label="结构保温装饰一体化外墙">
-                    <el-row >
-                        <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integrativeExternalWallNum" min="0">
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="0">
+                    <el-col :span="3">
+                        结构保温装饰一体化外墙
+                    </el-col>
+                    <el-col :span="7" :pull="2">
+                        <el-form-item prop="integrativeExternalWallNum">
+                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integrativeExternalWallNum" min="0">
                             </el-input>
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="4">
+                        <el-form-item prop="integrativeExternalWallAbility">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integrativeExternalWallAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="6">
+                        <el-form-item prop="integrativeExternalWallScale">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integrativeExternalWallScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
-     
-                <el-form-item label="预制楼梯">
-                    <el-row >
-                        <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.prebuiltStairsNum" min="0">
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="0">
+                    <el-col :span="3">
+                        预制楼梯
+                    </el-col>
+                    <el-col :span="7" :pull="2">
+                        <el-form-item prop="prebuiltStairsNum">
+                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.prebuiltStairsNum" min="0">
                             </el-input>
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="4">
+                        <el-form-item prop="prebuiltStairsAbility">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.prebuiltStairsAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="6">
+                        <el-form-item prop="prebuiltStairsScale">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.prebuiltStairsScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
-      
-
-                <el-form-item label="整体厨房">
-                    <el-row >
-                        <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralKitchenNum" min="0">
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="0">
+                    <el-col :span="3">
+                        整体厨房
+                    </el-col>
+                    <el-col :span="7" :pull="2">
+                        <el-form-item prop="integralKitchenNum">
+                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralKitchenNum" min="0">
                             </el-input>
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="4">
+                        <el-form-item prop="integralKitchenAbility">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralKitchenAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="6">
+                        <el-form-item prop="integralKitchenScale"> 
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralKitchenScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
-     
-
-                <el-form-item label="整体卫生间">
-                    <el-row >
-                        <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralToiletNum" min="0">
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="0">
+                    <el-col :span="3">
+                        整体卫生间
+                    </el-col>
+                    <el-col :span="7" :pull="2">
+                        <el-form-item prop="integralToiletNum">
+                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralToiletNum" min="0">
                             </el-input>
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="4">
+                        <el-form-item prop="integralToiletAbility">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralToiletAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="6">
+                        <el-form-item prop="integralToiletScale">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralToiletScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
-     
-
-                <el-form-item label="整体内装体系">
-                    <el-row>
-                        <el-col :span="5" :offset="1">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralInteriorDecorationNum" min="0">
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="0">
+                    <el-col :span="3">
+                        整体内装体系
+                    </el-col>
+                    <el-col :span="7" :pull="2">
+                        <el-form-item prop="integralInteriorDecorationNum">
+                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralInteriorDecorationNum" min="0">
                             </el-input>
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="4">
+                        <el-form-item prop="integralInteriorDecorationAbility">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralInteriorDecorationAbility" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>  
-                        </el-col>
-                        <el-col :span="5"  :offset="1">
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7" :pull="6">
+                        <el-form-item prop="integralInteriorDecorationScale">
                             <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.integralInteriorDecorationScale" min="0">
                             <template slot="append">万平方米</template>
                             </el-input>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
             </el-form>
             <div align="center">
                 <div v-if="this.submitVisible">
-                    <el-button @click="temporarySaveForm">暂存</el-button>
-                    <el-button @click="submitAddForm">提交</el-button>
+                    <el-button @click="temporarySaveForm('subUnitEnIndustrializationForm')">暂存</el-button>
+                    <el-button @click="submitAddForm('subUnitEnIndustrializationForm')">提交</el-button>
                 </div>
                 <div v-else="this.submitVisible">
-                    <el-button @click="temporarySaveForm">暂存</el-button>
-                    <el-button @click="submitEditForm">提交</el-button>
+                    <el-button @click="temporarySaveForm('subUnitEnIndustrializationForm')">暂存</el-button>
+                    <el-button @click="submitEditForm('subUnitEnIndustrializationForm')">提交</el-button>
                 </div>
             </div>
         </el-col>
@@ -199,7 +236,41 @@
 import msgDialog from '../common/msgDialog'
 export default{
     data(){
+        var validateNumber = (rule, value, callback) => {
+        // if (!Number.isInteger(value)) {
+        if(value===''){
+        callback(new Error('请输入数值'));
+        }else if(value<'0') {
+          callback('请输入大于或等于0的数值');
+        }else{
+          callback();
+      }
+      };
         return{
+            //表单验证
+            rules:{
+                year: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 declareTime: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 quarter: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralWallNum: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integrativeExternalWallNum: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 prebuiltStairsNum: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralKitchenNum: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralToiletNum: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralInteriorDecorationNum: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralWallAbility: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integrativeExternalWallAbility: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 prebuiltStairsAbility: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralKitchenAbility: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralToiletAbility: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralInteriorDecorationAbility: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralWallScale: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integrativeExternalWallScale: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 prebuiltStairsScale: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralKitchenScale: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralToiletScale: [{ validator: validateNumber, trigger: 'blur&change' }],
+                 integralInteriorDecorationScale: [{ validator: validateNumber, trigger: 'blur&change' }],
+            },
             //默认当前时间
             currentDate:'',
             //时间面板左侧快捷键
@@ -222,12 +293,12 @@ export default{
             //控制是提交还是修改
             submitVisible:true,
             //部品产业化的属性
-            subUnitEnIndustrializationForm:{integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}
+            subUnitEnIndustrializationForm:{integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
         }
     },
     methods:{
         setCurrent(row) {
-            this.subUnitEnIndustrializationForm={integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}
+            this.subUnitEnIndustrializationForm={integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
         },
         handleCurrentChange(selected){
             this.selectedRows = selected
@@ -242,40 +313,44 @@ export default{
             })
         },
         //暂存表单
-        temporarySaveForm(){
-            var url = this.HOST+"/addSubUnitEnIndustrialization"
-            for(var data in this.subUnitEnIndustrializationForm){
-                if(this.subUnitEnIndustrializationForm[data]==0){
-                    this.$refs.msgDialog.confirm("您有未填写的内容，请仔细检查，再重新提交")
-                    return
-                }
-            }
+        temporarySaveForm(formName){
+            
             this.subUnitEnIndustrializationForm.submit = false
-            this.$http.post(url,this.subUnitEnIndustrializationForm).then(response=>{
+            this.$refs[formName].validate((valid) => {
+              if (valid) {
+                var url = this.HOST+"/addSubUnitEnIndustrialization"
+                this.$http.post(url,this.subUnitEnIndustrializationForm).then(response=>{
                     this.getSubUnitEnIndustrializationTable();
                     this.$refs.msgDialog.notify("数据暂存成功")
                 }).catch(error=>{
                     this.$refs.msgDialog.confirm("数据暂存失败")
                 })
-                this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}
+                this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
+              } else {
+                this.$refs.msgDialog.confirm("您有未填写或小于0的内容，请仔细检查，再重新提交")
+                return false;
+              }
+            });               
         },
         //提交表单信息
-        submitAddForm(){
-            var url = this.HOST+"/addSubUnitEnIndustrialization"
-            for(var data in this.subUnitEnIndustrializationForm){
-                if(this.subUnitEnIndustrializationForm[data]==0){
-                    this.$refs.msgDialog.confirm("您有未填写的内容，请仔细检查，再重新提交")
-                    return
-                }
-            }
-            this.$http.post(url,this.subUnitEnIndustrializationForm).then(response=>{
+        submitAddForm(formName){
+            this.subUnitEnIndustrializationForm.submit = true
+            this.$refs[formName].validate((valid) => {
+              if (valid) {
+                var url = this.HOST+"/addSubUnitEnIndustrialization"
+                this.$http.post(url,this.subUnitEnIndustrializationForm).then(response=>{
                     this.getSubUnitEnIndustrializationTable();
                     this.$refs.msgDialog.notify("数据添加成功")
                 }).catch(error=>{
                     this.$refs.msgDialog.confirm("数据添加失败")
                 })
-                this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}
-            },
+                this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
+              } else {
+                this.$refs.msgDialog.confirm("您有未填写或小于0的内容，请仔细检查，再重新提交")
+                return false;
+              }
+            });
+        },
             //删除
             deleteRowData() {
                 if (this.selectedRows.length == 0) {
@@ -296,31 +371,35 @@ export default{
                 if (this.selectedRows.length == 0) {
                     this.$refs.msgDialog.confirm("请选择您要修改的产业化信息！")
                 }else if(this.selectedRows.submit){ 
-                    this.$refs.msgDialog.confirm("提交的数据不能修改")
-                    this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}
+                    if(this.selectedRows.checkedStatus.state!='修改重申'){
+                        this.$refs.msgDialog.confirm("提交且修改状态不为修改重申的数据不能修改")
+                        this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}  
+                    }else{
+                        this.submitVisible = false
+                    }
                 }else{
                     this.submitVisible = false
-                    this.subUnitEnIndustrializationForm.submit = true
                 }
             },
             //提交修改信息
-            submitEditForm(){
-              var url = this.HOST+"/updateSubUnitEnIndustrialization"
-              for(var data in this.subUnitEnIndustrializationForm){
-                    if(this.subUnitEnIndustrializationForm[data]==0){
-                        this.$refs.msgDialog.confirm("您有未填写的内容，请仔细检查，再重新提交")
-                        return
-                    }
-              }
-              this.$http.put(url,this.subUnitEnIndustrializationForm).then(response=>{
-                this.getSubUnitEnIndustrializationTable()
-                this.$refs.msgDialog.notify("数据修改成功")
-                this.editDialogVisible = false
-              }).catch(error=>{
-                this.$refs.msgDialog.confirm("数据修改失败")
-              })
-              this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:true}         
-                  },
+            submitEditForm(formName){
+              this.subUnitEnIndustrializationForm.submit = true
+                this.$refs[formName].validate((valid) => {
+                  if (valid) {
+                    var url = this.HOST+"/updateSubUnitEnIndustrialization"
+                    this.$http.put(url,this.subUnitEnIndustrializationForm).then(response=>{
+                        this.getSubUnitEnIndustrializationTable()
+                        this.$refs.msgDialog.notify("数据修改成功")
+                        this.editDialogVisible = false
+                    }).catch(error=>{
+                        this.$refs.msgDialog.confirm("数据修改失败")
+                    })         
+                    this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}    
+                  } else {
+                    this.$refs.msgDialog.confirm("您有未填写或小于0的内容，请仔细检查，再重新提交")
+                  }
+                });                
+            },
     },
     created(){
         this.getSubUnitEnIndustrializationTable()

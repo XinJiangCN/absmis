@@ -21,8 +21,8 @@
             highlight-current-row
             @current-change="handleSelectionChange">
                 <el-table-column
-                  type="index"
-                  width="55">
+                  label="序号"
+                  type="index">
                 </el-table-column>
                 <el-table-column label="企业名称" prop="subUnitEn.name" > 
                 </el-table-column>
