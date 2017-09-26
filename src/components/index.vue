@@ -115,8 +115,7 @@ html,body{
     background-color:#E5E9F2;
 }
 .content{
-    margin-left: 310px;
-    overflow-x: scroll;
+    margin-left:310px;
     background-color: #F9FAFC; 
 }
 .viewHeader{
