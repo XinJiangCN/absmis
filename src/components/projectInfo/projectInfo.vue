@@ -1,20 +1,20 @@
 <template>
 <div>
-	<el-form ref="form" :model="projectForm" label-width="180px">
+	<el-form ref="form" :model="projectForm" :rules="rules" label-width="180px">
     	<el-row>
     		<label>项目基本信息</label>
     	</el-row>
 
     	<el-row>
     		<el-col :span="12">
-    			<el-form-item label="项目名称">
+    			<el-form-item label="项目名称" prop="name">
 			    <el-row :span="20">
-			    <el-input v-model="projectForm.name"></el-input>
+			    <el-input v-model="projectForm.name" name="name"></el-input>
 			    </el-row>
 			    </el-form-item>
-			    <el-form-item label="建设单位">
+			    <el-form-item label="建设单位" prop="builder">
 			    <el-row :span="20">
-			    <el-input v-model="projectForm.builder"></el-input>
+			    <el-input v-model="projectForm.builder" name="builder"></el-input>
 			    </el-row>
 			    </el-form-item>
 			    <el-form-item label="设计单位">
@@ -359,8 +359,28 @@
   import msgDialog from '../common/msgDialog'
   export default{
   	 data() {
+  	  var checkName=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入项目名称"))
+				}else
+				callback();
+	  }
+	  var checkbuilder=(rule,value,callback)=>{
+				if(!value)
+					callback(new Error("请输入建设单位"))
+				else
+					callback();
+	  }
       return {
-        structureForm: ''
+        structureForm: '',
+        rules:{
+					name:[
+						{validator:checkName,trigger:'change'&'blur'}
+					],
+					builder:[
+						{validator:checkbuilder,trigger:'change'&'blur'}
+					]
+			}
       };
     },
     methods:{
