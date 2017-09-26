@@ -115,7 +115,11 @@ html,body{
     background-color:#E5E9F2;
 }
 .content{
+<<<<<<< HEAD
+    margin-left: 310px;
+=======
     margin-left:310px;
+>>>>>>> a14c517353428a9a79244359fde7a5bb5f3da700
     background-color: #F9FAFC; 
 }
 .viewHeader{
