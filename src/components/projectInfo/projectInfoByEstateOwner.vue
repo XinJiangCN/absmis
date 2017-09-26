@@ -7,12 +7,11 @@
 		        <!-- 增删改按钮 -->
 		        <el-button-group>
 		          <el-button type="primary" @click="reset">增加</el-button>
-		          <el-button type="primary">暂存</el-button>
 		          <el-button type="primary" @click="addProjectForm">提交</el-button>
 		        </el-button-group>
 		      </el-col>
     	</el-row>
-    <project-info :projectForm="projectForm">
+    <project-info :projectForm="projectForm" :structureForm="structureForm">
     </project-info>  	
 	</el-col>
 	<msg-dialog ref="msgDialog"></msg-dialog>
@@ -49,6 +48,7 @@
 		          }]
         },
       	projectStates:'',
+      	structureForm: '',
       	projectCategorys:'',
       	checkedStatus:'undefined',
   		projectForm: {
@@ -137,6 +137,7 @@
     },
     methods:{
     	reset(){
+    		this.structureForm = '',
     		this.checkedStatus = 'undefined',
     		this.projectForm = {
             name: '',
@@ -237,6 +238,17 @@
           		this.$refs.msgDialog.confirm("查询失败la")
         		})
 
+    	},
+    	findStructureForm(){
+    		var url = this.HOST + "/findStructureForm?id="+this.projectId
+        	this.$http.get(url).then(response => {
+        		console.log("成功了")
+        		this.structureForm = response.data
+        		console.log(this.structureForm+"yesyes")
+          	this.$refs.msgDialog.notify("获取成功")
+        	}).catch(error => {
+          	this.$refs.msgDialog.confirm("获取失败")
+        	})
     	},
     	//TODO 已经审核通过的不能重复提交
     	addProjectForm(){

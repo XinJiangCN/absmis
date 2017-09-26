@@ -108,6 +108,7 @@ import unitEngineeringInfo from './unitEngineeringInfo'
         this.clickRowId = selectedRow.id
         this.$refs.findAllUnitEngineerings.findAllUnitEngineerings()
         this.$refs.findProjectInfoByEstateEn.findCurrentProjectInfo()
+        this.$refs.findProjectInfoByEstateEn.findStructureForm()
        },
        handleSelectionChange(selectedRows) {
         this.tableSelectedRows = selectedRows

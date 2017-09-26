@@ -102,6 +102,7 @@
         this.clickRowId = selectedRow.id
         this.$refs.findAllUnitEngineerings.findAllUnitEngineerings()
         this.$refs.findProjectInfo.findCurrentProjectInfo()
+         this.$refs.findProjectInfo.findStructureForm()
        },
        handleSelectionChange(selectedRows) {
         this.tableSelectedRows = selectedRows

@@ -53,7 +53,13 @@
 			    </el-form-item>
 			    <el-form-item label="结构形式">
 			    <el-row :span="20">
-			    <el-input v-model="projectForm.construction" :disabled="true"></el-input>
+			    	<el-collapse v-model="activeNames">
+				        <el-collapse-item name="1">
+				            <div>
+				            	<span v-for="item in structureForm">{{item.description}}</span>
+				            </div>
+				        </el-collapse-item>
+    				</el-collapse>
 			    </el-row>
 			    </el-form-item>
     		</el-col>
@@ -368,6 +374,11 @@
 <script>
   import msgDialog from '../common/msgDialog'
   export default{
+  	 data() {
+      return {
+        activeNames: ['1']
+      };
+    },
     methods:{
     	findAllProjectStates() {
         		this.$http.get(this.HOST + "/findAllProjectStates").then(response => {
@@ -389,7 +400,7 @@
       this.findAllProjectCategorys()
       this.findAllProjectStates()
     },
-    props:['projectForm'],
+    props:['projectForm','structureForm'],
     components: {
       msgDialog
     }
