@@ -14,6 +14,7 @@
 
     <el-table-column
       label="用户名"
+      align="center"
       prop="username"
       show-overflow-tooltip>
     </el-table-column>

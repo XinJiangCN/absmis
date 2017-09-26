@@ -2,7 +2,8 @@
 <div>
     <el-form :model="machineryEnInformation" label-width="180px">
     <!-- 调用组件进行页面显示 -->
-        <part-basic-info :basicInfoData="machineryEnInformation"></part-basic-info>
+        <part-basic-info :basicInfoData="machineryEnInformation"
+        ref="partBasicInfo" @checkOthers="submit"></part-basic-info>
         <el-row>
             <el-col :span="7">
                 <label>企业类型：设备生产企业</label>
@@ -13,7 +14,7 @@
     </el-form>
     <!-- 调用组件进行页面显示 -->
     <all-type-basic-info :basicInfoData="machineryEnInformation"
-        @submitForm="submitBasicInfoDialogVisible=true"
+        @submitForm="submitBasicInfoDialog"
     ></all-type-basic-info>
     <!-- 调用组件，目的是利用组件中的消息提示框，实际无显示意义 -->
     <msg-dialog ref="msgForSubmit"></msg-dialog>
@@ -51,7 +52,7 @@ export default {
     },
     methods: {
         //点击提交时触发本方法
-        handleSubmit: function() {
+        handleSubmit() {
             //关闭对话框
             this.submitBasicInfoDialogVisible=false
             var url = this.HOST + '/updateMachineryEn'
@@ -60,6 +61,12 @@ export default {
             }).catch(error=>{
                 this.$refs.msgForSubmit.confirm("提交失败！")
             })
+        },
+        submitBasicInfoDialog(){
+            this.$refs.partBasicInfo.check();
+        },
+        submit(){
+            this.submitBasicInfoDialogVisible=true
         } 
     },
     components: {
