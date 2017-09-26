@@ -45,13 +45,13 @@
       <el-form>
         <unitEngineering-info-add-dialog
           :unitEngineeringDialog="unitEngineeringForAddForm"
-        ></unitEngineering-info-add-dialog>
+        ref="unitEngineeringAdd" @submitAddForm="submitAddForm"></unitEngineering-info-add-dialog>
       </el-form>
 
       <div slot="footer">
             <el-button @click="cancelAdd">取 消</el-button>
 
-            <el-button type="primary" @click="submitAddForm">确 定</el-button>
+            <el-button type="primary" @click="submit">确 定</el-button>
       </div>
     </el-dialog>
     <!-- Add Dialog Finished-->
@@ -273,9 +273,12 @@
         }
       },
       //点击确定进行添加保存
+      submit(){
+           this.$refs.unitEngineeringAdd.check();
+      },
       submitAddForm() {
         //this.unitEngineeringForAddForm.project=this.projectId
-        
+        console.log("对对对")
         this.addDialogVisible = false;
         var url = this.HOST + "/addUnitEngineering?projectId="+this.projectId
         this.$http.post(url, this.unitEngineeringForAddForm).then(response => {

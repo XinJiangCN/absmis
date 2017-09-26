@@ -1,11 +1,11 @@
 <template>
-	<el-form>
-		<el-form-item label="工程名称">
-	        <el-input v-model="unitEngineeringDialog.name">
+<div>
+	<el-form ref="checkForm" :model="unitEngineeringDialog" :rules="rules">
+		<el-form-item label="工程名称" prop="name">
+	        <el-input v-model="unitEngineeringDialog.name" name="name">
 	        </el-input>
 	    </el-form-item>
-	    <el-form-item label="工程开工时间">
-			    <el-row :span="20">
+	    <el-form-item label="工程开工时间" prop="startingTime">
 			    <el-date-picker
 			      v-model="unitEngineeringDialog.startingTime"
 			      align="right"
@@ -13,25 +13,24 @@
 			      placeholder="选择日期"
 			      :picker-options="pickerOptions1">
 			    </el-date-picker>
-			    </el-row>
 		</el-form-item>
-	    <el-form-item label="建筑面积">
-	        <el-input v-model="unitEngineeringDialog.constructionArea">
+	    <el-form-item label="建筑面积" prop="constructionArea">
+	        <el-input v-model="unitEngineeringDialog.constructionArea" name=""constructionArea>
 	        </el-input>
 	    </el-form-item>
-	    <el-form-item label="地上层数">
+	    <el-form-item label="地上层数" prop="undergroundNum">
 	        <el-input v-model="unitEngineeringDialog.undergroundNum">
 	        </el-input>
 	    </el-form-item>
-	    <el-form-item label="地下层数">
+	    <el-form-item label="地下层数" prop="overgroundNum">
 	        <el-input v-model="unitEngineeringDialog.overgroundNum">
 	        </el-input>
 	    </el-form-item>
-	    <el-form-item label="工程类别">
+	    <el-form-item label="工程类别" prop="engineeringCategory">
 	        <el-input v-model="unitEngineeringDialog.engineeringCategory">
 	        </el-input>
 	    </el-form-item>
-	    <el-form-item label="结构形式">
+	    <el-form-item label="结构形式" prop="structureForm">
 	    	<el-select v-model="unitEngineeringDialog.structureForm" placeholder="请选择">
 	            <el-option
 	              v-for="item in structureForms"
@@ -41,19 +40,20 @@
 	            </el-option>    
 	        </el-select>
 	    </el-form-item>
-	    <el-form-item label="单体装配率">
+	    <el-form :model="unitEngineeringDialog.engineeringIndustrialization" :rules="rules">
+	    <el-form-item label="单体装配率" prop="unitAssemblyRate">
 	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.unitAssemblyRate">
 	        </el-input>
 	    </el-form-item>
-	    <el-form-item label="外墙预制比例应用产业化技术的建筑面积">
+	    <el-form-item label="外墙预制比例应用产业化技术的建筑面积" prop="exteriorWallArea">
 	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.exteriorWallArea">
 	        </el-input>
 	    </el-form-item>
-	    <el-form-item label="预制外墙水平投影面积">
+	    <el-form-item label="预制外墙水平投影面积" prop="wallShadowArea">
 	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.wallShadowArea">
 	        </el-input>
 	    </el-form-item>
-	    <el-form-item label="不纳入地上容积率的建筑面积">
+	    <el-form-item label="不纳入地上容积率的建筑面积" prop="conArea">
 	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.conArea">
 	        </el-input>
 	    </el-form-item>
@@ -65,12 +65,13 @@
 	              :label="item.description"
 	              :value="item.id">
 	            </el-option>    
-	        </el-select>       
+	        </el-select>      
 	    </el-form-item>
-	    <el-form-item label="应用楼层范围">
+	    <el-form-item label="应用楼层范围" prop="floorScope">
 	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.floorScope">
 	        </el-input>
 	    </el-form-item>
+	    </el-form>
 	    <el-form-item label="应用构件部品">
 	        <el-checkbox label="柱" v-model="unitEngineeringDialog.engineeringIndustrialization.frameworkShear.columnFs"></el-checkbox>
 		    <el-checkbox label="梁" v-model="unitEngineeringDialog.engineeringIndustrialization.frameworkShear.beamFs"></el-checkbox>
@@ -83,16 +84,143 @@
 		    <el-checkbox label="太阳能" v-model="unitEngineeringDialog.engineeringIndustrialization.frameworkShear.solarEnergyFs"></el-checkbox>
 	    </el-form-item>
 	</el-form>
+	<msg-dialog ref="msgDialog"></msg-dialog>
+</div>
 </template>
 <script>
+ import msgDialog from '../common/msgDialog'
 	export default{
 		data(){
+			var checkName=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入工程名称"))
+				}else{
+					callback()
+				}	
+			}
+			var checkStartingTime=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入开工时间"))
+				}else{
+					callback()
+				}	
+			}
+			var checkStructureForm=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入结构形式"))
+				}else{
+					callback()
+				}	
+			}
+			var checkConstructionArea=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入建筑面积"))
+				}else
+				callback();
+			}
+			var checkUndergroundNum=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入地上层数"))
+				}else
+				callback();
+			}
+			var checkOvergroundNum=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入地下层数"))
+				}else
+				callback();
+			}
+			var checkEngineeringCategory=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入工程类别"))
+				}else
+				callback();
+			}
+			var checkUnitAssemblyRate=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入单体装配率"))
+				}else
+				callback();
+			}
+			var checkExteriorWallArea=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入外墙预制比例应用产业化技术的建筑面积"))
+				}else
+				callback();
+			}
+			var checkWallShadowArea=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入预制外墙水平投影面积"))
+				}else
+				callback();
+			}
+			var checkConArea=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入不纳入地上容积率的建筑面积"))
+				}else
+				callback();
+			}
+			var checkFloorScope=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入应用楼层范围"))
+				}else
+				callback();
+			}
       		return{
         		applicationStructureTypes:[],
-        		structureForms:[]
+        		structureForms:[],
+        		rules:{
+					name:[
+						{validator:checkName,trigger:'change'&'blur'}
+					],
+					startingTime:[
+						{validator:checkStartingTime,trigger:'change'&'blur'}
+					],
+					structureForm:[
+						{validator:checkStructureForm,trigger:'change'&'blur'}
+					],
+					constructionArea:[
+						{validator:checkConstructionArea,trigger:'change'&'blur'}
+					],
+					undergroundNum:[
+						{validator:checkUndergroundNum,trigger:'change'&'blur'}
+					],
+					overgroundNum:[
+						{validator:checkOvergroundNum,trigger:'change'&'blur'}
+					],
+					engineeringCategory:[
+						{validator:checkEngineeringCategory,trigger:'change'&'blur'}
+					],
+					unitAssemblyRate:[
+						{validator:checkUnitAssemblyRate,trigger:'change'&'blur'}
+					],
+					exteriorWallArea:[
+						{validator:checkExteriorWallArea,trigger:'change'&'blur'}
+					],
+					wallShadowArea:[
+						{validator:checkWallShadowArea,trigger:'change'&'blur'}
+					],
+					conArea:[
+						{validator:checkConArea,trigger:'change'&'blur'}
+					],
+					floorScope:[
+						{validator:checkFloorScope,trigger:'change'&'blur'}
+					]
+				}
       		}
     	},
     	methods: {
+    		check(){
+    			console.log("laillllll");
+            	this.$refs.checkForm.validate((valid)=>{
+                	if(valid){
+                    	this.$emit('submitAddForm')
+                	}else{
+                    	this.$refs.msgDialog.confirm("填写信息有误，请填写完整后再提交")
+                	}
+            	})
+            
+        	},
     		findAllApplicationStructureTypes() {
 	        	this.$http.get(this.HOST + "/findAllApplicationStructureTypes").then(response => {
 	          	this.applicationStructureTypes = response.data;
@@ -113,5 +241,8 @@
       		this.findAllApplicationStructureTypes()
       		this.findAllStructureForms()
     	},
+    	components: {
+      			msgDialog     
+    	}
 	}
 </script>
