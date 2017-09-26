@@ -1,12 +1,12 @@
 <template>
 <div id="header">
-    <div style="font-size:35px">
-    	<p>装配式建筑系统</p>
+    <div class="headerContent">
+    	<p style="color:#8492A6">装配式建筑信息系统</p>
     </div>
-    <div style="margin-right:-800px;margin-bottom:20px">
+    <div style="width:20%;float:left;padding-top:15px">
     	<p>{{ "当前用户：" + currentUser}}</p>
     </div>
-    <div style="float:margin-right">
+    <div style="float:margin-right;padding-top:22px">
       <el-button type="primary" @click="logout">退出</el-button>
     </div>
 </div>
@@ -47,8 +47,19 @@ export default{
 </script>
 <style type="text/css">
 	#header{
-		height: 10%;
 		width: 100%;
-		margin: 0 auto;
+		/* margin: 0 auto; */
 	}
+  .headerContent{
+    font-size: 29px;
+    /*font-family: "Times New Roman",Georgia,Serif;*/
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+    color: #000000;
+    width: 70%;
+    float: left;
+    /*padding-top: -28px !important;*/
+    padding-left: 5px !important;
+    text-align: left;
+    line-height: 30px;
+  }
 </style>
