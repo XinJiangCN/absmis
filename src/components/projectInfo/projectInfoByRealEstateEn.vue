@@ -7,11 +7,11 @@
 		        <!-- 增删改按钮 -->
 		        <el-button-group>
 		          <el-button type="primary" @click="reset">增加</el-button>
-		          <el-button type="primary" @click="addProjectForm">提交</el-button>
+		          <el-button type="primary" @click="submit" @addProjectForm="addProjectForm">提交</el-button>
 		        </el-button-group>
 		      </el-col>
     	</el-row>
-    <project-info :projectForm="projectForm" :structureForm="structureForm">
+    <project-info :projectForm="projectForm" :structureForm="structureForm" ref="projectInfo">
     </project-info>  	
 	</el-col>
 	<msg-dialog ref="msgDialog"></msg-dialog>
@@ -252,6 +252,9 @@
           	this.$refs.msgDialog.confirm("获取失败")
         	})
     	},
+    	submit(){
+           this.$refs.projectInfo.check();
+      	},
     	//TODO 已经审核通过的不能重复提交
     	addProjectForm(){
     		if(this.checkedStatus=='undefined'){

@@ -40,7 +40,7 @@
 	            </el-option>    
 	        </el-select>
 	    </el-form-item>
-	    <el-form :model="unitEngineeringDialog.engineeringIndustrialization" :rules="rules">
+	    <el-form ref="checkForm2" :model="unitEngineeringDialog.engineeringIndustrialization" :rules="rules">
 	    <el-form-item label="单体装配率" prop="unitAssemblyRate">
 	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.unitAssemblyRate">
 	        </el-input>
@@ -57,7 +57,7 @@
 	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.conArea">
 	        </el-input>
 	    </el-form-item>
-	    <el-form-item label="应用结构类型">
+	    <el-form-item label="应用结构类型" prop="applicationStructureType">
 	    	<el-select v-model="unitEngineeringDialog.engineeringIndustrialization.applicationStructureType" placeholder="请选择">
 	            <el-option
 	              v-for="item in applicationStructureTypes"
@@ -119,6 +119,12 @@
 				callback();
 			}
 			var checkUndergroundNum=(rule,value,callback)=>{
+				if(!value){
+					callback(new Error("请输入地上层数"))
+				}else
+				callback();
+			}
+			var checkApplicationStructureType=(rule,value,callback)=>{
 				if(!value){
 					callback(new Error("请输入地上层数"))
 				}else
@@ -200,6 +206,9 @@
 					wallShadowArea:[
 						{validator:checkWallShadowArea,trigger:'change'&'blur'}
 					],
+					applicationStructureType:[
+						{validator:checkApplicationStructureType,trigger:'change'&'blur'}
+					],
 					conArea:[
 						{validator:checkConArea,trigger:'change'&'blur'}
 					],
@@ -213,6 +222,17 @@
     		check(){
     			console.log("laillllll");
             	this.$refs.checkForm.validate((valid)=>{
+                	if(valid){
+                    	this.check2()
+                	}else{
+                    	this.$refs.msgDialog.confirm("填写信息有误，请填写完整后再提交")
+                	}
+            	})
+            
+        	},
+        	check2(){
+    			console.log("laillllll");
+            	this.$refs.checkForm2.validate((valid)=>{
                 	if(valid){
                     	this.$emit('submitAddForm')
                 	}else{

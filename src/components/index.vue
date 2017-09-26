@@ -111,7 +111,7 @@ html,body{
 }
 .menu{
     position:fixed;
-    height: 81%;
+    height: 85%;
     background-color:#E5E9F2;
 }
 .content{
