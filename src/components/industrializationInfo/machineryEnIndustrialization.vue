@@ -344,7 +344,13 @@ export default{
                     this.addDialogVisible = false 
                     this.editDialogVisible = false
                     }).catch(error=>{
-                       this.$refs.msgDialog.confirm("数据暂存失败")
+                       if (error=='Error: Request failed with status code 500') {
+                        this.$refs.msgDialog.confirm("不可同年同一季度，请检查增加信息")
+                     }else{
+                        this.$refs.msgDialog.confirm("数据暂存失败")
+                     }
+                     this.addDialogVisible = false 
+                    this.editDialogVisible = false
                     })
                     this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:'',submit:''}
               } else {
@@ -365,12 +371,18 @@ export default{
            this.$refs[formName].validate((valid) => {
               if (valid) {
                   var url = this.HOST+"/addMachineryEnIndustrialization"
+                  console.log(JSON.stringify(this.machineryEnIndustrializationForm))
                   this.$http.post(url,this.machineryEnIndustrializationForm).then(response=>{
                     this.getMachineryEnIndustrializationTable()
                     this.$refs.msgDialog.notify("数据提交成功")
                     this.addDialogVisible = false
                   }).catch(error=>{
-                    this.$refs.msgDialog.confirm("数据提交失败")
+                    if (error=='Error: Request failed with status code 500') {
+                        this.$refs.msgDialog.confirm("不可添加同年同一季度，请检查增加信息")
+                     }else{
+                        this.$refs.msgDialog.confirm("数据添加失败")
+                     }
+                     this.addDialogVisible = false
                   })
                   this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:'',submit:''}
               } else {
@@ -417,7 +429,12 @@ export default{
                     this.$refs.msgDialog.notify("数据修改成功")
                     this.editDialogVisible = false
                   }).catch(error=>{
-                    this.$refs.msgDialog.confirm("数据修改失败")
+                    if (error=='Error: Request failed with status code 500') {
+                        this.$refs.msgDialog.confirm("不可修改为已有年度季度的信息，请检查增加信息")
+                         }else{
+                            this.$refs.msgDialog.confirm("数据修改失败")
+                         }
+                         this.editDialogVisible = false
                   })
                   this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:'',submit:''} 
               } else {

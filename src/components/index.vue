@@ -115,7 +115,7 @@ html,body{
     background-color:#E5E9F2;
 }
 .content{
-    margin-left: 280px;
+    margin-left:310px;
     background-color: #F9FAFC; 
 }
 .viewHeader{
