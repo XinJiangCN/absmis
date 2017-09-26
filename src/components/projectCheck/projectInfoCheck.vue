@@ -12,7 +12,7 @@
 		      </el-col>
     	</el-row>
             <project-info-check-panel
-            :projectForm="projectForm"></project-info-check-panel>   	
+            :projectForm="projectForm" :structureForm="structureForm"></project-info-check-panel>   	
 	</el-col>
 
 	<msg-dialog ref="msgDialog"></msg-dialog>
@@ -49,6 +49,7 @@
           }]
         },
       	projectStates:[],
+        structureForm: '',
       	projectCategorys:[],
   		projectForm: {
   			id:'',
@@ -163,6 +164,17 @@
         		})
 
     	},
+      findStructureForm(){
+        var url = this.HOST + "/findStructureForm?id="+this.projectId
+          this.$http.get(url).then(response => {
+            console.log("成功了")
+            this.structureForm = response.data
+            console.log(this.structureForm+"yesyes")
+            this.$refs.msgDialog.notify("获取成功")
+          }).catch(error => {
+            this.$refs.msgDialog.confirm("获取失败")
+          })
+      },
     	findAllProjectStates() {
         		this.$http.get(this.HOST + "/findAllProjectStates").then(response => {
           		this.projectStates = response.data;
