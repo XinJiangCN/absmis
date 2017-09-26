@@ -275,14 +275,29 @@ export default{
             currentDate:'',
             //时间面板左侧快捷键
             pickerOptions1: {
+                disabledDate(time) {
+                  return time.getTime() > (Date.now()+24*60*60*1000) - 8.64e7;
+                },
                 shortcuts: [{
-                    text: '昨天',
+                    text: '今天',
                     onClick(picker) {
-                      const date = new Date();
-                      date.setTime(date.getTime() - 3600 * 1000 * 24);
-                      picker.$emit('pick', date);
+                      picker.$emit('pick', new Date());
                     }
-                }]
+                }, {
+                text: '昨天',
+                onClick(picker) {
+                  const date = new Date();
+                  date.setTime(date.getTime() - 3600 * 1000 * 24);
+                  picker.$emit('pick', date);
+                    }
+                }, {
+                text: '一周前',
+                onClick(picker) {
+                  const date = new Date();
+                  date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                  picker.$emit('pick', date);
+                    }
+                  }]
             },
             //获取表格数据
             subUnitEnIndustrializationTable:[],
@@ -290,15 +305,27 @@ export default{
             selectedRows:null,
             //删除行的id
             id:'',
-            //控制是提交还是修改
-            submitVisible:true,
+            //控制是提交还是修改false为修改
+            submitVisible:false,
             //部品产业化的属性
             subUnitEnIndustrializationForm:{integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
         }
     },
     methods:{
+        //获取当前年,季度,和当前日期
+        getCurrentYearAndQuarter(){
+            var currentDate= new Date();
+            var currMonth=currentDate.getMonth()
+            var preDate =new Date(currentDate.getTime()- 24*60*60*1000);
+            this.subUnitEnIndustrializationForm.declareTime=preDate
+            this.subUnitEnIndustrializationForm.year=currentDate.getFullYear()
+            this.subUnitEnIndustrializationForm.quarter=Math.floor( ( currMonth % 3 == 0 ? ( currMonth / 3 ) : ( currMonth / 3 + 1 ) ) )
+        },
+        //点击增加触发的事件
         setCurrent(row) {
             this.subUnitEnIndustrializationForm={integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
+            this.getCurrentYearAndQuarter()
+            this.submitVisible = true
         },
         handleCurrentChange(selected){
             this.selectedRows = selected
@@ -314,7 +341,6 @@ export default{
         },
         //暂存表单
         temporarySaveForm(formName){
-            
             this.subUnitEnIndustrializationForm.submit = false
             this.$refs[formName].validate((valid) => {
               if (valid) {
@@ -368,10 +394,14 @@ export default{
             },
             //点击修改之后运行本方法
             showEditDialogVisible() {
-                if (this.selectedRows.length == 0) {
+                if (this.selectedRows == null) {
                     this.$refs.msgDialog.confirm("请选择您要修改的产业化信息！")
                 }else if(this.selectedRows.submit){ 
-                    if(this.selectedRows.checkedStatus.state!='修改重申'){
+                    if(this.selectedRows.checkedStatus == null){
+                        this.$refs.msgDialog.confirm("提交且修改状态不为修改重申的数据不能修改")
+                        this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
+                    }
+                    else if(this.selectedRows.checkedStatus.state!='修改重申'){
                         this.$refs.msgDialog.confirm("提交且修改状态不为修改重申的数据不能修改")
                         this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}  
                     }else{
@@ -383,7 +413,23 @@ export default{
             },
             //提交修改信息
             submitEditForm(formName){
-              this.subUnitEnIndustrializationForm.submit = true
+                 if(this.selectedRows.submit){ 
+                    if(this.selectedRows.checkedStatus == null){
+                        this.$refs.msgDialog.confirm("提交且修改状态不为修改重申的数据不能修改")
+                        this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
+                        return
+                    }
+                    else if(this.selectedRows.checkedStatus.state!='修改重申'){
+                        this.$refs.msgDialog.confirm("提交且修改状态不为修改重申的数据不能修改")
+                        this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}  
+                        return
+                    }else{
+                        this.submitVisible = false
+                    }
+                }else{
+                    this.submitVisible = false
+                }
+                this.subUnitEnIndustrializationForm.submit = true
                 this.$refs[formName].validate((valid) => {
                   if (valid) {
                     var url = this.HOST+"/updateSubUnitEnIndustrialization"
@@ -403,6 +449,8 @@ export default{
     },
     created(){
         this.getSubUnitEnIndustrializationTable()
+        this.getCurrentYearAndQuarter()
+        
     },
     components:{
         msgDialog

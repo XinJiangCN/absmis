@@ -238,14 +238,29 @@ export default{
             //默认当前时间
             currentDate:'',
             pickerOptions1: {
+                disabledDate(time) {
+                  return time.getTime() > (Date.now()+24*60*60*1000) - 8.64e7;
+                },
                 shortcuts: [{
-                    text: '昨天',
+                    text: '今天',
                     onClick(picker) {
-                      const date = new Date();
-                      date.setTime(date.getTime() - 3600 * 1000 * 24);
-                      picker.$emit('pick', date);
+                      picker.$emit('pick', new Date());
                     }
-                }]
+                }, {
+                text: '昨天',
+                onClick(picker) {
+                  const date = new Date();
+                  date.setTime(date.getTime() - 3600 * 1000 * 24);
+                  picker.$emit('pick', date);
+                    }
+                }, {
+                text: '一周前',
+                onClick(picker) {
+                  const date = new Date();
+                  date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                  picker.$emit('pick', date);
+                    }
+                  }]
             },
             //部品产业化的属性(这里submit初始值设置为true是为了下面表单提交的时候通过测试)
             machineryEnIndustrializationForm:{integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:'',submit:'',checkedStatusState:''}
@@ -253,6 +268,15 @@ export default{
         }
     },
     methods:{
+        //获取当前年,季度,和当前日期
+        getCurrentYearAndQuarter(){
+            var currentDate= new Date();
+            var currMonth=currentDate.getMonth()
+            var preDate =new Date(currentDate.getTime()- 24*60*60*1000);
+            this.machineryEnIndustrializationForm.declareTime=preDate
+            this.machineryEnIndustrializationForm.year=currentDate.getFullYear()
+            this.machineryEnIndustrializationForm.quarter=Math.floor( ( currMonth % 3 == 0 ? ( currMonth / 3 ) : ( currMonth / 3 + 1 ) ) )
+        },
         //查询按钮处理事件
         handleSearch(){
             if(this.searchTime ==''){
@@ -332,6 +356,7 @@ export default{
         //点击增加打开增加对话框
         showAddDialogVisible(){
             this.machineryEnIndustrializationForm = {integralWall:'',specialTransportEquipment:'',specialConstructionEquipment:'',declareTime:'',year:'',quarter:'',submit:''}
+            this.getCurrentYearAndQuarter()
             this.addDialogVisible = true
         },
         //提交增加信息

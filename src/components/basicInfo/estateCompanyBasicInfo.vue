@@ -1,8 +1,8 @@
 <template>
 <div>
-    <el-form :model="estateInformation" label-width="180px">
+    <el-form :model="estateInformation" label-width="180px" :rules='rules' ref='estateInformation'>
     <!-- 调用组件，进行页面显示 -->
-        <part-basic-info :basicInfoData="estateInformation"></part-basic-info>
+        <part-basic-info :basicInfoData="estateInformation" @checkOthers="checkOthers('estateInformation')" ref='partBasicInfo'></part-basic-info>
         <el-row>
             <el-col :span="6">
                 <label>企业类型: 房地产企业</label>
@@ -13,7 +13,7 @@
 
         <el-row>
             <el-col :span="9">
-                <el-form-item label="资质证书编号">
+                <el-form-item label="资质证书编号" prop="qualificationNo">
                     <el-input v-model="estateInformation.qualificationNo"></el-input>
                 </el-form-item>
             </el-col>
@@ -33,15 +33,15 @@
         </el-row>
         <el-row>
             <el-col :span="18">
-                <el-form-item label="本单位从事装配式建筑初始累计">
-                    <el-input v-model="estateInformation.cumulant"></el-input>
+                <el-form-item label="本单位从事装配式建筑初始累计" prop="cumulant">
+                    <el-input v-model.number="estateInformation.cumulant"></el-input>
                 </el-form-item>
             </el-col>
         </el-row>
     </el-form>
     <!-- 调用组件进行页面显示 -->
     <all-type-basic-info :basicInfoData="estateInformation"
-        @submitForm="submitBasicInfoDialogVisible=true"
+        @submitForm="submitBasicInfoDialog"
     ></all-type-basic-info>
     <!-- 调用组件，使用其中的消息提示框，无显示意义 -->
     <msg-dialog ref="msgForSubmit"></msg-dialog>
@@ -79,7 +79,19 @@ export default {
             this.$refs.msgForSubmit.confirm("获取失败！")
         })
     },
-    data: function() {
+    data() {
+        var checkQualificationNo=(rule,value,callback)=>{
+            if(!value)
+                callback(new Error("必填项"))
+            else
+                callback()
+        }
+        var checkCumulant=(rule,value,callback)=>{
+            if(!value)
+                callback(new Error("必填项"))
+            else
+                callback()
+        }
         return {
             //用来存放当前使用者的所有信息
             estateInformation: {},
@@ -88,7 +100,16 @@ export default {
             //资质等级下拉框选项
             estateQualifications:[],
             //提交所有信息时的确认对话框
-            submitBasicInfoDialogVisible:false
+            submitBasicInfoDialogVisible:false,
+            rules:{
+                qualificationNo:[
+                    {validator:checkQualificationNo,trigger:'blur'}
+                ],
+                cumulant:[
+                    {validator:checkCumulant,trigger:'blur'},
+                    {type:'number',message:'只能填写数字',trigger:'change'}
+                ]
+            }
         }
     },
     methods: {
@@ -104,7 +125,23 @@ export default {
             }).catch(error=>{
                 this.$refs.msgForSubmit.confirm("提交失败！")
             })
-        } 
+        },
+        submitBasicInfoDialog(){
+            this.$refs.partBasicInfo.check();
+        },
+        checkOthers(form){
+            this.$refs[form].validate((valid)=>{
+                if(valid){
+                    if(this.estateQualificationId!=''){
+                        this.submitBasicInfoDialogVisible=true
+                    }else{
+                        this.$refs.msgForSubmit.confirm('资质等级不能为空')
+                    }
+                }else{
+                    this.$refs.msgForSubmit.confirm("填写信息有误，请填写完整后再提交")
+                }
+            })
+        }  
     },
     components: {
         partBasicInfo,
