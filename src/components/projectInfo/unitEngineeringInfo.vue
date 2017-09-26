@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <!-- 每行分为24栏（固定），span设置该列占有5栏 -->
-      <el-col :span="5">
+      <el-col :span="8">
         <!-- 增删改按钮 -->
         <el-button-group>
           <el-button type="primary" icon="plus" @click="addDialogVisible=true">
