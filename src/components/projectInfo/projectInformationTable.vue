@@ -1,16 +1,10 @@
 <template>
   <el-table
     :data="projectTableData"
-    border
-    stripe
-    tooltip-effect="dark"
-    style="width:100%"
     highlight-current-row
+    border
+    style="width:100%"
     @row-click="rowClick">
-    <el-table-column
-      type="selection"
-      width="55">
-    </el-table-column>
     <el-table-column
       label="项目名称"
       prop="name"

@@ -16,7 +16,7 @@
             <project-information-table 
             :projectTableData="projectTableData"
             @clickRow="clickRow"
-            @handleSelectionChange="handleSelectionChange"></project-information-table>
+          ></project-information-table>
           </el-col>
         </el-row>
         <el-row>
@@ -106,9 +106,9 @@ import unitEngineeringInfo from './unitEngineeringInfo'
        },
        clickRow(selectedRow) {
         this.clickRowId = selectedRow.id
-        this.$refs.findAllUnitEngineerings.findAllUnitEngineerings()
-        this.$refs.findProjectInfoByEstateEn.findCurrentProjectInfo()
-        this.$refs.findProjectInfoByEstateEn.findStructureForm()
+        this.$refs.findAllUnitEngineerings.findAllUnitEngineerings(selectedRow)
+        this.$refs.findProjectInfoByEstateEn.findCurrentProjectInfo(selectedRow)
+        this.$refs.findProjectInfoByEstateEn.findStructureForm(selectedRow)
        },
        handleSelectionChange(selectedRows) {
         this.tableSelectedRows = selectedRows
