@@ -111,11 +111,12 @@ html,body{
 }
 .menu{
     position:fixed;
-    height: 81%;
+    height: 85%;
     background-color:#E5E9F2;
 }
 .content{
-    margin-left: 280px;
+    margin-left: 310px;
+    overflow-x: scroll;
     background-color: #F9FAFC; 
 }
 .viewHeader{
