@@ -16,7 +16,7 @@
             <project-info-check-table 
             :projectTableData="projectTableData"
             @clickRow="clickRow"
-            @handleSelectionChange="handleSelectionChange"></project-info-check-table>
+            ></project-info-check-table>
           </el-col>
         </el-row>
         <el-row>
@@ -100,9 +100,9 @@
        },
        clickRow(selectedRow) {
         this.clickRowId = selectedRow.id
-        this.$refs.findAllUnitEngineerings.findAllUnitEngineerings()
-        this.$refs.findProjectInfo.findCurrentProjectInfo()
-         this.$refs.findProjectInfo.findStructureForm()
+        this.$refs.findAllUnitEngineerings.findAllUnitEngineerings(selectedRow)
+        this.$refs.findProjectInfo.findCurrentProjectInfo(selectedRow)
+         this.$refs.findProjectInfo.findStructureForm(selectedRow)
        },
        handleSelectionChange(selectedRows) {
         this.tableSelectedRows = selectedRows

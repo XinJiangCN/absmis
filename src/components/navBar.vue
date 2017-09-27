@@ -3,7 +3,7 @@
     <el-menu default-active="1-4-1" class="el-menu-vertical-demo" theme="light" :router=true>
     <template slot="title"></template> 
     <div v-for="item in menuData">
-    <el-menu-item :index="item.url" style="text-align: left;" class="menuItem"><i class="el-icon-menu"></i>{{item.text}}</el-menu-item>
+    <el-menu-item :index="item.url" style="text-align: left;" class="menuItem"><i :class="item.icon"></i>{{item.text}}</el-menu-item>
     </div>
     </el-menu>
 </div>

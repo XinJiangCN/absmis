@@ -192,8 +192,8 @@ export default {
         })
       },
       //查询所要显示的表格，或者刷新该表格使用
-      findAllUnitEngineerings() {
-        var url = this.HOST + "/displayAllUnitEngineeringsByPro?id="+this.projectId+"&page="+this.currentPage+"&rows="+this.pageSize
+      findAllUnitEngineerings(ref) {
+        var url = this.HOST + "/displayAllUnitEngineeringsByPro?id="+ref.id+"&page="+this.currentPage+"&rows="+this.pageSize
         //初始显示表格用的查询数据
         //当前多少页 一页多少条
         this.$http.get(url).then(response => {

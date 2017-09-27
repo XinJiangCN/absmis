@@ -153,19 +153,20 @@
 	          this.$refs.msgDialog.confirm("修改失败")
 	        })
       	 },
-    	findCurrentProjectInfo(){
-    		console.log("log"+this.projectId)
-    		this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
-          		this.projectForm = response.data
-          		console.log("啦啦啦啦")
-          		console.log(this.projectForm)
-        		}).catch(error => {
-          		this.$refs.msgDialog.confirm("查询失败la")
-        		})
+    	findCurrentProjectInfo(ref){
+        this.projectForm = ref
+    		// console.log("log"+this.projectId)
+    		// this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
+      //     		this.projectForm = response.data
+      //     		console.log("啦啦啦啦")
+      //     		console.log(this.projectForm)
+      //   		}).catch(error => {
+      //     		this.$refs.msgDialog.confirm("查询失败la")
+      //   		})
 
     	},
-      findStructureForm(){
-        var url = this.HOST + "/findStructureForm?id="+this.projectId
+      findStructureForm(ref){
+        var url = this.HOST + "/findStructureForm?id="+ref.id 
           this.$http.get(url).then(response => {
             console.log("成功了")
             this.structureForm = response.data

@@ -100,9 +100,9 @@
        },
        clickRow(selectedRow) {
         this.clickRowId = selectedRow.id
-        this.$refs.findAllUnitEngineerings.findAllUnitEngineerings()
-        this.$refs.findProjectInfoByEstateOwner.findCurrentProjectInfo()
-         this.$refs.findProjectInfoByEstateOwner.findStructureForm()
+        this.$refs.findAllUnitEngineerings.findAllUnitEngineerings(selectedRow)
+        this.$refs.findProjectInfoByEstateOwner.findCurrentProjectInfo(selectedRow)
+         this.$refs.findProjectInfoByEstateOwner.findStructureForm(selectedRow)
        },
        handleSelectionChange(selectedRows) {
         console.log("*********")
