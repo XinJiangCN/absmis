@@ -86,7 +86,7 @@
 			    </el-form-item>
     		</el-col>
     	</el-row>
-    	<el-form :model="projectForm.schedule" :rules="rules">
+    	<el-form ref="checkForm2" :model="projectForm.schedule" :rules="rules">
     	<el-row>
     		<label>项目进度信息</label>
     	</el-row>
@@ -317,7 +317,7 @@
     		</el-row>		
     	</el-row>
     	</el-form>
-    	<el-form :model="projectForm.projectIndustrialization" :rules="rules">
+    	<el-form ref="checkForm3" :model="projectForm.projectIndustrialization" :rules="rules">
     	<el-row>
     		<label>项目产业化信息</label>
     	</el-row>
@@ -724,13 +724,33 @@
     	check(){
             	this.$refs.checkForm.validate((valid)=>{
                 	if(valid){
-                    	this.$emit('addProjectForm')
+                    	this.check2()
                 	}else{
                     	this.$refs.msgDialog.confirm("填写信息有误，请填写完整后再提交")
                 	}
             	})
             
-        	},
+        },
+        check2(){
+            	this.$refs.checkForm2.validate((valid)=>{
+                	if(valid){
+                    	this.check3()
+                	}else{
+                    	this.$refs.msgDialog.confirm("填写信息有误，请填写完整后再提交")
+                	}
+            	})
+            
+        },
+    	check3(){
+        	this.$refs.checkForm3.validate((valid)=>{
+            	if(valid){
+                	this.$emit('addProjectForm')
+            	}else{
+                	this.$refs.msgDialog.confirm("填写信息有误，请填写完整后再提交")
+            	}
+        	})
+        
+    	},
     	findAllProjectStates() {
         		this.$http.get(this.HOST + "/findAllProjectStates").then(response => {
           		this.projectStates = response.data;
