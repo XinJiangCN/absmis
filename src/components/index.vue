@@ -116,7 +116,6 @@ html,body{
 }
 .content{
     margin-left: 310px;
-    overflow-x: scroll;
     background-color: #F9FAFC; 
 }
 .viewHeader{

@@ -5,8 +5,6 @@
     <div v-for="item in menuData">
     <el-menu-item :index="item.url" style="text-align: left;" class="menuItem"><i class="el-icon-menu"></i>{{item.text}}</el-menu-item>
     </div>
-
-
     </el-menu>
 </div>
 </template>
@@ -47,7 +45,5 @@ export default {
 }
 </script>
 <style type="text/css">
-    .menuItem{
-        height: 50px;
-    }
+    
 </style>

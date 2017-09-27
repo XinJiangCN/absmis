@@ -20,7 +20,7 @@
 			    <el-input v-model="projectForm.construction"></el-input>
 			    </el-form-item>
 			    <el-form-item label="项目状态" prop="projectState">
-			    <el-select v-model="projectForm.projectState.id" placeholder="请选择">
+			    <el-select v-model="projectForm.projectState" placeholder="请选择">
 	            <el-option
 	              v-for="item in projectStates"
 	              :key="item.id"
@@ -30,7 +30,7 @@
 	        	</el-select>
 			    </el-form-item>
 			    <el-form-item label="项目类别" prop="projectCategory">
-			    <el-select v-model="projectForm.projectCategory.id" placeholder="请选择">
+			    <el-select v-model="projectForm.projectCategory" placeholder="请选择">
 	            <el-option
 	              v-for="item in projectCategorys"
 	              :key="item.id"

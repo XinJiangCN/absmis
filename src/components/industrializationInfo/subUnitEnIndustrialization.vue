@@ -349,7 +349,12 @@ export default{
                     this.getSubUnitEnIndustrializationTable();
                     this.$refs.msgDialog.notify("数据暂存成功")
                 }).catch(error=>{
-                    this.$refs.msgDialog.confirm("数据暂存失败")
+                    if (error=='Error: Request failed with status code 500') {
+                        this.$refs.msgDialog.confirm("不可暂存同年同一季度，请检查增加信息")
+                     }else{
+                        this.$refs.msgDialog.confirm("数据暂存失败")
+                     }
+                    
                 })
                 this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
               } else {
@@ -368,7 +373,11 @@ export default{
                     this.getSubUnitEnIndustrializationTable();
                     this.$refs.msgDialog.notify("数据添加成功")
                 }).catch(error=>{
-                    this.$refs.msgDialog.confirm("数据添加失败")
+                    if (error=='Error: Request failed with status code 500') {
+                        this.$refs.msgDialog.confirm("不可添加同年同一季度，请检查增加信息")
+                     }else{
+                        this.$refs.msgDialog.confirm("数据添加失败")
+                     }
                 })
                 this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
               } else {
@@ -438,7 +447,12 @@ export default{
                         this.$refs.msgDialog.notify("数据修改成功")
                         this.editDialogVisible = false
                     }).catch(error=>{
-                        this.$refs.msgDialog.confirm("数据修改失败")
+                        if (error=='Error: Request failed with status code 500') {
+                        this.$refs.msgDialog.confirm("不可修改为已有年度季度的信息，请检查增加信息")
+                         }else{
+                            this.$refs.msgDialog.confirm("数据修改失败")
+                         }
+                         this.editDialogVisible = false
                     })         
                     this.subUnitEnIndustrializationForm = {integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}    
                   } else {
