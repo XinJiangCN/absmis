@@ -57,7 +57,7 @@ export default new Router({
     {
         path: '/homePage',
         name: '首页',
-        component: projectCheck
+        component: homePage
     },
     {
         path: '/accountMaintain',
