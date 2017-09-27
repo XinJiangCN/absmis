@@ -2,7 +2,7 @@
 <div>
 	<el-form ref="checkForm" :model="unitEngineeringDialog" :rules="rules">
 		<el-form-item label="工程名称" prop="name">
-	        <el-input v-model="unitEngineeringDialog.name" name="name">
+	        <el-input v-model="unitEngineeringDialog.name">
 	        </el-input>
 	    </el-form-item>
 	    <el-form-item label="工程开工时间" prop="startingTime">
@@ -15,7 +15,7 @@
 			    </el-date-picker>
 		</el-form-item>
 	    <el-form-item label="建筑面积" prop="constructionArea">
-	        <el-input v-model="unitEngineeringDialog.constructionArea" name=""constructionArea>
+	        <el-input v-model="unitEngineeringDialog.constructionArea">
 	        </el-input>
 	    </el-form-item>
 	    <el-form-item label="地上层数" prop="undergroundNum">
