@@ -277,12 +277,10 @@
            this.$refs.unitEngineeringAdd.check();
       },
       submitAddForm() {
-        //this.unitEngineeringForAddForm.project=this.projectId
-        console.log("对对对")
         this.addDialogVisible = false;
         var url = this.HOST + "/addUnitEngineering?projectId="+this.projectId
         this.$http.post(url, this.unitEngineeringForAddForm).then(response => {
-          this.findAllUnitEngineerings();
+          this.findAllUnitEngineering();
           this.$refs.msgDialog.notify("添加成功")
         }).catch(error => {
           this.$refs.msgDialog.confirm("添加失败")
@@ -393,6 +391,17 @@
         }
       },
       //查询所要显示的表格，或者刷新该表格使用
+      findAllUnitEngineering() {
+        var url = this.HOST + "/displayAllUnitEngineeringsByPro?id="+this.projectId+"&page="+this.currentPage+"&rows="+this.pageSize
+        //初始显示表格用的查询数据
+        //当前多少页 一页多少条
+        this.$http.get(url).then(response => {
+          this.unitEngineeringTableData = response.data.rows;
+          this.totalNum = response.data.total;
+        }).catch(error => {
+          this.$refs.msgDialog.confirm("查询失败")
+        })
+      },
       findAllUnitEngineerings(ref) {
         console.log(JSON.stringify(ref)+"ref")
         var url = this.HOST + "/displayAllUnitEngineeringsByPro?id="+ref.id+"&page="+this.currentPage+"&rows="+this.pageSize

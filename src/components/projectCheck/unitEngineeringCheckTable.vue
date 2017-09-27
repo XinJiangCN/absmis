@@ -3,9 +3,10 @@
     :data="unitEngineeringTableData"
     border
     stripe
+    tooltip-effect="dark"
     style="width:63%"
     highlight-current-row
-    @row-click="handleSelectionChange">
+    @selection-change="handleSelectionChange">
     <el-table-column
       type="selection"
       width="55">

@@ -130,6 +130,7 @@ export default {
       },
       //选中行之后，触发本方法
       handleSelectionChange(selectedRows) {
+        // console.log("啦啦啦啦")
         //取出选中行的所有信息，在判断选中情况、修改和删除时使用
         this.tableSelectedRows = selectedRows
       },
@@ -166,6 +167,7 @@ export default {
         } else if (this.tableSelectedRows.length == 0) {
           this.$refs.msgDialog.confirm("请至少选择一个企业进行修改！");
         } else {
+          console.log(this.tableSelectedRows.length+"jijiji")
           this.$refs.msgDialog.confirm("仅可选择一个企业进行修改！")
         }
       },
@@ -175,7 +177,7 @@ export default {
         this.editDialogVisible = false;
         var url = this.HOST + "/checkUnitEngineering?id="+this.unitEngineeringForUpdateForm.id+"&checkedStatusId="+1
         this.$http.post(url).then(response => {
-          this.findAllUnitEngineerings();
+          this.findAllUnitEngineering();
           this.$refs.msgDialog.notify("审核通过")
         }).catch(error => {
           this.$refs.msgDialog.confirm("修改失败1")
@@ -185,13 +187,24 @@ export default {
         this.editDialogVisible = false;
         var url = this.HOST + "/checkUnitEngineering?id="+this.unitEngineeringForUpdateForm.id+"&checkedStatusId="+2
         this.$http.post(url).then(response => {
-          this.findAllUnitEngineerings();
+          this.findAllUnitEngineering();
           this.$refs.msgDialog.notify("修改重申")
         }).catch(error => {
           this.$refs.msgDialog.confirm("修改失败2")
         })
       },
       //查询所要显示的表格，或者刷新该表格使用
+      findAllUnitEngineering() {
+        var url = this.HOST + "/displayAllUnitEngineeringsByPro?id="+this.projectId+"&page="+this.currentPage+"&rows="+this.pageSize
+        //初始显示表格用的查询数据
+        //当前多少页 一页多少条
+        this.$http.get(url).then(response => {
+          this.unitEngineeringTableData = response.data.rows;
+          this.totalNum = response.data.total;
+        }).catch(error => {
+          this.$refs.msgDialog.confirm("查询失败")
+        })
+      },
       findAllUnitEngineerings(ref) {
         var url = this.HOST + "/displayAllUnitEngineeringsByPro?id="+ref.id+"&page="+this.currentPage+"&rows="+this.pageSize
         //初始显示表格用的查询数据
