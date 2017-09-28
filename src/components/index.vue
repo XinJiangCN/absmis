@@ -1,18 +1,18 @@
 <template>
     <div id="indexContent">
-        <el-row class="header">
+        <div class="header">
             <!-- Header Part -->
             <index-header></index-header>
-        </el-row>   
+        </div>   
         <!-- Row for the main index part-->
-        <el-row :gutter="20" class="main">
+        <div class="main">
             <!-- Left for the navigation bar -->
-            <el-col :span="5" id="navBar" class="menu">     
+            <div id="navBar" class="menu">
                 <nav-bar></nav-bar>
-            </el-col>
+            </div>
             <!-- Right part for the view offerred by the router,
                      with the transition effects-->
-            <el-col :span="17" class="content">
+            <div class="content">
                 <el-row class="viewHeader">
                     <view-header></view-header>
                 </el-row>
@@ -21,13 +21,13 @@
                         <router-view></router-view>
                     </transition>
                 </el-row>
-            </el-col>
-        </el-row>
+            </div>
+        </div>
         <!--Footer Part
             The push div used to prevent overlaping when the content is full-->
-        <el-row class="footer">
+        <div class="footer">
             <index-footer></index-footer>
-        </el-row>
+        </div>
     </div>    
 </template>
 
@@ -95,8 +95,8 @@ html,body{
 .header{
     margin-top: 0px;
     width: 100%;
-    height: 60px;
-    position:absolute;
+    height: 10%;
+    position:fixed;
     top:0;
     background-color:#E5E9F2;
 }
@@ -104,18 +104,26 @@ html,body{
 .main{
     width:100%;
     overflow:auto;
-    top:60px;
+    height: 85%;
+   /* top:60px;*/
     bottom: 30px;
-    position:absolute;
+    position:fixed;
     background-color: #F9FAFC; 
 }
 .menu{
+    overflow:auto;
     position:fixed;
     height: 85%;
+    width: 20%;
+    float: left;
     background-color:#E5E9F2;
 }
 .content{
-    margin-left: 310px;
+    /*margin-left: 310px;*/
+   /* overflow-y: auto;
+    scroll-behavior: auto;*/
+    width: 80%;
+    float: right;
     background-color: #F9FAFC; 
 }
 .viewHeader{
@@ -123,9 +131,9 @@ html,body{
 }
 .footer{
     background-color:#EFF2F7;  
-    height:50px;
+    height:5%;
     width:100%;
-    position:absolute;
+    position:fixed;
     bottom: 0px;
     left: 0px;
 }
