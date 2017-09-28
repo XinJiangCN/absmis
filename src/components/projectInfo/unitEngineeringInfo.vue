@@ -171,7 +171,7 @@
             wallShadowArea: '',
             conArea: '', 
             applicationStrutureType: {
-               id:1,
+               id:'',
             description:''
             }, 
             floorScope: '',
@@ -321,7 +321,7 @@
         this.editDialogVisible = false;
         var url = this.HOST + "/updateUnitEngineering?projectId="+this.projectId
         this.$http.put(url, this.unitEngineeringForUpdateForm).then(response => {
-          this.findAllUnitEngineerings();
+          this.findAllUnitEngineering();
           this.$refs.msgDialog.notify("修改成功")
         }).catch(error => {
           this.$refs.msgDialog.confirm("修改失败")
@@ -349,7 +349,7 @@
       delRecord() {
         var url = this.HOST + "/deleteUnitEngineerings?ids=" + this.ids
         this.$http.delete(url).then(response => {
-          this.findAllUnitEngineerings();
+          this.findAllUnitEngineering();
           this.$refs.msgDialog.notify("删除成功")
         }).catch(response => {
           this.$refs.msgDialog.confirm("删除失败")
