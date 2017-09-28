@@ -19,8 +19,8 @@
 			    <el-form-item label="施工单位" prop="construction">
 			    <el-input v-model="projectForm.construction"></el-input>
 			    </el-form-item>
-			    <el-form-item label="项目状态" prop="projectState">
-			    <el-select v-model="projectForm.projectState" placeholder="请选择">
+			    <el-form-item label="项目状态" prop="projectState.id">
+			    <el-select v-model="projectForm.projectState.id" placeholder="请选择">
 	            <el-option
 	              v-for="item in projectStates"
 	              :key="item.id"
@@ -29,8 +29,8 @@
 	            </el-option>    
 	        	</el-select>
 			    </el-form-item>
-			    <el-form-item label="项目类别" prop="projectCategory">
-			    <el-select v-model="projectForm.projectCategory" placeholder="请选择">
+			    <el-form-item label="项目类别" prop="projectCategory.id">
+			    <el-select v-model="projectForm.projectCategory.id" placeholder="请选择">
 	            <el-option
 	              v-for="item in projectCategorys"
 	              :key="item.id"
@@ -340,8 +340,17 @@
 			    <el-form-item label="不纳入地上容积率的建筑面积" prop="constructionArea">
 			    <el-input v-model="projectForm.projectIndustrialization.constructionArea"></el-input>
 			    </el-form-item> 
-			    <el-form-item label="应用建筑产业化技术内容">
+			    <el-form-item>
+				    <el-row>
+				    <el-col :span="6">
+	    				<label>应用建筑产业化技术内容</label>
+				    </el-col>
+				    </el-row>
 			    <el-row :span="24">
+			    	<el-col :span="3">
+    				<label>框架及剪框:</label>
+    				</el-col>
+    				<el-col :span="21">
 			    		<!-- <el-checkbox-group> -->
 							    <el-checkbox label="柱" v-model="projectForm.projectIndustrialization.applicationTechnology.frameworkShear.columnFs"></el-checkbox>
 							    <el-checkbox label="梁" v-model="projectForm.projectIndustrialization.applicationTechnology.frameworkShear.beamFs"></el-checkbox>
@@ -352,11 +361,15 @@
 							    <el-checkbox label="整体厨房" v-model="projectForm.projectIndustrialization.applicationTechnology.frameworkShear.integralKitchenFs"></el-checkbox>
 							    <el-checkbox label="整体卫生间" v-model="projectForm.projectIndustrialization.applicationTechnology.frameworkShear.integralToiletFs"></el-checkbox>
 							    <el-checkbox label="太阳能" v-model="projectForm.projectIndustrialization.applicationTechnology.frameworkShear.solarEnergyFs"></el-checkbox>
-
+						</el-col>
 					  	<!-- </el-checkbox-group> -->
 			  
 			    </el-row>
 			    <el-row :span="24">
+			    		<el-col :span="3">
+    					<label>剪力墙结构:</label>
+    					</el-col>
+    					<el-col :span="21">
 			    		<!-- <el-checkbox-group> -->
 							    <el-checkbox label="楼板" v-model="projectForm.projectIndustrialization.applicationTechnology.shearWall.floorSw"></el-checkbox>
 							    <el-checkbox label="楼梯"v-model="projectForm.projectIndustrialization.applicationTechnology.shearWall.stairsSw"></el-checkbox>
@@ -366,9 +379,14 @@
 							    <el-checkbox label="整体卫生间" v-model="projectForm.projectIndustrialization.applicationTechnology.shearWall.integralToiletSw"></el-checkbox>
 							    <el-checkbox label="太阳能" v-model="projectForm.projectIndustrialization.applicationTechnology.shearWall.solarEnergySw"></el-checkbox>
 					  	<!-- </el-checkbox-group> -->
+					  	</el-col>
 			  
 			    </el-row>
 			    <el-row :span="24">
+			    		<el-col :span="3">
+    					<label>框架核心筒:</label>
+    					</el-col>
+    					<el-col :span="21">
 			    		<!-- <el-checkbox-group> -->
 							    <el-checkbox label="柱" v-model="projectForm.projectIndustrialization.applicationTechnology.frameworkCore.columnFc"></el-checkbox>
 							    <el-checkbox label="梁" v-model="projectForm.projectIndustrialization.applicationTechnology.frameworkCore.beamFc"></el-checkbox>
@@ -380,6 +398,7 @@
 							    <el-checkbox label="整体卫生间" v-model="projectForm.projectIndustrialization.applicationTechnology.frameworkCore.integralToiletFc"></el-checkbox>
 							    <el-checkbox label="太阳能" v-model="projectForm.projectIndustrialization.applicationTechnology.frameworkCore.solarEnergyFc"></el-checkbox>
 					  	<!-- </el-checkbox-group> -->
+					  	</el-col>
 			  
 			    </el-row>
 			    </el-form-item> 		
@@ -724,7 +743,7 @@
     	check(){
             	this.$refs.checkForm.validate((valid)=>{
                 	if(valid){
-                    	this.check2()
+                    	this.check4()
                 	}else{
                     	this.$refs.msgDialog.confirm("填写信息有误，请填写完整后再提交")
                 	}
@@ -750,6 +769,14 @@
             	}
         	})
         
+    	},
+    	check4(){
+    		console.log("llllll"+this.projectForm.projectState.id+"projectForm");
+        	 if(this.projectForm.projectState.id==='' && this.projectForm.projectCategory.id===''){
+                      this.$refs.msgDialog.confirm('填写信息有误，请填写完整后再提交')  
+             }else{
+                  this.check2()      
+             }
     	},
     	findAllProjectStates() {
         		this.$http.get(this.HOST + "/findAllProjectStates").then(response => {

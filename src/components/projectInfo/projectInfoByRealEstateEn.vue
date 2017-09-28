@@ -216,22 +216,22 @@
         }
     	},
     	findCurrentProjectInfo(ref){
-    		this.projectForm = ref
-    		// console.log("测试中1"+this.projectForm)
-    		// console.log("测试中1"+JSON.stringify(this.projectForm))
-    		// this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
-      //     		this.projectForm = response.data
-      //     		 this.checkedStatus = response.data.checkedStatus
-      //     		console.log("啦啦啦啦"+response.data.checkedStatus)
-      //     		// console.log("啦啦啦啦"+response.data.checkedStatus.id)
-      //     		console.log("啦啦啦啦")
-      //     		console.log("测试中2"+this.projectForm)
-      //     		console.log("测试中3"+JSON.stringify(response.data))
-    		// 	console.log("测试中2"+JSON.stringify(this.projectForm))
-      //     		//console.log(this.projectForm)
-      //   		}).catch(error => {
-      //     		this.$refs.msgDialog.confirm("查询失败la")
-      //   		})
+    		//this.projectForm = ref
+    		//console.log("测试中1"+this.projectForm)
+    		//console.log("测试中1"+JSON.stringify(this.projectForm))
+    		this.$http.get(this.HOST + "/findProjectInfoById?id="+ref.id).then(response => {
+          		this.projectForm = response.data
+          		 this.checkedStatus = response.data.checkedStatus
+          		//console.log("啦啦啦啦"+response.data.checkedStatus)
+          		// console.log("啦啦啦啦"+response.data.checkedStatus.id)
+          		console.log("啦啦啦啦")
+          		//console.log("测试中2"+this.projectForm)
+          		//console.log("测试中3"+JSON.stringify(response.data))
+    			console.log("测试中2"+JSON.stringify(this.projectForm))
+          		//console.log(this.projectForm)
+        		}).catch(error => {
+          		this.$refs.msgDialog.confirm("查询失败la")
+        		})
 
     	},
 
