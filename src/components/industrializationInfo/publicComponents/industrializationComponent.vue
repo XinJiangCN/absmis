@@ -286,7 +286,7 @@ import msgDialog from '../../../components/common/msgDialog.vue'
 		},
 		methods:{
 			getAllIndustrializationInfo:function(){
-				var url=this.HOST+'/displayAllConstructionEnIndustrializations?page='+this.pageNum+'&rows='+this.pageSize
+				var url=this.HOST+'/getAllConstructionEnIndustrializations?page='+this.pageNum+'&rows='+this.pageSize
 				this.$http.get(url).then(response=>{
 					this.industrializationInfoData=response.data.rows
 					this.totalIndustrializationInfoData=response.data.total

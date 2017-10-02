@@ -61,13 +61,13 @@
       <div>
         <unitEngineering-info-edit-dialog
           :unitEngineeringDialog="unitEngineeringForUpdateForm"
-        ></unitEngineering-info-edit-dialog>
+        @submitUpdateForm="submitUpdateForm"ref="unitEngineeringUpdate"></unitEngineering-info-edit-dialog>
       </div>
 
       <div slot="footer">
             <el-button @click="editDialogVisible=false">取 消</el-button>
 
-            <el-button type="primary" @click="submitUpdateForm">提 交</el-button>
+            <el-button type="primary" @click="submitUpdate">提 交</el-button>
         </div>
     </el-dialog>
     <!-- Edit Dialog Finished -->
@@ -172,7 +172,7 @@
             conArea: '', 
             applicationStrutureType: {
                id:'',
-            description:''
+               description:''
             }, 
             floorScope: '',
             frameworkShear:{
@@ -299,7 +299,10 @@
             exteriorWallArea: '',
             wallShadowArea: '',
             conArea: '', 
-            applicationStrutureType:'', 
+            applicationStrutureType:{
+              id:'',
+              description:''
+            }, 
             floorScope: '',
             frameworkShear:{
                columnFs:false,
@@ -317,6 +320,9 @@
         }
       },
       //点击确定进行修改保存
+      submitUpdate(){
+           this.$refs.unitEngineeringUpdate.check();
+      },
       submitUpdateForm() {
         this.editDialogVisible = false;
         var url = this.HOST + "/updateUnitEngineering?projectId="+this.projectId
@@ -373,7 +379,10 @@
             exteriorWallArea: '',
             wallShadowArea: '',
             conArea: '', 
-            applicationStrutureType:'', 
+            applicationStrutureType:{
+              id:'',
+              description:''
+            }, 
             floorScope: '',
             frameworkShear: {
                columnFs:false,

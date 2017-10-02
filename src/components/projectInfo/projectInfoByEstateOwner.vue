@@ -151,8 +151,14 @@
 		    builder:'',
 		  	designer:'',
 		   	construction:'',
-		    projectCategory:'',
-		   	projectState:'',
+		    projectCategory:{
+		    	id:'',
+		    	description:''
+		    },
+		   	projectState:{
+		   		id:'',
+		   		description:''
+		   	},
 		   	schedule:{
 		   		projectEndTime:'',
 		   		projectStartTime:'',
