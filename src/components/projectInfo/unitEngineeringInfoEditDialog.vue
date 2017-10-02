@@ -15,16 +15,16 @@
 			    </el-date-picker>
 		</el-form-item>
 	    <el-form-item label="建筑面积"prop="constructionArea">
-	        <el-input v-model="unitEngineeringDialog.constructionArea">
+	        <el-input v-model="unitEngineeringDialog.constructionArea"><template slot="append">万平方米</template>
 	        </el-input>
 	    </el-form-item>
 	    <el-form-item label="地上层数"prop="undergroundNum">
-	        <el-input v-model="unitEngineeringDialog.undergroundNum">
+	        <el-input v-model="unitEngineeringDialog.undergroundNum"><template slot="append">层</template>
 	        </el-input>
 	    </el-form-item>
 	    <el-form-item label="地下层数"prop="overgroundNum">
 	        <el-input v-model="unitEngineeringDialog.overgroundNum">
-	        </el-input>
+	        <template slot="append">层</template></el-input>
 	    </el-form-item>
 	    <el-form-item label="工程类别"prop="engineeringCategory">
 	        <el-input v-model="unitEngineeringDialog.engineeringCategory">
@@ -46,15 +46,15 @@
 	        </el-input>
 	    </el-form-item>
 	    <el-form-item label="外墙预制比例应用产业化技术的建筑面积"prop="exteriorWallArea">
-	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.exteriorWallArea">
+	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.exteriorWallArea"><template slot="append">万平方米</template>
 	        </el-input>
 	    </el-form-item>
 	    <el-form-item label="预制外墙水平投影面积"prop="wallShadowArea">
-	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.wallShadowArea">
+	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.wallShadowArea"><template slot="append">万平方米</template>
 	        </el-input>
 	    </el-form-item>
 	    <el-form-item label="不纳入地上容积率的建筑面积"prop="conArea">
-	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.conArea">
+	        <el-input v-model="unitEngineeringDialog.engineeringIndustrialization.conArea"><template slot="append">万平方米</template>
 	        </el-input>
 	    </el-form-item>
 	    <el-form-item label="应用结构类型"prop="applicationStructureType">
@@ -186,31 +186,38 @@ import msgDialog from '../common/msgDialog'
 						{validator:checkStructureForm,trigger:'change'&'blur'}
 					],
 					constructionArea:[
-						{validator:checkConstructionArea,trigger:'change'&'blur'}
+						{validator:checkConstructionArea,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					undergroundNum:[
-						{validator:checkUndergroundNum,trigger:'change'&'blur'}
+						{validator:checkUndergroundNum,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					overgroundNum:[
-						{validator:checkOvergroundNum,trigger:'change'&'blur'}
+						{validator:checkOvergroundNum,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					engineeringCategory:[
 						{validator:checkEngineeringCategory,trigger:'change'&'blur'}
 					],
 					unitAssemblyRate:[
-						{validator:checkUnitAssemblyRate,trigger:'change'&'blur'}
+						{validator:checkUnitAssemblyRate,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					exteriorWallArea:[
-						{validator:checkExteriorWallArea,trigger:'change'&'blur'}
+						{validator:checkExteriorWallArea,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					wallShadowArea:[
-						{validator:checkWallShadowArea,trigger:'change'&'blur'}
+						{validator:checkWallShadowArea,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					applicationStructureType:[
 						{validator:checkApplicationStructureType,trigger:'change'&'blur'}
 					],
 					conArea:[
-						{validator:checkConArea,trigger:'change'&'blur'}
+						{validator:checkConArea,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					floorScope:[
 						{validator:checkFloorScope,trigger:'change'&'blur'}

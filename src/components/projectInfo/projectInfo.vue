@@ -75,14 +75,14 @@
 			    <el-input v-model="projectForm.licenseNo"></el-input>
 			    </el-form-item>
 			    <el-form-item label="单位工程数量" prop="unitEngineeringNum">
-			    <el-input v-model="projectForm.unitEngineeringNum"></el-input>
+			    <el-input v-model="projectForm.unitEngineeringNum"><template slot="append">个</template></el-input>
 			    </el-form-item>
 			    <el-form-item label="总建筑面积" prop="totalConstructionArea">
-			    <el-input v-model="projectForm.totalConstructionArea"></el-input>
+			    <el-input v-model="projectForm.totalConstructionArea"><template slot="append">万平方米</template></el-input>
 			    </el-form-item>
 			    </el-form-item>
 			    <el-form-item label="地上建筑面积" prop="overgroundConstructionArea">
-			    <el-input v-model="projectForm.overgroundConstructionArea"></el-input>
+			    <el-input v-model="projectForm.overgroundConstructionArea"><template slot="append">万平方米</template></el-input>
 			    </el-form-item>
     		</el-col>
     	</el-row>
@@ -323,22 +323,22 @@
     	</el-row>
     	<el-row>
     			<el-form-item label="应用产业化技术的建筑面积" prop="industrializedTechnologyArea">
-			    <el-input v-model="projectForm.projectIndustrialization.industrializedTechnologyArea"></el-input>
+			    <el-input v-model="projectForm.projectIndustrialization.industrializedTechnologyArea"><template slot="append">万平方米</template></el-input>
 			    </el-form-item>
 			    <el-form-item label="落实产业化技术的面积比例" prop="industrializedTechnologyAreaRatio">
-			    <el-input v-model="projectForm.projectIndustrialization.industrializedTechnologyAreaRatio"></el-input>
+			    <el-input v-model="projectForm.projectIndustrialization.industrializedTechnologyAreaRatio"><template slot="append">%</template></el-input>
 			    </el-form-item>
 			    <el-form-item label="建筑单体装配率（≥45%）"prop="unitAssemblyRate">
-			    <el-input v-model="projectForm.projectIndustrialization.unitAssemblyRate"></el-input>
+			    <el-input v-model="projectForm.projectIndustrialization.unitAssemblyRate"><template slot="append">%</template></el-input>
 			    </el-form-item>
 			    <el-form-item label="建筑外墙采用预制墙体的比例（≥60%）"prop="wall">
-			    <el-input v-model="projectForm.projectIndustrialization.wall"></el-input>
+			    <el-input v-model="projectForm.projectIndustrialization.wall"><template slot="append">%</template></el-input>
 			    </el-form-item>
 			    <el-form-item label="各单体预制外墙水平投影总面积" prop="wallShadowArea">
-			    <el-input v-model="projectForm.projectIndustrialization.wallShadowArea"></el-input>
+			    <el-input v-model="projectForm.projectIndustrialization.wallShadowArea"><template slot="append">万平方米</template></el-input>
 			    </el-form-item> 
 			    <el-form-item label="不纳入地上容积率的建筑面积" prop="constructionArea">
-			    <el-input v-model="projectForm.projectIndustrialization.constructionArea"></el-input>
+			    <el-input v-model="projectForm.projectIndustrialization.constructionArea"><template slot="append">万平方米</template></el-input>
 			    </el-form-item> 
 			    <el-form-item>
 				    <el-row>
@@ -492,13 +492,13 @@
 	  }
 	  var checkLandUseRightStart=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入取得土地使用权"))
+					callback(new Error("请输入取得土地使用权开始时间"))
 				else
 					callback();
 	  }
 	  var checkLandUseRightEnd=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入取得土地使用权"))
+					callback(new Error("请输入取得土地使用权结束时间"))
 				else
 					callback();
 	  }
@@ -516,73 +516,73 @@
 	  }
 	  var checkConstructionLicenseStart=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入建设用地规划许可证"))
+					callback(new Error("请输入建设用地规划许可证开始时间"))
 				else
 					callback();
 	  }
 	  var checkConstructionLicenseEnd=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入建设用地规划许可证"))
+					callback(new Error("请输入建设用地规划许可证结束时间"))
 				else
 					callback();
 	  }
 	  var checkEngineeringLicenseStart=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入建设工程规划许可证"))
+					callback(new Error("请输入建设工程规划许可证开始时间"))
 				else
 					callback();
 	  }
 	  var checkEngineeringLicenseEnd=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入建设工程规划许可证"))
+					callback(new Error("请输入建设工程规划许可证结束时间"))
 				else
 					callback();
 	  }
 	  var checkTenderStart=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入施工图设计及审查"))
+					callback(new Error("请输入施工图设计及审查开始时间"))
 				else
 					callback();
 	  }
 	  var checkTenderEnd=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入施工图设计及审查"))
+					callback(new Error("请输入施工图设计及审查结束时间"))
 				else
 					callback();
 	  }
 	  var checkComprehensiveInspectionAndAcceptanceStart=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入组织工程招标及工程施工"))
+					callback(new Error("请输入组织工程招标及工程施工开始时间"))
 				else
 					callback();
 	  }
 	  var checkComprehensiveInspectionAndAcceptanceEnd=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入组织工程招标及工程施工"))
+					callback(new Error("请输入组织工程招标及工程施工结束时间"))
 				else
 					callback();
 	  }
 	  var checkDeliveryStart=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入项目综合验收"))
+					callback(new Error("请输入项目综合验收开始时间"))
 				else
 					callback();
 	  }
 	  var checkDeliveryEnd=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入项目综合验收"))
+					callback(new Error("请输入项目综合验收结束时间"))
 				else
 					callback();
 	  }
 	  var checkConstructionDrawingStart=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入项目交付使用"))
+					callback(new Error("请输入项目交付使用开始时间"))
 				else
 					callback();
 	  }
 	  var checkConstructionDrawingEnd=(rule,value,callback)=>{
 				if(!value)
-					callback(new Error("请输入项目交付使用"))
+					callback(new Error("请输入项目交付使用结束时间"))
 				else
 					callback();
 	  }
@@ -662,13 +662,16 @@
 						{validator:checkLicenseNo,trigger:'change'&'blur'}
 					],
 					unitEngineeringNum:[
-						{validator:checkUnitEngineeringNum,trigger:'change'&'blur'}
+						{validator:checkUnitEngineeringNum,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					totalConstructionArea:[
-						{validator:checkConstruction,trigger:'change'&'blur'}
+						{validator:checkConstruction,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					overgroundConstructionArea:[
-						{validator:checkOvergroundConstructionArea,trigger:'change'&'blur'}
+						{validator:checkOvergroundConstructionArea,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					projectStartTime:[
 						{validator:checkProjectStartTime,trigger:'change'&'blur'}
@@ -719,22 +722,28 @@
 						{validator:checkConstructionDrawingEnd,trigger:'change'&'blur'}
 					],
 					industrializedTechnologyArea:[
-						{validator:checkIndustrializedTechnologyArea,trigger:'change'&'blur'}
+						{validator:checkIndustrializedTechnologyArea,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					industrializedTechnologyAreaRatio:[
-						{validator:checkIndustrializedTechnologyAreaRatio,trigger:'change'&'blur'}
+						{validator:checkIndustrializedTechnologyAreaRatio,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					unitAssemblyRate:[
-						{validator:checkUnitAssemblyRate,trigger:'change'&'blur'}
+						{validator:checkUnitAssemblyRate,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					wall:[
-						{validator:checkWall,trigger:'change'&'blur'}
+						{validator:checkWall,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					wallShadowArea:[
-						{validator:checkWallShadowArea,trigger:'change'&'blur'}
+						{validator:checkWallShadowArea,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					constructionArea:[
-						{validator:checkConstructionArea,trigger:'change'&'blur'}
+						{validator:checkConstructionArea,trigger:'change'&'blur'},
+						{type:'number',message:'只能填写数字',trigger:'change'}
 					]
 			}
       };
