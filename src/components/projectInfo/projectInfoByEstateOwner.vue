@@ -18,6 +18,7 @@
 </div>
 </template>
 <script>
+import moment from 'moment'
   import msgDialog from '../common/msgDialog'
   import projectInfo from './projectInfo'
   export default{
@@ -222,10 +223,16 @@
         }
     	},
     	findCurrentProjectInfo(ref){
-    		this.projectForm = ref
-    		console.log("测试中1"+this.projectForm)
-    		console.log("测试中1"+JSON.stringify(this.projectForm))
-    		// this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
+    		this.$http.get(this.HOST + "/findProjectInfoById?id="+ref.id).then(response => {
+          		this.projectForm = response.data
+          		 this.checkedStatus = response.data.checkedStatus
+        		}).catch(error => {
+          		this.$refs.msgDialog.confirm("查询失败la")
+        		})
+    		// this.projectForm = ref
+    		// console.log("测试中1"+this.projectForm)
+    		// console.log("测试中1"+JSON.stringify(this.projectForm))
+    		// // this.$http.get(this.HOST + "/findProjectInfoById?id="+this.projectId).then(response => {
       //     		this.projectForm = response.data
       //     		 this.checkedStatus = response.data.checkedStatus
       //     		console.log("啦啦啦啦"+response.data.checkedStatus)
@@ -271,7 +278,29 @@
     			}
     		}
     	},
+    	smallFormat(data){
+            return moment(data).format("YYYY-MM-DD")
+        },
     	submitForm(){
+    		this.projectForm.startingTime = this.smallFormat(this.projectForm.startingTime)
+    		this.projectForm.fillTime = this.smallFormat(this.projectForm.fillTime)
+    		this.projectForm.schedule.projectStartTime =  this.smallFormat(this.projectForm.schedule.projectStartTime)
+    		this.projectForm.schedule.projectEndTime =  this.smallFormat(this.projectForm.schedule.projectEndTime)
+    		this.projectForm.schedule.landUseRightStart =  this.smallFormat(this.projectForm.schedule.landUseRightStart)
+    		this.projectForm.schedule.landUseRightEnd =  this.smallFormat(this.projectForm.schedule.landUseRightEnd)
+    		this.projectForm.schedule.constructionLicenseStart =  this.smallFormat(this.projectForm.schedule.constructionLicenseStart)
+    		this.projectForm.schedule.constructionLicenseEnd =  this.smallFormat(this.projectForm.schedule.constructionLicenseEnd)
+    		this.projectForm.schedule.engineeringLicenseStart =  this.smallFormat(this.projectForm.schedule.engineeringLicenseStart)
+    		this.projectForm.schedule.engineeringLicenseEnd =  this.smallFormat(this.projectForm.schedule.engineeringLicenseEnd)
+    		this.projectForm.schedule.tenderStart =  this.smallFormat(this.projectForm.schedule.tenderStart)
+    		this.projectForm.schedule.tenderEnd =  this.smallFormat(this.projectForm.schedule.tenderEnd)
+    		this.projectForm.schedule.comprehensiveInspectionAndAcceptanceStart =  this.smallFormat(this.projectForm.schedule.comprehensiveInspectionAndAcceptanceStart)
+    		this.projectForm.schedule.comprehensiveInspectionAndAcceptanceEnd =  this.smallFormat(this.projectForm.schedule.comprehensiveInspectionAndAcceptanceEnd)
+    		this.projectForm.schedule.deliveryStart =  this.smallFormat(this.projectForm.schedule.deliveryStart)
+    		this.projectForm.schedule.deliveryEnd =  this.smallFormat(this.projectForm.schedule.deliveryEnd)
+    		this.projectForm.schedule.constructionDrawingStart =  this.smallFormat(this.projectForm.schedule.constructionDrawingStart)
+    		this.projectForm.schedule.constructionDrawingEnd =  this.smallFormat(this.projectForm.schedule.constructionDrawingEnd)
+    		
 			var url = this.HOST + "/addProjectByEstateOwner"
         	this.$http.post(url, this.projectForm).then(response => {
         		console.log("成功了")

@@ -102,6 +102,7 @@
 <script>
  import unitEngineeringInfoEditDialog from './unitEngineeringInfoEditDialog'
   import unitEngineeringInfoAddDialog from './unitEngineeringInfoAddDialog'
+  import moment from 'moment'
  import msgDialog from '../common/msgDialog'
  import unitEngineeringInformationTable from './unitEngineeringInformationTable'
   export default{
@@ -156,6 +157,7 @@
         unitEngineeringForUpdateForm: {
           id:'',
           name: '', 
+          startingTime:'',
           constructionArea: '',
           undergroundNum: '', 
           overgroundNum: '', 
@@ -276,8 +278,12 @@
       submit(){
            this.$refs.unitEngineeringAdd.check();
       },
+      smallFormat(data){
+            return moment(data).format("YYYY-MM-DD")
+      },
       submitAddForm() {
         this.addDialogVisible = false;
+        this.unitEngineeringForAddForm.startingTime =  this.smallFormat(this.unitEngineeringForAddForm.startingTime)
         var url = this.HOST + "/addUnitEngineering?projectId="+this.projectId
         this.$http.post(url, this.unitEngineeringForAddForm).then(response => {
           this.findAllUnitEngineering();
@@ -324,6 +330,7 @@
            this.$refs.unitEngineeringUpdate.check();
       },
       submitUpdateForm() {
+        this.unitEngineeringForUpdateForm.startingTime =  this.smallFormat(this.unitEngineeringForUpdateForm.startingTime)
         this.editDialogVisible = false;
         var url = this.HOST + "/updateUnitEngineering?projectId="+this.projectId
         this.$http.put(url, this.unitEngineeringForUpdateForm).then(response => {

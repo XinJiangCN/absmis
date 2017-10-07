@@ -55,8 +55,8 @@
 			      v-model="projectForm.startingTime"
 			      align="right"
 			      type="date"
-			      placeholder="选择日期"
-			      :picker-options="pickerOptions1">
+			      format="yyyy-MM-dd"
+			      placeholder="选择日期">
 			    </el-date-picker>
 			    </el-form-item>
 			    <el-form-item label="项目填报时间" prop="fillTime">
@@ -75,14 +75,14 @@
 			    <el-input v-model="projectForm.licenseNo"></el-input>
 			    </el-form-item>
 			    <el-form-item label="单位工程数量" prop="unitEngineeringNum">
-			    <el-input v-model="projectForm.unitEngineeringNum"><template slot="append">个</template></el-input>
+			    <el-input v-model.number="projectForm.unitEngineeringNum"><template slot="append">个</template></el-input>
 			    </el-form-item>
 			    <el-form-item label="总建筑面积" prop="totalConstructionArea">
-			    <el-input v-model="projectForm.totalConstructionArea"><template slot="append">万平方米</template></el-input>
+			    <el-input v-model.number="projectForm.totalConstructionArea"><template slot="append">万平方米</template></el-input>
 			    </el-form-item>
 			    </el-form-item>
 			    <el-form-item label="地上建筑面积" prop="overgroundConstructionArea">
-			    <el-input v-model="projectForm.overgroundConstructionArea"><template slot="append">万平方米</template></el-input>
+			    <el-input v-model.number="projectForm.overgroundConstructionArea"><template slot="append">万平方米</template></el-input>
 			    </el-form-item>
     		</el-col>
     	</el-row>
@@ -662,16 +662,16 @@
 						{validator:checkLicenseNo,trigger:'change'&'blur'}
 					],
 					unitEngineeringNum:[
-						{validator:checkUnitEngineeringNum,trigger:'change'&'blur'},
-						{type:'number',message:'只能填写数字',trigger:'change'}
+						{validator:checkUnitEngineeringNum,trigger:'change'&'blur'}
+						// {type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					totalConstructionArea:[
-						{validator:checkConstruction,trigger:'change'&'blur'},
-						{type:'number',message:'只能填写数字',trigger:'change'}
+						{validator:checkConstruction,trigger:'change'&'blur'}
+						// {type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					overgroundConstructionArea:[
-						{validator:checkOvergroundConstructionArea,trigger:'change'&'blur'},
-						{type:'number',message:'只能填写数字',trigger:'change'}
+						{validator:checkOvergroundConstructionArea,trigger:'change'&'blur'}
+						// {type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					projectStartTime:[
 						{validator:checkProjectStartTime,trigger:'change'&'blur'}
@@ -723,27 +723,27 @@
 					],
 					industrializedTechnologyArea:[
 						{validator:checkIndustrializedTechnologyArea,trigger:'change'&'blur'},
-						{type:'number',message:'只能填写数字',trigger:'change'}
+						// {type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					industrializedTechnologyAreaRatio:[
 						{validator:checkIndustrializedTechnologyAreaRatio,trigger:'change'&'blur'},
-						{type:'number',message:'只能填写数字',trigger:'change'}
+						// {type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					unitAssemblyRate:[
 						{validator:checkUnitAssemblyRate,trigger:'change'&'blur'},
-						{type:'number',message:'只能填写数字',trigger:'change'}
+						// {type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					wall:[
 						{validator:checkWall,trigger:'change'&'blur'},
-						{type:'number',message:'只能填写数字',trigger:'change'}
+						// {type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					wallShadowArea:[
 						{validator:checkWallShadowArea,trigger:'change'&'blur'},
-						{type:'number',message:'只能填写数字',trigger:'change'}
+						// {type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					constructionArea:[
 						{validator:checkConstructionArea,trigger:'change'&'blur'},
-						{type:'number',message:'只能填写数字',trigger:'change'}
+						// {type:'number',message:'只能填写数字',trigger:'change'}
 					]
 			}
       };
