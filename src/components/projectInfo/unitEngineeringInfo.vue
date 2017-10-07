@@ -61,13 +61,13 @@
       <div>
         <unitEngineering-info-edit-dialog
           :unitEngineeringDialog="unitEngineeringForUpdateForm"
-        ></unitEngineering-info-edit-dialog>
+        @submitUpdateForm="submitUpdateForm"ref="unitEngineeringUpdate"></unitEngineering-info-edit-dialog>
       </div>
 
       <div slot="footer">
             <el-button @click="editDialogVisible=false">取 消</el-button>
 
-            <el-button type="primary" @click="submitUpdateForm">提 交</el-button>
+            <el-button type="primary" @click="submitUpdate">提 交</el-button>
         </div>
     </el-dialog>
     <!-- Edit Dialog Finished -->
@@ -102,6 +102,7 @@
 <script>
  import unitEngineeringInfoEditDialog from './unitEngineeringInfoEditDialog'
   import unitEngineeringInfoAddDialog from './unitEngineeringInfoAddDialog'
+  import moment from 'moment'
  import msgDialog from '../common/msgDialog'
  import unitEngineeringInformationTable from './unitEngineeringInformationTable'
   export default{
@@ -156,6 +157,7 @@
         unitEngineeringForUpdateForm: {
           id:'',
           name: '', 
+          startingTime:'',
           constructionArea: '',
           undergroundNum: '', 
           overgroundNum: '', 
@@ -172,7 +174,7 @@
             conArea: '', 
             applicationStrutureType: {
                id:'',
-            description:''
+               description:''
             }, 
             floorScope: '',
             frameworkShear:{
@@ -276,8 +278,12 @@
       submit(){
            this.$refs.unitEngineeringAdd.check();
       },
+      smallFormat(data){
+            return moment(data).format("YYYY-MM-DD")
+      },
       submitAddForm() {
         this.addDialogVisible = false;
+        this.unitEngineeringForAddForm.startingTime =  this.smallFormat(this.unitEngineeringForAddForm.startingTime)
         var url = this.HOST + "/addUnitEngineering?projectId="+this.projectId
         this.$http.post(url, this.unitEngineeringForAddForm).then(response => {
           this.findAllUnitEngineering();
@@ -299,7 +305,10 @@
             exteriorWallArea: '',
             wallShadowArea: '',
             conArea: '', 
-            applicationStrutureType:'', 
+            applicationStrutureType:{
+              id:'',
+              description:''
+            }, 
             floorScope: '',
             frameworkShear:{
                columnFs:false,
@@ -317,7 +326,11 @@
         }
       },
       //点击确定进行修改保存
+      submitUpdate(){
+           this.$refs.unitEngineeringUpdate.check();
+      },
       submitUpdateForm() {
+        this.unitEngineeringForUpdateForm.startingTime =  this.smallFormat(this.unitEngineeringForUpdateForm.startingTime)
         this.editDialogVisible = false;
         var url = this.HOST + "/updateUnitEngineering?projectId="+this.projectId
         this.$http.put(url, this.unitEngineeringForUpdateForm).then(response => {
@@ -373,7 +386,10 @@
             exteriorWallArea: '',
             wallShadowArea: '',
             conArea: '', 
-            applicationStrutureType:'', 
+            applicationStrutureType:{
+              id:'',
+              description:''
+            }, 
             floorScope: '',
             frameworkShear: {
                columnFs:false,

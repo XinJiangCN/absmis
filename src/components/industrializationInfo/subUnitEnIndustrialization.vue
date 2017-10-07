@@ -12,7 +12,7 @@
         </el-col>
     </el-row>
     <el-row>
-        <el-col :span="5">
+        <el-col :span="6">
             <el-table
             :data="subUnitEnIndustrializationTable"
             stripe
@@ -28,8 +28,17 @@
                 <el-table-column label="填报时间" prop="declareTime"> 
                 </el-table-column>
             </el-table>
+            <el-pagination
+            @current-change="handlePageNumChange"
+            @size-change="handlePageSizeChange"
+            :current-page="pageNum"
+            :page-size="pageSize"
+            :page-sizes="[5,10,15,20]"
+            layout="total, sizes, prev, pager, next"
+            :total="total">
+            </el-pagination>
         </el-col>
-        <el-col :span="19">
+        <el-col :span="18">
             <el-form :model="subUnitEnIndustrializationForm" label-width="100px" :rules="rules" ref="subUnitEnIndustrializationForm">
                 <el-row :gutter="0">
                     <el-col :span="2" :push="2">年份</el-col>
@@ -247,6 +256,9 @@ export default{
       }
       };
         return{
+            pageNum:1,
+            pageSize:10,
+            total:'',
             //表单验证
             rules:{
                 year: [{ validator: validateNumber, trigger: 'blur&change' }],
@@ -331,10 +343,19 @@ export default{
             this.selectedRows = selected
             this.subUnitEnIndustrializationForm = this.selectedRows
         },
+        handlePageNumChange:function(val){
+                this.pageNum=val
+                this.getSubUnitEnIndustrializationTable()
+            },
+            handlePageSizeChange:function(val){
+                this.pageSize=val
+                this.getSubUnitEnIndustrializationTable()
+            },
         getSubUnitEnIndustrializationTable(){
-            var url = this.HOST+'/findAllSubUnitEnIndustrializations'
+            var url = this.HOST+'/getAllSubUnitEnIndustrializations?page='+this.pageNum+'&rows='+this.pageSize
             this.$http.get(url).then(response=>{
-                this.subUnitEnIndustrializationTable = response.data
+                this.total=response.data.total
+                this.subUnitEnIndustrializationTable = response.data.rows
             }).catch(error=>{
                 this.$refs.msgDialog.confirm("获取表格数据失败")
             })

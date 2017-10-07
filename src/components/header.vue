@@ -6,9 +6,9 @@
     <div style="width:20%;float:left;padding-top:15px">
     	<p>{{ "当前用户：" + currentUser}}</p>
     </div>
-    <div style="float:margin-right;padding-top:22px">
+    <!-- <div style="float:margin-right;padding-top:22px">
       <el-button type="primary" @click="logout">退出</el-button>
-    </div>
+    </div> -->
 </div>
 </template>
 
@@ -33,7 +33,7 @@ export default{
       logout() {
         //初始显示表格用的查询数据
         //当前多少页 一页多少条
-        window.location.href="http://localhost:8080/absmis/login"
+        //window.location.href="http://localhost:8080/absmis/login"
       }
 
     },

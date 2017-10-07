@@ -520,7 +520,7 @@ import msgDialog from '../common/msgDialog.vue'
 		},
 		methods:{
 			getAllComponentEnIndustralization:function(){
-				var url=this.HOST+'/displayAllComponentEnIndustrializations?page='+this.pageNum+'&rows='+this.pageSize
+				var url=this.HOST+'/getAllComponentEnIndustrializations?page='+this.pageNum+'&rows='+this.pageSize
 				this.$http.get(url).then(response=>{
 					this.componentIndustrializationInfoData=response.data.rows
 					this.totalComponentIndustrializationData=response.data.total

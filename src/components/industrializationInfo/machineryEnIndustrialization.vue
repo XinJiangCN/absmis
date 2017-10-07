@@ -309,7 +309,7 @@ export default{
         },
         //获取表格数据
         getMachineryEnIndustrializationTable(){
-            var url = this.HOST+'/displayAllMachineryEnIndustrializations?page='+this.currentPage+"&rows="+this.currentPageSize
+            var url = this.HOST+'/getAllMachineryEnIndustrializations?page='+this.currentPage+"&rows="+this.currentPageSize
             this.$http.get(url).then(response=>{
                 this.machineryEnIndustrializationTable = response.data.rows
                 this.totalNumber = response.data.total
