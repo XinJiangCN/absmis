@@ -106,12 +106,12 @@ export default new Router({
     },
     {
         path: '/traditionalInfoCheck',
-        name: '传统企业-基本信息审核',
+        name: '建设类企业基本信息审核',
         component: traditionalInfoCheck
     },
     {
         path: '/nonTraditionalInfoCheck',
-        name: '非传统企业-基本信息审核',
+        name: '非建设类企业基本信息审核',
         component: nonTraditionalInfoCheck
     },
     {
@@ -121,47 +121,47 @@ export default new Router({
     },
     {
         path: '/designerIn',
-        name: '设计单位-产业化信息',
+        name: '设计单位-建筑产业化信息',
         component: designerIndustrialization
     },
     {
         path: '/builderIn',
-        name: '施工单位-产业化信息',
+        name: '施工单位-建筑产业化信息',
         component: builderIndustrialization
     },
     {
         path: '/componentEnIn',
-        name: '构件企业-产业化信息',
+        name: '构件企业-建筑产业化信息',
         component: componentEnIndustrialization
     },
     {
         path:'/machineryEnIn',
-        name:'设备企业-产业化信息',
+        name:'设备企业-建筑产业化信息',
         component:machineryEnIndustrialization
     },
     {
         path: '/subUnitEnIn',
-        name: '部品企业-产业化信息',
+        name: '部品企业-建筑产业化信息',
         component: subUnitEnIndustrialization
     },
     {
         path: '/traditionalInCheck',
-        name: '传统企业-产业化审核',
+        name: '建设类企业产业化信息审核',
         component: traditionalInCheck
     },
     {
         path: '/componentEnInCheck',
-        name: '构件企业-产业化审核',
+        name: '构件企业产业化信息审核',
         component: componentEnInCheck
     },
     {
         path: '/subUnitEnInCheck',
-        name: '部品企业-产业化审核',
+        name: '部品企业产业化信息审核',
         component: auditSubUnitEnIndustrialization
     },
     {
         path: '/machineryEnInCheck',
-        name: '设备企业-产业化审核',
+        name: '设备企业产业化信息审核',
         component: auditMachineryEnIndustrialization
     },
     {

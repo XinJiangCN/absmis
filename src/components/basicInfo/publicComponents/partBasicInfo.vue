@@ -5,13 +5,6 @@
             <el-form-item label="统一社会信用代码" prop="creditCode">
                 <el-input v-model="basicInfoData.creditCode"></el-input>
             </el-form-item>
-
-            <el-form-item label="组织机构代码" prop="organizationCode"> 
-                <el-input v-model="basicInfoData.organizationCode"></el-input>
-            </el-form-item>
-        </el-row>
-
-        <el-row type="flex">
             <el-form-item label="企业名称" prop="name">
                 <el-input v-model="basicInfoData.name"></el-input>
             </el-form-item>
@@ -42,12 +35,6 @@ export default {
             }else
             callback();
         }
-        var checkOrganizationCode=(rule,value,callback)=>{
-            if(!value){
-                callback(new Error("必填项"))
-            }else
-            callback()
-        }
         var checkName=(rule,value,callback)=>{
             if(!value){
                 callback(new Error("必填项"))
@@ -70,9 +57,6 @@ export default {
             rules:{
                 creditCode:[
                     {validator:checkCreditCode,tigger:'blur'}
-                ],
-                organizationCode:[
-                    {validator:checkOrganizationCode,tigger:'blur'}
                 ],
                 name:[
                     {validator:checkName,tigger:'blur'}
