@@ -3,7 +3,7 @@
 	<div id="header">
 		<h4>
 			<label>业务管理员</label>
-			<label>构件生产企业建筑产业化信息</label>
+			<label>构件生产企业建筑产业化信息审核</label>
 		</h4>	
 	</div>
 	<el-row>

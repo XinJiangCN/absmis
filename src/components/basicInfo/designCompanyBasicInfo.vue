@@ -5,12 +5,6 @@
         <part-basic-info :basicInfoData="designInformation" ref="partBasicInfo"
             @checkOthers="checkOthers('designInformation')"
         ></part-basic-info>
-        <el-row>
-            <el-col :span="6">
-                <label>企业类型: 设计单位</label>
-            </el-col>
-        </el-row>
-
         <el-row></el-row>
 
         <el-row>

@@ -1,8 +1,7 @@
 <template>
 	<div>
 		<h4>
-			<label>施工单位</label><br>
-			<label>企业建筑产业化信息</label> 
+			<label>施工单位建筑产业化信息</label> 
 		</h4>
 		<industrialization-component></industrialization-component>
 	</div>

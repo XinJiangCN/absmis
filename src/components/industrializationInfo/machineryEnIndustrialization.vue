@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div id='header'>
+            <h4>        
+                <label>设备企业建筑产业化信息</label>
+            </h4>
+        </div>
         <el-row>
             <el-col :span="10">
                 <span>填报起止时间</span>

@@ -2,7 +2,7 @@
 	<div>
 		<el-row>
 			<el-col :span="5">
-				<h4>资质企业基本信息审核</h4>
+				<h4>建设类企业基本信息审核</h4>
 			</el-col>
 		</el-row>
 		<el-tabs v-model="activeName2" type="card">

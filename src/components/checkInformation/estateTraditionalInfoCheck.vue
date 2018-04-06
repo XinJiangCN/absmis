@@ -17,7 +17,11 @@
 		    tooltip-effect="dark"
 		    style="width:100%"
 		    highlight-current-row
-		    @row-click="handleSelectionChange">
+		    @selection-change="handleSelectionChange">
+		    <el-table-column
+		      type="selection"
+		      width="55">
+		    </el-table-column>
 		    <el-table-column
 		      label="企业名称"
 		      prop="name"
@@ -208,10 +212,23 @@ import msgDialog from '../common/msgDialog'
 			},
 			//当某一行被点击时执行
 			handleSelectionChange(currentRow){
-				//获取当前行的id，提交时执行
-				this.currentRowId=currentRow.id
-				//获取当前行的审核状态的Id，用于弹出框的初始显示和提交
-				this.checkedStatusId=currentRow.checkedStatus.id
+				if (currentRow[1]) {
+					this.$refs.traditionalCheckMsg.confirm("只能选择一行进行审核！")
+					this.currentRowId=''
+					this.checkedStatusId=''
+				}else{
+					//判断该行是进行的选中操作还是取消操作
+					if (currentRow[0]) {
+						//获取当前行的id，提交时执行
+						this.currentRowId=currentRow[0].id
+						//获取当前行的审核状态id，用于对话框初始显示和提交
+						this.checkedStatusId=currentRow[0].checkedStatus.id
+					}else{
+						//取消选中行，清空当前数据
+						this.currentRowId=''
+						this.checkedStatusId=''
+					}
+				}		
 			},
 			//查询获取查询内容
 			searchEstateTraditionalData(){

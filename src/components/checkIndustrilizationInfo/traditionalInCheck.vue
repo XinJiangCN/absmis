@@ -2,8 +2,8 @@
 	<div>
 		<div id="header">
 		<h4>
-			<label>业务管理员</label><br>			
-			<label>企业建筑产业化信息</label>
+			<label>业务管理员</label>	
+			<label>建设类企业产业化信息审核</label>
 		</h4>			
 		</div>
 		<el-row>
@@ -28,15 +28,19 @@
 				    </el-date-picker>	
 					</el-col>
 					<el-button type="primary" @click="searchTraditionalInfo">查询</el-button>
-					<el-button @click="passCheck(selectedId)">通过</el-button>
-				    <el-button @click="failCheck(selectedId)">驳回</el-button>
+					<el-button @click="passCheck">通过</el-button>
+				    <el-button @click="failCheck">驳回</el-button>
 				</el-row>
 				<el-row>
 					<el-table
 					:data="traditionalInfoData"
 					highlight-current-row
 					border
-					@row-click="handleRowChange">
+					@selection-change="handleRowChange">
+					<el-table-column
+					type="selection"
+					width="55"
+					></el-table-column>
 					<el-table-column
 					label="企业名称"
 					prop="constructionEn.name">				
@@ -107,10 +111,21 @@ import msgDialog from '../common/msgDialog.vue'
 					this.$refs.msgDialog.notify("获取数据失败")
 				})
 			},
-			handleRowChange:function(val){	
-				this.selectedId=val.id
-				this.selectedRow=val
-				this.selectedConstructionId=val.constructionEn.id		
+			handleRowChange:function(val){
+				alert("@@@@@@@"+JSON.stringify(val))
+				if(val[1]){
+					this.$refs.msgDialog.confirm("只能选择一行进行审核！")
+				}else{
+					if(val[0]){	
+						this.selectedId=val[0].id
+						this.selectedRow=val[0]
+						this.selectedConstructionId=val[0].constructionEn.id
+					}else{
+						this.selectedId=''
+						this.selectedRow=''
+						this.selectedConstructionId=''
+					}
+				}		
 			},
 			handlePageNumChange:function(val){
 				this.pageNum=val
@@ -135,8 +150,8 @@ import msgDialog from '../common/msgDialog.vue'
 					})
 				}
 			},
-			passCheck:function(val){
-				if (val) {
+			passCheck:function(){
+				if (this.selectedId) {
 					var url1 = this.HOST+'/checkConstructionEnIndustrialization?id='+this.selectedId+'&checkedStatusId='+1+'&constructionEnId='+this.selectedConstructionId			
 					this.$http.post(url1).then(response=>{
 						this.$refs.msgDialog.notify("通过审核！")
@@ -149,8 +164,8 @@ import msgDialog from '../common/msgDialog.vue'
 				}
 				
 			},
-			failCheck:function(val){
-				if (val) {
+			failCheck:function(){
+				if (this.selectedId) {
 					var url = this.HOST+'/checkConstructionEnIndustrialization?id='+this.selectedId+'&checkedStatusId='+2+'&constructionEnId='+this.selectedConstructionId	
 					this.$http.post(url).then(response=>{
 						this.$refs.msgDialog.notify("成功驳回！")

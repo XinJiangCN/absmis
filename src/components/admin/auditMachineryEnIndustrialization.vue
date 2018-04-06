@@ -15,13 +15,12 @@
                 <el-col :span="2">
                     <el-button @click="handleSearch">查询</el-button>
                 </el-col>
+                <el-col :span="10" :pull="2">
+                    <el-button @click="rebutAudit">驳回</el-button>
+                    <el-button type="primary" @click="passAudit">通过</el-button>
+                </el-col>
         </el-row>
-        <el-row>
-            <el-col :span="20" :push="6">
-                <el-button @click="rebutAudit">驳回</el-button>
-                <el-button type="primary" @click="passAudit">通过</el-button>
-            </el-col>
-        </el-row>
+        
         <el-row>
             <el-col>
                 <el-table

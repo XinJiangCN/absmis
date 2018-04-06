@@ -1,8 +1,13 @@
 <template>
     <div>
-    <el-row>
+        <div id='header'>
+            <h4>        
+                <label>部品企业建筑产业化信息</label>
+            </h4>
+        </div>
+        <el-row>
         <el-col :span="2">
-            <el-button @click="setCurrent()">增加</el-button>
+            <el-button @click="setCurrent">增加</el-button>
         </el-col>
         <el-col :span="2" >
             <el-button @click="deleteRowData">删除</el-button>
@@ -32,23 +37,23 @@
         <el-col :span="19">
             <el-form :model="subUnitEnIndustrializationForm" label-width="100px" :rules="rules" ref="subUnitEnIndustrializationForm">
                 <el-row :gutter="0">
-                    <el-col :span="2" :push="2">年份</el-col>
-                    <el-col :span="5" :pull="1">
+                    <el-col :span="2">年份</el-col>
+                    <el-col :span="6" :pull="3">
                         <el-form-item prop="year">
-                            <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.year" min="2000">
+                            <el-input  type="number" v-model.number="subUnitEnIndustrializationForm.year" min="2000">
                             </el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="2" :pull="1">季度</el-col>
-                    <el-col :span="5" :pull="4" >
+                    <el-col :span="2" :pull="2">季度</el-col>
+                    <el-col :span="5" :pull="5" >
                         <el-form-item prop="quarter">
                              <el-input  type="number" auto-complete="off" v-model.number="subUnitEnIndustrializationForm.quarter" min="1" max="4">
                             </el-input>
                         </el-form-item>
                     </el-col>
                    
-                    <el-col :span="2" :pull="3">填报时间</el-col>
-                    <el-col :span="8" :pull="5" >
+                    <el-col :span="3" :pull="3">填报时间</el-col>
+                    <el-col :span="6" :pull="5" >
                         <el-form-item prop="declareTime">
                             <el-date-picker
                               v-model="subUnitEnIndustrializationForm.declareTime"
@@ -322,7 +327,7 @@ export default{
             this.subUnitEnIndustrializationForm.quarter=Math.floor( ( currMonth % 3 == 0 ? ( currMonth / 3 ) : ( currMonth / 3 + 1 ) ) )
         },
         //点击增加触发的事件
-        setCurrent(row) {
+        setCurrent() {
             this.subUnitEnIndustrializationForm={integralWallNum:'',integrativeExternalWallNum:'',prebuiltStairsNum:'',integralKitchenNum:'',integralToiletNum:'',integralInteriorDecorationNum:'',integralWallAbility:'',integrativeExternalWallAbility:'',prebuiltStairsAbility:'',integralKitchenAbility:'',integralToiletAbility:'',integralInteriorDecorationAbility:'',integralWallScale:'',integrativeExternalWallScale:'',prebuiltStairsScale:'',integralKitchenScale:'',integralToiletScale:'',integralInteriorDecorationScale:'',declareTime:'',year:'',quarter:'',submit:''}
             this.getCurrentYearAndQuarter()
             this.submitVisible = true
