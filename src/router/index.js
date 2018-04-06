@@ -166,7 +166,7 @@ export default new Router({
     },
     {
         path: '/realEstateEnProject',
-        name: '房地产-项目信息',
+        name: '装配式建筑项目信息',
         component: projectByRealEstateEn
     },
     {

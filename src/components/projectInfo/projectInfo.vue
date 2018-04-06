@@ -88,7 +88,7 @@
     	</el-row>
     	<el-form ref="checkForm2" :model="projectForm.schedule" :rules="rules">
     	<el-row>
-    		<label>项目进度信息</label>
+    		<label>项目进度计划信息</label>
     	</el-row>
     	<el-row>
     		<el-row>
@@ -101,7 +101,7 @@
 					      v-model="projectForm.schedule.projectStartTime"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择开始日期"
 					      >
 					    </el-date-picker>
 				    </el-form-item>
@@ -112,7 +112,7 @@
 					      v-model="projectForm.schedule.projectEndTime"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择结束日期"
 					     >
 					    </el-date-picker>
 			    	</el-form-item>
@@ -129,7 +129,7 @@
 					      v-model="projectForm.schedule.landUseRightStart"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择开始日期"
 					    >
 					    </el-date-picker>
 			    	</el-form-item>
@@ -140,7 +140,7 @@
 					      v-model="projectForm.schedule.landUseRightEnd"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择结束日期"
 					      >
 					    </el-date-picker>
 			    	</el-form-item>
@@ -157,7 +157,7 @@
 					      v-model="projectForm.schedule.constructionLicenseStart"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择开始日期"
 					    >
 					    </el-date-picker>
 				    </el-form-item>
@@ -168,7 +168,7 @@
 					      v-model="projectForm.schedule.constructionLicenseEnd"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择结束日期"
 					     >
 					    </el-date-picker>
 					</el-form-item>
@@ -186,7 +186,7 @@
 							      v-model="projectForm.schedule.engineeringLicenseStart"
 							      align="right"
 							      type="date"
-							      placeholder="选择日期"
+							      placeholder="选择开始日期"
 							     >
 							    </el-date-picker>
 					    </el-form-item>
@@ -197,7 +197,7 @@
 					      v-model="projectForm.schedule.engineeringLicenseEnd"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择结束日期"
 					      >
 					    </el-date-picker>
 					</el-form-item>
@@ -214,7 +214,7 @@
 					      v-model="projectForm.schedule.tenderStart"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择开始日期"
 					      >
 					    </el-date-picker>
 			    	</el-form-item>
@@ -225,7 +225,7 @@
 					      v-model="projectForm.schedule.tenderEnd"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择结束日期"
 					    >
 					    </el-date-picker>
 			    	</el-form-item>
@@ -242,7 +242,7 @@
 					      v-model="projectForm.schedule.comprehensiveInspectionAndAcceptanceStart"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择开始日期"
 					     >
 					    </el-date-picker>
 			    	</el-form-item>
@@ -253,7 +253,7 @@
 					      v-model="projectForm.schedule.comprehensiveInspectionAndAcceptanceEnd"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择结束日期"
 					     >
 					    </el-date-picker>
 			    	</el-form-item>
@@ -270,7 +270,7 @@
 				      v-model="projectForm.schedule.deliveryStart"
 				      align="right"
 				      type="date"
-				      placeholder="选择日期"
+				      placeholder="选择开始日期"
 				    >
 				    </el-date-picker>
 			    </el-form-item>
@@ -281,7 +281,7 @@
 					      v-model="projectForm.schedule.deliveryEnd"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择结束日期"
 					     >
 					    </el-date-picker>
 			    	</el-form-item>
@@ -298,7 +298,7 @@
 					      v-model="projectForm.schedule.constructionDrawingStart"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择开始日期"
 					     >
 					    </el-date-picker>
 			    </el-form-item>
@@ -309,7 +309,7 @@
 					      v-model="projectForm.schedule.constructionDrawingEnd"
 					      align="right"
 					      type="date"
-					      placeholder="选择日期"
+					      placeholder="选择结束日期"
 					    >
 					    </el-date-picker>
 			    </el-form-item>
@@ -666,7 +666,7 @@
 						// {type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					totalConstructionArea:[
-						{validator:checkConstruction,trigger:'change'&'blur'}
+						{validator:checkTotalConstructionArea,trigger:'change'&'blur'}
 						// {type:'number',message:'只能填写数字',trigger:'change'}
 					],
 					overgroundConstructionArea:[
